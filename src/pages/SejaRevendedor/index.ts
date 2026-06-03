@@ -1,0 +1,1 @@
+export { SejaRevendedor } from "./SejaRevendedor";

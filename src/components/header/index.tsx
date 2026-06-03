@@ -31,7 +31,9 @@ export function Header() {
         <StyledLink to="/garantia">
           <TextWrapper2>Garantias</TextWrapper2>
         </StyledLink>
-        <TextWrapper3>Atendimento</TextWrapper3>
+        <StyledLink to="/fale-conosco">
+          <TextWrapper3>Atendimento</TextWrapper3>
+        </StyledLink>
         <TextWrapper4>PT</TextWrapper4>
         <Camada
           alt="Camada"
@@ -48,11 +50,19 @@ export function Header() {
         </StyledLink>
 
         <Navbar>
-          <NavItem>Categorias e Produtos</NavItem>
-          <NavItem>Conheça a Vonder</NavItem>
-          <NavItem>Onde comprar VONDER</NavItem>
-          <NavItem>Nosso Blog</NavItem>
-          <StyledLink to="/fale-conosco">
+          <StyledLink to="/categorias-e-produtos">
+            <NavItem>Categorias e Produtos</NavItem>
+          </StyledLink>
+          <StyledLink to="/conheca-a-vonder">
+            <NavItem>Conheça a Vonder</NavItem>
+          </StyledLink>
+          <StyledLink to="/onde-comprar">
+            <NavItem>Onde comprar VONDER</NavItem>
+          </StyledLink>
+          <StyledLink to="/blog">
+            <NavItem>Nosso Blog</NavItem>
+          </StyledLink>
+          <StyledLink to="/seja-revendedor">
             <NavItem>Trabalhe Conosco</NavItem>
           </StyledLink>
         </Navbar>  

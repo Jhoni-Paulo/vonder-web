@@ -1,0 +1,515 @@
+.seja-revendedor {
+  background-color: #ffffff;
+  height: 2305px;
+  min-width: 1440px;
+  position: relative;
+  width: 100%;
+  margin-top: 50px;
+}
+
+.seja-revendedor .text-wrapper-17 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 16px;
+  font-weight: 300;
+  left: calc(50% - 615px);
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 18px;
+  white-space: nowrap;
+  width: 535px;
+}
+
+.seja-revendedor .group {
+  background-color: #f6be00;
+  border-radius: 16px;
+  height: 1142px;
+  left: 105px;
+  position: absolute;
+  top: 90px;
+  width: 699px;
+}
+
+.seja-revendedor .seja-um-revendedor {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 45px;
+  font-style: italic;
+  font-weight: 700;
+  left: calc(50% - 543px);
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 151px;
+  width: 476px;
+}
+
+.seja-revendedor .div {
+  background-color: #000000;
+  border-radius: 16px;
+  height: 1142px;
+  left: 713px;
+  position: absolute;
+  top: 163px;
+  width: 608px;
+}
+
+.seja-revendedor .text-wrapper {
+  color: #ffffff;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 700;
+  left: calc(50% + 68px);
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 234px;
+  width: 221px;
+}
+
+/* Campo Nome */
+.seja-revendedor .rectangle-8 {
+  background-color: #ffffff;
+  border-radius: 100px;
+  height: 58px;
+  left: 752px;
+  position: absolute;
+  top: 285px;
+  width: 530px;
+}
+
+.seja-revendedor .text-wrapper-15 {
+  color: #3e3e3e;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-weight: 700;
+  height: 0;
+  left: 54.99%;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 303px;
+  width: 16.61%;
+}
+
+/* Campo Email */
+.seja-revendedor .group-2 {
+  height: 58px;
+  left: 752px;
+  position: absolute;
+  top: 357px;
+  width: 532px;
+}
+
+.seja-revendedor .group-2 .rectangle {
+  background-color: #ffffff;
+  border-radius: 100px;
+  height: 58px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 530px;
+}
+
+.seja-revendedor .group-2 .text-wrapper-2 {
+  color: #3e3e3e;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-weight: 700;
+  height: 43.10%;
+  left: 7.50%;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 31.03%;
+  width: 44.99%;
+}
+
+/* Campo Telefone */
+.seja-revendedor .rectangle-9 {
+  background-color: #ffffff;
+  border-radius: 100px;
+  height: 58px;
+  left: 752px;
+  position: absolute;
+  top: 429px;
+  width: 530px;
+}
+
+.seja-revendedor .text-wrapper-16 {
+  color: #3e3e3e;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-weight: 700;
+  height: 0;
+  left: 54.99%;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 447px;
+  width: 16.61%;
+}
+
+/* Seção Lojistas */
+.seja-revendedor .p {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 700;
+  left: calc(50% - 497px);
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 382px;
+  width: 262px;
+}
+
+.seja-revendedor .vector {
+  height: 20px;
+  left: calc(50% - 527px);
+  position: absolute;
+  top: 382px;
+  width: 20px;
+}
+
+.seja-revendedor .text-wrapper-3 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 17px;
+  font-weight: 300;
+  left: calc(50% - 497px);
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 446px;
+  width: 405px;
+}
+
+/* Campo CPF/CNPJ */
+.seja-revendedor .group-3 {
+  height: 58px;
+  left: 752px;
+  position: absolute;
+  top: 501px;
+  width: 532px;
+}
+
+.seja-revendedor .group-3 .rectangle {
+  background-color: #ffffff;
+  border-radius: 100px;
+  height: 58px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 530px;
+}
+
+.seja-revendedor .group-3 .text-wrapper-2 {
+  color: #3e3e3e;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-weight: 700;
+  height: 43.10%;
+  left: 7.50%;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 31.03%;
+  width: 44.99%;
+}
+
+/* Campo Nome Empresa */
+.seja-revendedor .rectangle-2 {
+  background-color: #ffffff;
+  border-radius: 100px;
+  height: 58px;
+  left: 752px;
+  position: absolute;
+  top: 572px;
+  width: 530px;
+}
+
+.seja-revendedor .text-wrapper-4 {
+  color: #3e3e3e;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-weight: 700;
+  height: 0;
+  left: 54.75%;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 590px;
+  width: 16.61%;
+}
+
+/* Seção Profissionais */
+.seja-revendedor .text-wrapper-5 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 700;
+  left: calc(50% - 497px);
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 630px;
+  width: 262px;
+}
+
+.seja-revendedor .img {
+  height: 20px;
+  left: calc(50% - 527px);
+  position: absolute;
+  top: 630px;
+  width: 20px;
+}
+
+/* Campo Cidade */
+.seja-revendedor .rectangle-3 {
+  background-color: #ffffff;
+  border-radius: 100px;
+  height: 58px;
+  left: 752px;
+  position: absolute;
+  top: 648px;
+  width: 530px;
+}
+
+.seja-revendedor .text-wrapper-6 {
+  color: #3e3e3e;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-weight: 700;
+  height: 0;
+  left: 54.75%;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 665px;
+  width: 16.61%;
+}
+
+.seja-revendedor .text-wrapper-7 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 17px;
+  font-weight: 300;
+  left: calc(50% - 497px);
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 694px;
+  width: 405px;
+}
+
+/* Campo Produtos de Interesse */
+.seja-revendedor .rectangle-4 {
+  background-color: #ffffff;
+  border-radius: 100px;
+  height: 58px;
+  left: 752px;
+  position: absolute;
+  top: 724px;
+  width: 530px;
+}
+
+.seja-revendedor .group-4 {
+  height: 0;
+  left: 54.75%;
+  position: absolute;
+  top: 742px;
+  width: 32.40%;
+}
+
+.seja-revendedor .text-wrapper-8 {
+  color: #3e3e3e;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-weight: 700;
+  height: 100%;
+  left: 0;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 0;
+  width: 51.28%;
+}
+
+.seja-revendedor .modo-de-isolamento {
+  height: 15px;
+  left: 459px;
+  position: absolute;
+  top: 5px;
+  width: 6px;
+}
+
+/* Campo Segmentos */
+.seja-revendedor .rectangle-5 {
+  background-color: #ffffff;
+  border-radius: 100px;
+  height: 58px;
+  left: 752px;
+  position: absolute;
+  top: 800px;
+  width: 530px;
+}
+
+.seja-revendedor .group-5 {
+  height: 0;
+  left: 54.75%;
+  position: absolute;
+  top: 818px;
+  width: 32.40%;
+}
+
+/* Campo Mensagem */
+.seja-revendedor .rectangle-6 {
+  background-color: #ffffff;
+  border-radius: 16px;
+  height: 233px;
+  left: 752px;
+  position: absolute;
+  top: 876px;
+  width: 530px;
+}
+
+.seja-revendedor .div-wrapper {
+  display: flex;
+  height: 0;
+  left: 54.75%;
+  position: absolute;
+  top: 891px;
+  width: 16.75%;
+}
+
+.seja-revendedor .text-wrapper-9 {
+  color: #3e3e3e;
+  flex: 1;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: normal;
+  width: 239.25px;
+}
+
+/* Seção Representante */
+.seja-revendedor .text-wrapper-10 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 700;
+  left: calc(50% - 497px);
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 918px;
+  width: 262px;
+}
+
+.seja-revendedor .vector-2 {
+  height: 20px;
+  left: calc(50% - 527px);
+  position: absolute;
+  top: 918px;
+  width: 20px;
+}
+
+.seja-revendedor .text-wrapper-11 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 17px;
+  font-weight: 300;
+  left: calc(50% - 497px);
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 982px;
+  width: 405px;
+}
+
+/* Botão Enviar */
+.seja-revendedor .group-6 {
+  height: 58px;
+  left: 1001px;
+  position: absolute;
+  top: 1129px;
+  width: 283px;
+}
+
+.seja-revendedor .rectangle-7 {
+  background-color: #ffc600;
+  border-radius: 100px;
+  height: 58px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 281px;
+}
+
+.seja-revendedor .text-wrapper-12 {
+  color: #3e3e3e;
+  font-family: "Inter", Helvetica;
+  font-size: 18px;
+  font-weight: 700;
+  height: 43.10%;
+  left: 12.37%;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: center;
+  top: 31.03%;
+  width: 74.20%;
+}
+
+/* Seção inferior */
+.seja-revendedor .camada {
+  height: 529px;
+  left: 229px;
+  position: absolute;
+  top: 1398px;
+  width: 484px;
+}
+
+.seja-revendedor .camada-2 {
+  background-image: url(https://c.animaapp.com/MphM8zCP/img/camada-1-1.png);
+  background-size: 100% 100%;
+  height: 805px;
+  left: 8.33%;
+  position: absolute;
+  top: 1437px;
+  width: 29.24%;
+}
+
+.seja-revendedor .text-wrapper-13 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 45px;
+  font-style: italic;
+  font-weight: 700;
+  left: calc(50% + 25px);
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 1566px;
+  width: 570px;
+}
+
+.seja-revendedor .text-wrapper-14 {
+  color: #000000;
+  font-family: "Inter", Helvetica;
+  font-size: 17px;
+  font-weight: 300;
+  left: calc(50% + 26px);
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 1744px;
+  width: 534px;
+}

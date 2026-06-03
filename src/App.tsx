@@ -4,6 +4,12 @@ import { Footer } from "./components/Footer/Footer.tsx"
 import { FaleConosco } from "./pages/FaleConosco/FaleConosco.tsx"
 import { AssistenciaTcnica } from "./pages/AssistenciaTecnica"
 import { Garantia } from "./pages/Garantia"
+import { Home } from "./pages/Home"
+import { OndeComprar } from "./pages/OndeComprar"
+import { Blog } from "./pages/Blog"
+import { ConhecaAVonder } from "./pages/ConhecaAVonder"
+import { SejaRevendedor } from "./pages/SejaRevendedor"
+import { CategoriasEProdutos } from "./pages/CategoriasEProdutos"
 import { NewsletterSection } from "./components/NewsletterSection/NewsletterSection.tsx"
 import { LoadingScreen } from "./components/LoadingScreen"
 import { useLoading } from "./hooks/useLoading"
@@ -21,10 +27,16 @@ function App() {
         <Header />
 
         <Routes>
-          <Route path="/" element={<FaleConosco />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/assistencia-tecnica" element={<AssistenciaTcnica />} />
           <Route path="/fale-conosco" element={<FaleConosco />} />
           <Route path="/garantia" element={<Garantia />} />
+          <Route path="/onde-comprar" element={<OndeComprar />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/conheca-a-vonder" element={<ConhecaAVonder />} />
+          <Route path="/seja-revendedor" element={<SejaRevendedor />} />
+          <Route path="/categorias-e-produtos" element={<CategoriasEProdutos />} />
         </Routes>
 
         <NewsletterSection />

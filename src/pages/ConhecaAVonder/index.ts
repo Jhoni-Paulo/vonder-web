@@ -1,0 +1,1 @@
+export { ConhecaAVonder } from "./ConhecaAVonder";

@@ -6,6 +6,7 @@ export const HeaderWrapper = styled.header`
   max-width: 100%;
   margin: 0;
   padding: 0;
+  background-color: #efefef;
 `;
 
 export const Topo = styled.div`
