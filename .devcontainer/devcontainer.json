@@ -1,0 +1,28 @@
+{
+  "name": "Vonder Web",
+  "dockerFile": "Dockerfile",
+  "workspaceFolder": "/workspaces/vonder-web",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/vonder-web,type=bind,consistency=cached",
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": {
+      "label": "Vite Dev Server",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "postCreateCommand": "npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "styled-components.vscode-styled-components",
+        "ms-vscode.vscode-typescript-next"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      }
+    }
+  }
+}

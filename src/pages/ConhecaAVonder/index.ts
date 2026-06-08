@@ -1,1 +1,1 @@
-export { ConhecaAVonder } from "./ConhecaAVonder";
+export { ConheaAVonder } from "./ConheaAVonder";

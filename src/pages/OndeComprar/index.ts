@@ -1,1 +1,1 @@
-export { OndeComprar } from "./OndeComprar";
+export { OndeComprarVonder } from "./OndeComprarVonder";

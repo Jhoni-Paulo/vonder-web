@@ -1,0 +1,1 @@
+export { ProdutoInterno } from "./ProdutoInterno";

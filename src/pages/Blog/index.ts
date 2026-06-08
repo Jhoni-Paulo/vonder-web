@@ -1,1 +1,1 @@
-export { Blog } from "./Blog";
+export { BlogHome } from "./BlogHome";

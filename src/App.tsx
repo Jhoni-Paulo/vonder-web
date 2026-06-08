@@ -3,16 +3,18 @@ import { Header } from "./components/header"
 import { Footer } from "./components/Footer/Footer.tsx"
 import { FaleConosco } from "./pages/FaleConosco/FaleConosco.tsx"
 import { AssistenciaTcnica } from "./pages/AssistenciaTecnica"
-import { Garantia } from "./pages/Garantia"
-import { Home } from "./pages/Home"
-import { OndeComprar } from "./pages/OndeComprar"
-import { Blog } from "./pages/Blog"
-import { ConhecaAVonder } from "./pages/ConhecaAVonder"
-import { SejaRevendedor } from "./pages/SejaRevendedor"
 import { CategoriasEProdutos } from "./pages/CategoriasEProdutos"
 import { NewsletterSection } from "./components/NewsletterSection/NewsletterSection.tsx"
 import { LoadingScreen } from "./components/LoadingScreen"
 import { useLoading } from "./hooks/useLoading"
+import { Home } from "./pages/Home"
+import { BlogHome } from "./pages/Blog"
+import { ConheaAVonder } from "./pages/ConhecaAVonder"
+import { Faq } from "./pages/Faq"
+import { Garantia } from "./pages/Garantias"
+import { OndeComprarVonder } from "./pages/OndeComprar"
+import { ProdutoInterno } from "./pages/ProdutoInterno"
+import { TrabalheConosco } from "./pages/TrabalheConosco"
 
 function App() {
   const { isLoading } = useLoading(1500);
@@ -31,12 +33,14 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/assistencia-tecnica" element={<AssistenciaTcnica />} />
           <Route path="/fale-conosco" element={<FaleConosco />} />
-          <Route path="/garantia" element={<Garantia />} />
-          <Route path="/onde-comprar" element={<OndeComprar />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/conheca-a-vonder" element={<ConhecaAVonder />} />
-          <Route path="/seja-revendedor" element={<SejaRevendedor />} />
           <Route path="/categorias-e-produtos" element={<CategoriasEProdutos />} />
+          <Route path="/blog" element={<BlogHome />} />
+          <Route path="/conheca-a-vonder" element={<ConheaAVonder />} />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/garantia" element={<Garantia />} />
+          <Route path="/onde-comprar" element={<OndeComprarVonder />} />
+          <Route path="/produto/:id" element={<ProdutoInterno />} />
+          <Route path="/trabalhe-conosco" element={<TrabalheConosco />} />
         </Routes>
 
         <NewsletterSection />

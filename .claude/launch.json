@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "vonder-web",
+      "runtimeExecutable": "docker",
+      "runtimeArgs": ["exec", "angry_jang", "sh", "-c", "cd /workspaces/vonder-web && npm run dev -- --host 0.0.0.0"],
+      "port": 5174
+    }
+  ]
+}

@@ -9,7 +9,7 @@ import {
 
 export function NewsletterSection() {
   return (
-    <NewsletterSectionContainer className="flex flex-col items-center px-16 pt-16 pb-28 mt-20 w-full rounded-none bg-zinc-600 max-md:px-5 max-md:pb-24 max-md:mt-10 max-md:max-w-full">
+    <NewsletterSectionContainer className="flex flex-col items-center px-16 pt-16 pb-28 w-full rounded-none bg-zinc-600 max-md:px-5 max-md:pb-24 max-md:max-w-full">
       <div className="mb-0 w-full max-w-[1071px] max-md:mb-2.5 max-md:max-w-full">
         <div className="flex gap-5 max-md:flex-col">
           <div className="w-[23%] max-md:ml-0 max-md:w-full">

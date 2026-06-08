@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
 export const HeaderWrapper = styled.header`
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   width: 100%;
   max-width: 100%;
   margin: 0;
   padding: 0;
-  background-color: #efefef;
+  background-color: #F6BE00;
+  border-radius: 0px 0px 20px 20px;
 `;
 
 export const Topo = styled.div`
@@ -22,7 +25,7 @@ export const Topo = styled.div`
 `;
 
 export const BottomHeader = styled.div`
-  background-color: #efefef;
+  background-color: #F6BE00;
   border-radius: 0px 0px 20px 20px;
   height: 91px;
   width: 100%;
