@@ -2,123 +2,172 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledGroupSubsection = styled.div`
-  height: 388px;
-  margin-left: 106px;
-  position: relative;
-  width: 1228px;
+  width: 100%;
+  max-width: 1248px;
 
-  & .group {
-    height: 316px;
-    left: calc(50.00% - 614px);
-    position: absolute;
-    top: calc(50.00% - 122px);
-    width: 1230px;
+  & .group-3 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px 56px;
+    justify-content: center;
+    width: 100%;
   }
 
-  & .div {
-    background-color: #f6be00;
-    border-radius: 16px;
-    height: 316px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 1228px;
+  & .frame-2,
+  & .frame-3 {
+    align-items: center;
+    display: flex;
+    flex: 1 1 240px;
+    flex-direction: column;
+    gap: 5px;
+    max-width: 270px;
   }
 
-  & .j-pensou-em {
+  & .img-wrapper {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+  }
+
+  & .img-2 {
+    aspect-ratio: 1;
+    height: 50px;
+    position: relative;
+    width: 50px;
+  }
+
+  & .div-wrapper {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    justify-content: center;
+    padding: 10px;
+    position: relative;
+    width: 100%;
+  }
+
+  & .text-wrapper-4 {
     color: #000000;
-    font-family: "Swis721 LtCn BT-Light", Helvetica;
-    font-size: 40px;
-    font-weight: 400;
-    left: calc(50.00% - 555px);
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: calc(50.00% - 96px);
-    width: 497px;
-  }
-
-  & .text-wrapper {
-    font-family: "Swis721 LtCn BT-LightItalic", Helvetica;
-    font-style: italic;
-    font-weight: 300;
-  }
-
-  & .span {
     font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
+    font-size: 22px;
     font-style: italic;
     font-weight: 700;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    width: 250px;
   }
 
-  & .group-2 {
-    height: 388px;
-    left: 620px;
-    position: absolute;
-    top: 0;
-    width: 587px;
-  }
-
-  & .c {
-    aspect-ratio: 0.76;
-    height: 360px;
-    left: 0;
-    position: absolute;
-    top: 28px;
-    width: 275px;
-  }
-
-  & .img {
-    aspect-ratio: 0.63;
-    height: 364px;
-    left: 356px;
-    position: absolute;
-    top: 24px;
-    width: 231px;
-  }
-
-  & .c-2 {
-    aspect-ratio: 0.77;
-    height: 388px;
-    left: 150px;
-    position: absolute;
-    top: 0;
-    width: 300px;
+  & .p {
+    color: #000000;
+    font-family: "Swis721 LtCn BT-Light", Helvetica;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    width: 250px;
   }
 `;
 
 export const GroupSubsection = (): React.JSX.Element => {
   return (
     <StyledGroupSubsection className="group-subsection">
-      <div className="group">
-        <div className="div" />
-        <p className="j-pensou-em">
-          <span className="text-wrapper">
-            Já pensou em trabalhar com
-            <br />
-          </span>
-          <span className="span">
-            o maior e mais completo mix
-            <br />
-            de ferramentas profissionais e industriais da América Latina?
-          </span>
-        </p>
-      </div>
-      <div className="group-2">
-        <img
-          className="c"
-          alt="C"
-          src="https://c.animaapp.com/jIsSRIVa/img/c-2@2x.png"
-        />
-        <img
-          className="img"
-          alt="C"
-          src="https://c.animaapp.com/jIsSRIVa/img/c-3@2x.png"
-        />
-        <img
-          className="c-2"
-          alt="C"
-          src="https://c.animaapp.com/jIsSRIVa/img/c-1@2x.png"
-        />
+      <div className="group-3">
+        <div className="frame-2">
+          <div className="img-wrapper">
+            <img
+              className="img-2"
+              alt="Morale"
+              src="https://c.animaapp.com/fkOynynE/img/morale@2x.png"
+            />
+          </div>
+          <div className="div-wrapper">
+            <div className="text-wrapper-4">
+              ÉTICA, RESPEITO
+              <br />E VALORES
+            </div>
+          </div>
+          <div className="div-wrapper">
+            <p className="p">
+              A base para todas as nossas decisões, garantindo soluções
+              duradouras e justas.
+            </p>
+          </div>
+        </div>
+        <div className="frame-3">
+          <div className="img-wrapper">
+            <img
+              className="img-2"
+              alt="Handshake"
+              src="https://c.animaapp.com/fkOynynE/img/handshake@2x.png"
+            />
+          </div>
+          <div className="div-wrapper">
+            <div className="text-wrapper-4">
+              COLABORAÇÃO
+              <br />E PROATIVIDADE
+            </div>
+          </div>
+          <div className="div-wrapper">
+            <p className="p">
+              Valorizamos o trabalho em equipe, onde todos têm a oportunidade de
+              contribuir para o sucesso comum.
+            </p>
+          </div>
+        </div>
+        <div className="frame-3">
+          <div className="img-wrapper">
+            <img
+              className="img-2"
+              alt="Project manager"
+              src="https://c.animaapp.com/fkOynynE/img/project-manager@2x.png"
+            />
+          </div>
+          <div className="div-wrapper">
+            <div className="text-wrapper-4">
+              LIBERDADE COM
+              <br />
+              RESPONSABILIDADE
+            </div>
+          </div>
+          <div className="div-wrapper">
+            <p className="p">
+              Incentivamos a autonomia em suas ações, com responsabilidade e
+              foco nos resultados.
+            </p>
+          </div>
+        </div>
+        <div className="frame-3">
+          <div className="img-wrapper">
+            <img
+              className="img-2"
+              alt="Customer insights"
+              src="https://c.animaapp.com/fkOynynE/img/customer-insights-manager@2x.png"
+            />
+          </div>
+          <div className="div-wrapper">
+            <div className="text-wrapper-4">
+              DESAFIAR O<br />
+              STATUS QUO
+            </div>
+          </div>
+          <div className="div-wrapper">
+            <p className="p">
+              Estamos sempre em busca de novas soluções, melhores processos e
+              mais eficiência.
+            </p>
+          </div>
+        </div>
       </div>
     </StyledGroupSubsection>
   );

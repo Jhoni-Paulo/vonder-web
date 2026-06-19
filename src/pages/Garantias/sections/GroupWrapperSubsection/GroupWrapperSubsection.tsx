@@ -1,93 +1,126 @@
 import React from "react";
 import styled from "styled-components";
 
-const GroupWrapperSubsectionContainer = styled.div`
-  align-self: center;
-  background-color: #f2f2f2;
+export const GroupWrapperSubsection = (): React.JSX.Element => {
+  return (
+    <Wrapper>
+      <Group7>
+        <PngMockVonder
+          alt="Png mock vonder"
+          src="https://c.animaapp.com/Qnwadh4r/img/png-mock-vonder-2.png"
+        />
+        <Group9>
+          <TextWrapper20>Ainda precisa de ajuda?</TextWrapper20>
+          <TextWrapper21>
+            Se você não localizou uma revenda próxima ou não encontrou a opção
+            ideal nos nossos revendedores online, não se preocupe! Clique no
+            botão abaixo e nossa equipe estará pronta para orientá-lo e garantir
+            que você tenha a melhor experiência com nossos produtos.
+          </TextWrapper21>
+          <Group10>
+            <Rectangle6 />
+            <TextWrapper19>Fale Conosco</TextWrapper19>
+          </Group10>
+        </Group9>
+      </Group7>
+    </Wrapper>
+  );
+};
+
+const Wrapper = styled.div`
+  align-items: center;
+  align-self: stretch;
   display: flex;
-  height: 206px;
+  flex-direction: column;
+  gap: 10px;
   justify-content: center;
-  margin-top: 60px;
-  width: 1440px;
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
-const Group2 = styled.div`
+const Group7 = styled.div`
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  max-width: 1120px;
+  padding: 40px 32px;
+  width: 100%;
+  box-sizing: border-box;
+`;
+
+const Group8 = styled.div`
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Group9 = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 126px;
-  margin-left: 2px;
-  margin-top: 40px;
-  width: 1022px;
+  flex: 1 1 280px;
+  min-width: 260px;
+  max-width: 520px;
 `;
 
-const TextWrapper2 = styled.p`
-  align-self: center;
-  color: #000000;
-  font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-  font-size: 40px;
-  font-style: italic;
-  font-weight: 700;
-  height: 48px;
-  letter-spacing: 0;
-  line-height: normal;
-  margin-left: -2px;
-  text-align: center;
-  white-space: nowrap;
-  width: 1020px;
-`;
-
-const GroupWrapper = styled.div`
+const Group10 = styled.div`
   display: flex;
-  margin-left: 370px;
-  width: 281px;
-`;
-
-const Group3 = styled.div`
-  height: 58px;
+  width: fit-content;
   position: relative;
-  width: 283px;
 `;
 
-const Rectangle2 = styled.div`
-  background-color: #ffc600;
+const Rectangle6 = styled.div`
+  background-color: #000000;
   border-radius: 100px;
-  height: 58px;
-  left: 0;
   position: absolute;
-  top: 0;
-  width: 281px;
+  inset: 0;
+  z-index: 0;
 `;
 
-const TextWrapper3 = styled.div`
-  color: #000000;
+const TextWrapper19 = styled.div`
+  color: #f6be00;
   font-family: "Swis721 Cn BT-Bold", Helvetica;
   font-size: 18px;
   font-weight: 700;
-  height: 43.1%;
-  left: 12.37%;
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
+  padding: 10px 24px;
+  position: relative;
   text-align: center;
-  top: 31.03%;
-  width: 74.2%;
+  z-index: 1;
+  cursor: pointer;
 `;
 
-export const GroupWrapperSubsection = (): React.JSX.Element => {
-  return (
-    <GroupWrapperSubsectionContainer>
-      <Group2>
-        <TextWrapper2>
-          Preencha o formulário, assista o vídeo e cadastre sua garantia!
-        </TextWrapper2>
-        <GroupWrapper>
-          <Group3>
-            <Rectangle2 />
-            <TextWrapper3>Cadastrar Garantia</TextWrapper3>
-          </Group3>
-        </GroupWrapper>
-      </Group2>
-    </GroupWrapperSubsectionContainer>
-  );
-};
+const TextWrapper20 = styled.div`
+  color: #000000;
+  font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
+  font-size: clamp(26px, 4vw, 45px);
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: normal;
+`;
+
+const TextWrapper21 = styled.p`
+  color: #333333;
+  font-family: "Swis721 LtCn BT-Light", Helvetica;
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 500px;
+`;
+
+const PngMockVonder = styled.img`
+  flex: 0 0 auto;
+  width: min(400px, 90vw);
+  height: auto;
+  display: block;
+`;

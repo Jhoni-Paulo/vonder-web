@@ -58,15 +58,6 @@ const TextWrapper29 = styled.div`
   width: 398px;
 `;
 
-const StyledVector = styled.img`
-  aspect-ratio: 0.82;
-  height: 43px;
-  left: 38.75%;
-  position: absolute;
-  top: calc(50.00% + 17px);
-  width: 61.25%;
-`;
-
 export const BlogHome = (): React.JSX.Element => {
   return (
     <StyledBlogHome data-model-id="1:6818">
@@ -83,10 +74,6 @@ export const BlogHome = (): React.JSX.Element => {
         <Rectangle6 />
         <TextWrapper29>Ver todos os conteúdos</TextWrapper29>
       </Group45>
-      <StyledVector
-        alt="Vector"
-        src="https://c.animaapp.com/w4wnBid1/img/vector.svg"
-      />
     </StyledBlogHome>
   );
 };

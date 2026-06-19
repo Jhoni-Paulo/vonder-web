@@ -1,237 +1,115 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledFrameSubsection = styled.div`
-  align-items: flex-start;
+const Wrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px 15px;
-  left: calc(50.00% - 615px);
-  position: absolute;
-  top: 700px;
-  width: 1230px;
+  width: 100%;
+`;
 
-  & .group {
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0px 0px 20px #00000026;
-    height: 110px;
-    position: relative;
-    width: 400px;
+const Card = styled.div`
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 16px;
+  display: flex;
+  gap: 40px;
+  padding: 32px 64px;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+    padding: 32px;
   }
+`;
 
-  & .div {
-    height: 50px;
-    left: calc(50.00% - 170px);
-    position: relative;
-    top: 30px;
-    width: 285px;
+const ImageWrapper = styled.div`
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+`;
+
+const GeminiGeneratedImage = styled.img`
+  aspect-ratio: 0.82;
+  height: 300px;
+  width: auto;
+  object-fit: contain;
+
+  @media (max-width: 900px) {
+    height: 240px;
   }
+`;
 
-  & .text-wrapper {
-    color: #000000;
-    font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-    font-size: 24px;
-    font-style: italic;
-    font-weight: 700;
-    left: calc(50.00% - 56px);
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 12px;
+const FrameContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+
+  @media (max-width: 900px) {
+    align-items: center;
   }
+`;
 
-  & .img {
-    height: 50px;
-    left: 0;
-    position: absolute;
-    top: calc(50.00% - 25px);
-    width: 100%;
+const TextTitle = styled.div`
+  color: #f6be00;
+  font-family: "Swis721 Cn BT-Bold", Helvetica;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: normal;
+`;
+
+const TextSubtitle = styled.div`
+  color: #000000;
+  font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
+  font-size: 45px;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: normal;
+
+  @media (max-width: 600px) {
+    font-size: 32px;
   }
+`;
 
-  & .group-2 {
-    height: 50px;
-    left: calc(50.00% - 170px);
-    position: relative;
-    top: 30px;
-    width: 304px;
-  }
+const Description = styled.p`
+  color: #000000;
+  font-family: "Swis721 LtCn BT-Light", Helvetica;
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: normal;
+  margin: 0;
+  max-width: 620px;
 
-  & .text-wrapper-2 {
-    color: #000000;
-    font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-    font-size: 24px;
-    font-style: italic;
-    font-weight: 700;
-    left: calc(50.00% - 66px);
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 12px;
-  }
-
-  & .group-3 {
-    height: 58px;
-    left: calc(50.00% - 170px);
-    position: relative;
-    top: calc(50.00% - 27px);
-    width: 207px;
-  }
-
-  & .COMPRAR-e-REVENDER {
-    color: #000000;
-    font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-    font-size: 24px;
-    font-style: italic;
-    font-weight: 700;
-    left: calc(50.00% - 18px);
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: calc(50.00% - 29px);
-  }
-
-  & .group-4 {
-    height: 50px;
-    left: 0;
-    position: absolute;
-    top: calc(50.00% - 27px);
-    width: 100%;
-  }
-
-  & .group-5 {
-    height: 58px;
-    left: calc(50.00% - 170px);
-    position: relative;
-    top: calc(50.00% - 29px);
-    width: 252px;
-  }
-
-  & .SEGURAN-a-e {
-    color: #000000;
-    font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-    font-size: 24px;
-    font-style: italic;
-    font-weight: 700;
-    left: calc(50.00% - 40px);
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: calc(50.00% - 29px);
-  }
-
-  & .group-6 {
-    height: 50px;
-    left: calc(50.00% - 170px);
-    position: relative;
-    top: 30px;
-    width: 294px;
-  }
-
-  & .text-wrapper-3 {
-    color: #000000;
-    font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-    font-size: 24px;
-    font-style: italic;
-    font-weight: 700;
-    left: calc(50.00% - 61px);
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 12px;
-  }
-
-  & .group-7 {
-    height: 50px;
-    left: calc(50.00% - 170px);
-    position: relative;
-    top: 30px;
-    width: 179px;
-  }
-
-  & .text-wrapper-4 {
-    color: #000000;
-    font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-    font-size: 24px;
-    font-style: italic;
-    font-weight: 700;
-    left: calc(50.00% - 4px);
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 12px;
+  @media (max-width: 600px) {
+    font-size: 18px;
   }
 `;
 
 export const FrameSubsection = (): React.JSX.Element => {
   return (
-    <StyledFrameSubsection className="frame-subsection">
-      <div className="group">
-        <div className="div">
-          <div className="text-wrapper">PRODUTOS VONDER</div>
-          <img
-            className="img"
-            alt="Group"
-            src="https://c.animaapp.com/ABVT0Ado/img/group-69132@2x.png"
+    <Wrapper>
+      <Card>
+        <ImageWrapper>
+          <GeminiGeneratedImage
+            alt="FAQ VONDER"
+            src="https://c.animaapp.com/lFhe4nh2/img/gemini-generated-image-9f5rdc9f5rdc9f5r-1@2x.png"
           />
-        </div>
-      </div>
-      <div className="group">
-        <div className="group-2">
-          <div className="text-wrapper-2">GARANTIA E SUPORTE</div>
-          <img
-            className="img"
-            alt="Group"
-            src="https://c.animaapp.com/ABVT0Ado/img/group-69132-1@2x.png"
-          />
-        </div>
-      </div>
-      <div className="group">
-        <div className="group-3">
-          <div className="COMPRAR-e-REVENDER">
-            COMPRAR E<br />
-            REVENDER
-          </div>
-          <img
-            className="group-4"
-            alt="Group"
-            src="https://c.animaapp.com/ABVT0Ado/img/group-69132-2@2x.png"
-          />
-        </div>
-      </div>
-      <div className="group">
-        <div className="group-5">
-          <div className="SEGURAN-a-e">
-            SEGURANÇA E <br />
-            CONFIABILIDADE
-          </div>
-          <img
-            className="img"
-            alt="Group"
-            src="https://c.animaapp.com/ABVT0Ado/img/group-69132-3@2x.png"
-          />
-        </div>
-      </div>
-      <div className="group">
-        <div className="group-6">
-          <div className="text-wrapper-3">TRABALHE CONOSCO</div>
-          <img
-            className="img"
-            alt="Group"
-            src="https://c.animaapp.com/ABVT0Ado/img/group-69132-4@2x.png"
-          />
-        </div>
-      </div>
-      <div className="group">
-        <div className="group-7">
-          <div className="text-wrapper-4">CONTATO</div>
-          <img
-            className="img"
-            alt="Group"
-            src="https://c.animaapp.com/ABVT0Ado/img/group-69132-5@2x.png"
-          />
-        </div>
-      </div>
-    </StyledFrameSubsection>
+        </ImageWrapper>
+        <FrameContent>
+          <TextTitle>FAQ</TextTitle>
+          <TextSubtitle>DÚVIDAS FREQUENTES</TextSubtitle>
+          <Description>
+            Encontre respostas rápidas para as principais perguntas sobre
+            produtos, garantia, assistência técnica, revenda e muito mais!
+          </Description>
+        </FrameContent>
+      </Card>
+    </Wrapper>
   );
 };

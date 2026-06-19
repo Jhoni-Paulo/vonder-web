@@ -6,15 +6,15 @@ import { Group1Subsection } from "./sections/Group1Subsection";
 import { Group2Subsection } from "./sections/Group2Subsection";
 import { Group3Subsection } from "./sections/Group3Subsection/Group3Subsection";
 import { Group4Subsection } from "./sections/Group4Subsection";
-import { Group5Subsection } from "./sections/Group5Subsection/Group5Subsection";
 import { GroupSubsection } from "./sections/GroupSubsection/GroupSubsection";
+import { ConfiraRedesSociais } from "../../components/ConfiraRedesSociais";
 import { GroupWrapperSubsection } from "./sections/GroupWrapperSubsection";
 import { SectionComponentNodeSubsection } from "./sections/SectionComponentNodeSubsection";
 
 const StyledConheaAVonder = styled.div`
   background-color: #ffffff;
   margin-top: -180px;
-  min-height: 7444px;
+  min-height: 7494px;
   min-width: 1440px;
   overflow: hidden;
   position: relative;
@@ -132,7 +132,7 @@ export const ConheaAVonder = (): React.JSX.Element => {
       />
       <Group3Subsection />
       <Group4Subsection />
-      <Group5Subsection />
+      <ConfiraRedesSociais top="5980px" />
     </StyledConheaAVonder>
   );
 };

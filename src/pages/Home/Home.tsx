@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { AutoSubsection } from "./sections/AutoSubsection/AutoSubsection";
 import { DivSubsection } from "./sections/DivSubsection/DivSubsection";
-import { DivWrapperSubsection } from "./sections/DivWrapperSubsection";
+import { ConfiraRedesSociais } from "../../components/ConfiraRedesSociais";
 import { Group1Subsection } from "./sections/Group1Subsection";
 import { Group239WrapperSubsection } from "./sections/Group239WrapperSubsection";
 import { GroupSubsection } from "./sections/GroupSubsection/GroupSubsection";
@@ -270,7 +270,7 @@ export const Home = (): React.JSX.Element => {
       />
       <GroupWrapperSubsection />
       <AutoSubsection />
-      <DivWrapperSubsection />
+      <ConfiraRedesSociais />
       <Group239WrapperSubsection />
       <DivSubsection />
       <div className="group-69">

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export function useLoading(initialDelay = 1000) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const startLoading = () => {
     setIsLoading(true);

@@ -22,9 +22,9 @@ export function Footer() {
         />
 
         <div className="mt-14 max-md:mt-10 max-md:max-w-full">
-          <div className="flex gap-12 max-md:flex-col">
+          <div className="flex gap-12 max-md:flex-col max-md:gap-10">
             <ColumnFooter className="w-3/12 max-md:ml-0 max-md:w-full">
-              <div className="flex flex-col grow max-md:mt-10">
+              <div className="flex flex-col grow">
                 <h3 className="self-start text-lg font-bold text-yellow-400">
                   Institucional
                 </h3>
@@ -39,7 +39,7 @@ export function Footer() {
             </ColumnFooter>
 
             <ColumnFooter2 className="ml-5 w-3/12 max-md:ml-0 max-md:w-full">
-              <div className="flex flex-col max-md:mt-10">
+              <div className="flex flex-col">
                 <h3 className="self-start text-lg font-bold text-yellow-400">
                   Suporte e Segurança
                 </h3>
@@ -61,9 +61,9 @@ export function Footer() {
             </ColumnFooter2>
 
             <ColumnFooter3 className="ml-5 w-3/12 max-md:ml-0 max-md:w-full">
-              <div className="flex flex-col text-lg font-bold text-yellow-400 max-md:mt-10">
+              <div className="flex flex-col text-lg font-bold text-yellow-400">
                 <h3 className="self-start">Contato</h3>
-                <div className="mt-6 text-base font-light leading-8 text-white max-md:mr-1">
+                <div className="mt-6 text-base font-light leading-8 text-white">
                   <p>
                     Assistência ao consumidor:{" "}
                     <span className="font-medium">0800 723 4762</span>
@@ -73,25 +73,25 @@ export function Footer() {
                   </p>
                 </div>
 
-                <HorarioAtendimento className="mt-14 max-md:mt-10">Horário de atendimento</HorarioAtendimento>
-                <p className="mt-5 text-base font-light leading-8 text-white max-md:mr-1">
+                <HorarioAtendimento className="mt-14 max-md:mt-8">Horário de atendimento</HorarioAtendimento>
+                <p className="mt-5 text-base font-light leading-8 text-white">
                   Segunda a sexta das 08:00 às 18:00(Exceto Feriados)
                 </p>
               </div>
             </ColumnFooter3>
 
             <ColumnFooter4 className="ml-5 w-3/12 max-md:ml-0 max-md:w-full">
-              <div className="flex flex-col text-lg font-bold text-yellow-400 max-md:mt-10">
-                <h3 className="self-start">Redes Sociais</h3>
+              <div className="flex flex-col text-lg font-bold text-yellow-400 max-md:items-center max-md:text-center">
+                <h3 className="self-start max-md:self-center">Redes Sociais</h3>
                 <img
                   src="https://api.builder.io/api/v1/image/assets/97eac47059e74e63a3095e32b4db8f3b/c2c6b7bcca1eec60b789e8962f4ac1a303085092?placeholderIfAbsent=true"
                   alt="Social media icons"
-                  className="object-contain mt-6 aspect-[5.35] w-[230px]"
+                  className="object-contain mt-6 aspect-[5.35] w-[230px] max-w-full"
                 />
                 <OvdLogoFooter
                   src="https://api.builder.io/api/v1/image/assets/97eac47059e74e63a3095e32b4db8f3b/831f56d552f9ad7b37be8b65c0d7a778f013ac7d?placeholderIfAbsent=true"
                   alt="Additional footer logo"
-                  className="object-contain self-center mt-16 max-w-full aspect-[1.89] w-[142px] max-md:mt-10"
+                  className="object-contain self-center mt-16 max-w-full aspect-[1.89] w-[142px] max-md:mt-8"
                 />
               </div>
             </ColumnFooter4>

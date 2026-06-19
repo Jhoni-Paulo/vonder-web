@@ -1,0 +1,1 @@
+export { OutrasOpEsQueVocWrapperSubsection } from "./OutrasOpEsQueVocWrapperSubsection";

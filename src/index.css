@@ -1,5 +1,56 @@
 @import 'tailwindcss';
 
+/* ===== Fontes do projeto (Swiss721 VONDER) ===== */
+@font-face {
+  font-family: "Swis721 Cn BT-Bold";
+  src: url("./assets/fonts/swis721-cn-bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Swis721 Cn BT-BoldItalic";
+  src: url("./assets/fonts/swis721-cn-bolditalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Swis721 Cn BT-Italic";
+  src: url("./assets/fonts/swis721-cn-italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Swis721 Cn BT-Roman";
+  src: url("./assets/fonts/swis721-cn-roman.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Swis721 Cn BT-Regular";
+  src: url("./assets/fonts/swis721-cn-roman.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Swis721 LtCn BT-Light";
+  src: url("./assets/fonts/swis721-lt-light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Swis721 LtCn BT-LightItalic";
+  src: url("./assets/fonts/swis721-lt-lightitalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Reset Completo */
 * {
   margin: 0;

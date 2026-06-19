@@ -1,317 +1,208 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
-  align-self: center;
+const Wrapper = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  height: 470px;
-  margin-left: 13px;
-  margin-top: 100px;
-  width: 1241px;
+  gap: 20px;
+  width: 100%;
+  max-width: 1207px;
 `;
 
-const Title = styled.p`
-  align-self: center;
+const Title = styled.div`
   color: #000000;
   font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
   font-size: 45px;
   font-style: italic;
   font-weight: 700;
-  height: 54px;
   letter-spacing: 0;
   line-height: normal;
-  margin-left: -13px;
-  width: 1228px;
+  text-align: center;
+  padding: 10px;
+
+  @media (max-width: 600px) {
+    font-size: 32px;
+  }
 `;
 
 const Subtitle = styled.p`
-  align-self: center;
-  color: #000000;
+  color: #333333;
   font-family: "Swis721 LtCn BT-Light", Helvetica;
   font-size: 24px;
   font-weight: 300;
-  height: 29px;
   letter-spacing: 0;
   line-height: normal;
-  margin-left: -13px;
-  margin-top: 20px;
-  width: 1228px;
+  margin: 0;
+  text-align: center;
+  padding: 10px;
+
+  @media (max-width: 600px) {
+    font-size: 18px;
+  }
 `;
 
-const Group8 = styled.div`
+const PostsRow = styled.div`
+  align-items: stretch;
   display: flex;
-  gap: 26px;
-  margin-top: 40px;
-  width: 1237px;
-`;
-
-const Group9 = styled.div`
-  height: 300px;
-  position: relative;
-  width: 395px;
-`;
-
-const Group12 = styled.div`
-  height: 327px;
-  position: relative;
-  width: 395px;
-`;
-
-const GroupWrapper = styled.div`
-  display: flex;
-  height: 277px;
-  left: 0;
-  position: absolute;
-  top: 23px;
-  width: 387px;
-`;
-
-const DivWrapper = styled.div`
-  align-items: flex-end;
-  background-image: url(https://c.animaapp.com/jIsSRIVa/img/rectangle-78.svg);
-  background-size: 100% 100%;
-  display: flex;
-  height: 277px;
-  min-width: 387px;
-  padding: 26.1px 35px;
-`;
-
-const Group13 = styled.div`
-  align-items: flex-start;
-  background-color: #f6be00;
-  border-radius: 15px;
-  display: flex;
-  height: 277px;
-  min-width: 387px;
-  padding: 31.1px 35px;
-`;
-
-const Group15 = styled.div`
-  align-items: flex-end;
-  background-color: #f2f2f2;
-  border-radius: 15px;
-  display: flex;
-  height: 277px;
-  min-width: 387px;
-  padding: 26.1px 35px;
-`;
-
-const Group10 = styled.div`
-  display: flex;
-  height: 220px;
+  flex-wrap: wrap;
+  gap: 21px;
   justify-content: center;
-  width: 180px;
+  width: 100%;
 `;
 
-const Group11 = styled.div`
-  align-items: center;
+const PostCard = styled.div`
   display: flex;
+  flex: 1 1 280px;
   flex-direction: column;
-  gap: 12px;
-  height: 219.79px;
-  margin-left: 4px;
-  width: 184px;
+  max-width: 286px;
+  min-width: 260px;
 `;
 
-const Group14 = styled.div`
-  display: flex;
-  width: 180px;
+const PostImage = styled.img`
+  width: 100%;
+  height: auto;
+  aspect-ratio: 286 / 351;
+  object-fit: cover;
+  border-radius: 15px 15px 0 0;
 `;
 
-const Frame = styled.div`
+const PostBody = styled.div`
   align-items: flex-start;
+  background-color: #ffffff;
+  border-radius: 0 0 15px 15px;
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 12px;
-  height: 200px;
-  position: relative;
-  width: 180px;
+  justify-content: center;
+  padding: 16px 15px 20px;
 `;
 
-const HighlightedText = styled.p`
-  color: #000000;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 22px;
-  font-weight: 700;
-  height: 58.21px;
-  letter-spacing: 0;
-  line-height: normal;
-  margin-left: -4px;
-  width: 180px;
-`;
-
-const SpanItalic = styled.span`
-  font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-  font-style: italic;
-`;
-
-const SpanBoldItalic = styled.span`
-  font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-  font-size: 25px;
-  font-style: italic;
-`;
-
-const Description = styled.p`
-  color: #000000;
-  font-family: "Swis721 LtCn BT-Light", Helvetica;
-  font-size: 17px;
-  font-weight: 300;
-  height: 149.54px;
-  letter-spacing: 0;
-  line-height: normal;
-  margin-left: -4px;
-  width: 180px;
-`;
-
-const SecondaryDescription = styled.p`
-  align-self: stretch;
-  color: #000000;
-  font-family: "Swis721 LtCn BT-Light", Helvetica;
-  font-size: 17px;
-  font-weight: 300;
-  letter-spacing: 0;
-  line-height: normal;
-  position: relative;
-`;
-
-const SevillaText = styled.p`
-  align-self: stretch;
-  color: #000000;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: normal;
-  margin-top: -1px;
-  position: relative;
-`;
-
-const ImageH = styled.img`
-  height: 300px;
-  left: 225px;
-  position: absolute;
-  top: 0;
-  width: 170px;
-`;
-
-const VectorImage = styled.img`
-  aspect-ratio: 0.82;
-  height: 43px;
-  left: 4.3%;
-  position: absolute;
-  top: calc(50.0% + 120px);
-  width: 95.7%;
-`;
-
-const _Group97Wrapper = styled.div`
+const PostHeader = styled.div`
   align-items: center;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  height: 219.79px;
-  margin-left: 4px;
-  width: 184px;
+  gap: 8px;
+  width: 100%;
 `;
+
+const PostIcon = styled.img`
+  height: 28px;
+  width: auto;
+`;
+
+const Handle = styled.div`
+  color: #000000;
+  font-family: "Swis721 Cn BT-Bold", Helvetica;
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+`;
+
+const ShareIcon = styled.img`
+  height: 24px;
+  width: auto;
+  margin-left: auto;
+`;
+
+const PostText = styled.p`
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  color: #000000;
+  display: -webkit-box;
+  font-family: "Swis721 LtCn BT-Light", Helvetica;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.4;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const ButtonRow = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+const CtaButton = styled.button`
+  align-items: center;
+  background-color: #000000;
+  border: none;
+  border-radius: 100px;
+  color: #f6be00;
+  cursor: pointer;
+  display: flex;
+  font-family: "Swis721 Cn BT-Bold", Helvetica;
+  font-size: 20px;
+  font-weight: 700;
+  height: 58px;
+  justify-content: center;
+  padding: 17px 50px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px #00000040;
+  }
+`;
+
+const SHARE = "https://c.animaapp.com/fkOynynE/img/frame-69682.svg";
+
+const posts = [
+  {
+    img: "https://c.animaapp.com/fkOynynE/img/mask-group@2x.png",
+    icon: "https://c.animaapp.com/fkOynynE/img/frame-129.svg",
+    text: "Temos vagas para Vendedor Interno(a), venha trabalhar conosco! 💼 Se você é comunicativo(a), tem perfil comercial e gosta de desafios, essa oportunidade é para você!",
+  },
+  {
+    img: "https://c.animaapp.com/fkOynynE/img/mask-group-1@2x.png",
+    icon: "https://c.animaapp.com/fkOynynE/img/frame-129-1.svg",
+    text: "O Catálogo de Produtos VONDER 2026 já está disponível em nosso site! Apresentado durante a FEICON, o novo catálogo reúne uma das linhas mais completas",
+  },
+  {
+    img: "https://c.animaapp.com/fkOynynE/img/mask-group-2@2x.png",
+    icon: "https://c.animaapp.com/fkOynynE/img/frame-129-2.svg",
+    text: "A VONDER está preparando um verdadeiro show de exposição para a FEICON 2026 🔧✨ Inúmeros lançamentos e best-sellers do nosso mix, reunidos na maior feira da construção na América Latina.",
+  },
+  {
+    img: "https://c.animaapp.com/fkOynynE/img/mask-group-3@2x.png",
+    icon: "https://c.animaapp.com/fkOynynE/img/frame-129-3.svg",
+    text: "✨ No Dia do Carpinteiro e Marceneiro, celebramos quem transforma madeira em criatividade, técnica e arte. Profissionais que, com talento e dedicação, criam peças que fazem parte do nosso dia a dia.",
+  },
+];
 
 export const DivWrapperSubsection = (): React.JSX.Element => {
   return (
-    <Container>
-      <Title>Faça parte do nosso time!</Title>
+    <Wrapper>
+      <Title>
+        Já conhece
+        <br />
+        nosso LinkedIn?
+      </Title>
       <Subtitle>
-        Escolha abaixo a opção que mais se encaixa ao seu perfil e siga os
-        passos:
+        Acompanhe nossas novidades, inovações e oportunidades de carreira em
+        tempo real!
       </Subtitle>
-      <Group8>
-        <Group9>
-          <GroupWrapper>
-            <DivWrapper>
-              <Group10>
-                <Group11>
-                  <HighlightedText>
-                    <SpanItalic>
-                      Seja um
-                      <br />
-                    </SpanItalic>
-                    <SpanBoldItalic>COLABORADOR</SpanBoldItalic>
-                  </HighlightedText>
-                  <Description>
-                    A VONDER oferece oportunidades em diversas áreas, onde você
-                    pode crescer e contribuir para nossa busca constante pela
-                    excelência no mercado de ferramentas.
-                  </Description>
-                </Group11>
-              </Group10>
-            </DivWrapper>
-          </GroupWrapper>
-          <ImageH
-            alt="H"
-            src="https://c.animaapp.com/jIsSRIVa/img/h-1-1@2x.png"
-          />
-        </Group9>
-        <Group12>
-          <GroupWrapper>
-            <Group13>
-              <Group14>
-                <Group14>
-                  <Frame>
-                    <SevillaText>
-                      <SpanItalic>
-                        Seja um
-                        <br />
-                      </SpanItalic>
-                      <SpanBoldItalic>
-                        REPRESENTANTE
-                        <br />
-                        COMERCIAL
-                      </SpanBoldItalic>
-                    </SevillaText>
-                    <SecondaryDescription>
-                      Ajude a expandir a presença da VONDER em todo o Brasil,
-                      conquistando novos clientes e fortalecendo nossa rede de
-                      parceiros.
-                    </SecondaryDescription>
-                  </Frame>
-                </Group14>
-              </Group14>
-            </Group13>
-          </GroupWrapper>
-          <ImageH
-            alt="H"
-            src="https://c.animaapp.com/jIsSRIVa/img/h-1@2x.png"
-          />
-          <VectorImage
-            alt="Vector"
-            src="https://c.animaapp.com/jIsSRIVa/img/vector-4.svg"
-          />
-        </Group12>
-        <Group9>
-          <GroupWrapper>
-            <Group15>
-              <Group10>
-                <Group11>
-                  <HighlightedText>
-                    <SpanItalic>
-                      Seja um
-                      <br />
-                    </SpanItalic>
-                    <SpanBoldItalic>REVENDEDOR</SpanBoldItalic>
-                  </HighlightedText>
-                  <Description>
-                    Seja revendedor VONDER e cresça com a nossa marca,
-                    reconhecida pela qualidade e inovação, oferecendo as
-                    melhores soluções para seus clientes em todo o país.
-                  </Description>
-                </Group11>
-              </Group10>
-            </Group15>
-          </GroupWrapper>
-          <ImageH
-            alt="H"
-            src="https://c.animaapp.com/jIsSRIVa/img/h-2-1@2x.png"
-          />
-        </Group9>
-      </Group8>
-    </Container>
+      <PostsRow>
+        {posts.map((post, i) => (
+          <PostCard key={i}>
+            <PostImage alt="Publicação" src={post.img} />
+            <PostBody>
+              <PostHeader>
+                <PostIcon alt="" src={post.icon} />
+                <Handle>@grupoovd</Handle>
+                <ShareIcon alt="" src={SHARE} />
+              </PostHeader>
+              <PostText>{post.text}</PostText>
+            </PostBody>
+          </PostCard>
+        ))}
+      </PostsRow>
+      <ButtonRow>
+        <CtaButton type="button">Clique e confira</CtaButton>
+      </ButtonRow>
+    </Wrapper>
   );
 };

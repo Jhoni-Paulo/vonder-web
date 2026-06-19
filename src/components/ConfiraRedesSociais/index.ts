@@ -1,0 +1,1 @@
+export { ConfiraRedesSociais } from "./ConfiraRedesSociais";

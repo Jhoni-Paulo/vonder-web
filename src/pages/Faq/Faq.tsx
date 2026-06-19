@@ -1,78 +1,94 @@
 import React from "react";
 import styled from "styled-components";
+import { DivWrapperSubsection } from "./sections/DivWrapperSubsection";
 import { FrameSubsection } from "./sections/FrameSubsection";
 import { FrameWrapperSubsection } from "./sections/FrameWrapperSubsection";
-import { GroupSubsection } from "./sections/GroupSubsection";
 
 const StyledFAQ = styled.div`
-  margin-top: -238px;
+  align-items: center;
   background-color: #ffffff;
-  min-height: 5581px;
-  min-width: 1440px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 95px 80px;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 1024px) {
+    padding: 24px 48px 64px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 20px 20px 48px;
+  }
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 1230px;
+`;
+
+const BreadcrumbWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  padding: 10px;
   width: 100%;
 `;
 
-const PGinaInicialFAQ = styled.p`
+const BreadcrumbText = styled.p`
   color: #000000;
   font-family: "Swis721 LtCn BT-Light", Helvetica;
   font-size: 18px;
   font-weight: 400;
-  left: calc(50.00% - 614px);
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
-  top: 216px;
-  width: 628px;
+  margin: 0;
 `;
 
-const Span = styled.span`
+const BreadcrumbSpan = styled.span`
   font-weight: 300;
 `;
 
-const TextWrapper12 = styled.span`
+const BreadcrumbTitle = styled.span`
   font-family: "Swis721 Cn BT-Bold", Helvetica;
   font-weight: 700;
 `;
 
-const TextWrapper13 = styled.div`
+const SearchTitle = styled.div`
   color: #000000;
   font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
   font-size: 45px;
   font-style: italic;
   font-weight: 700;
-  left: calc(50.00% - 184px);
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
-  top: calc(50.00% - 2652px);
-  white-space: nowrap;
-`;
+  text-align: center;
+  padding: 10px;
 
-const GeminiGenerated = styled.img`
-  aspect-ratio: 0.82;
-  height: 352px;
-  left: 194px;
-  position: absolute;
-  top: 216px;
-  width: 289px;
+  @media (max-width: 600px) {
+    font-size: 32px;
+  }
 `;
 
 export const Faq = (): React.JSX.Element => {
   return (
     <StyledFAQ data-model-id="1:10631">
-      <PGinaInicialFAQ>
-        <Span>Página inicial &gt; </Span>
-        <TextWrapper12>FAQ</TextWrapper12>
-      </PGinaInicialFAQ>
-      <FrameSubsection />
-      <GroupSubsection />
-      <TextWrapper13>O que você procura?</TextWrapper13>
-      <GeminiGenerated
-        alt="Gemini generated"
-        src="https://c.animaapp.com/ABVT0Ado/img/gemini-generated-image-9f5rdc9f5rdc9f5r-1@2x.png"
-      />
-      <FrameWrapperSubsection />
+      <Content>
+        <BreadcrumbWrapper>
+          <BreadcrumbText>
+            <BreadcrumbSpan>Página inicial &gt; </BreadcrumbSpan>
+            <BreadcrumbTitle>FAQ</BreadcrumbTitle>
+          </BreadcrumbText>
+        </BreadcrumbWrapper>
+        <FrameSubsection />
+        <SearchTitle>O que você procura?</SearchTitle>
+        <FrameWrapperSubsection />
+        <DivWrapperSubsection />
+      </Content>
     </StyledFAQ>
   );
 };

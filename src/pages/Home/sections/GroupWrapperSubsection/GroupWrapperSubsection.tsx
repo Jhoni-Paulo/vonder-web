@@ -15,6 +15,7 @@ const Section = styled.div`
 `;
 
 const Group5 = styled.div`
+  align-items: center;
   display: flex;
   margin-left: 160px;
   width: 1144px;
