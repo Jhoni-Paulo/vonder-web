@@ -17,6 +17,7 @@ import { Garantia } from "./pages/Garantias"
 import { OndeComprarVonder } from "./pages/OndeComprar"
 import { ProdutoInterno } from "./pages/ProdutoInterno"
 import { TrabalheConosco } from "./pages/TrabalheConosco"
+import { Lancamentos } from "./pages/Lancamentos/Lancamentos"
 
 function AppContent() {
   const location = useLocation()
@@ -34,7 +35,7 @@ function AppContent() {
         <Header />
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomeNova />} />
           <Route path="/home" element={<Home />} />
           <Route path="/home-nova" element={<HomeNova />} />
           <Route path="/assistencia-tecnica" element={<AssistenciaTcnica />} />
@@ -47,6 +48,7 @@ function AppContent() {
           <Route path="/onde-comprar" element={<OndeComprarVonder />} />
           <Route path="/produto/:id" element={<ProdutoInterno />} />
           <Route path="/trabalhe-conosco" element={<TrabalheConosco />} />
+          <Route path="/lancamentos" element={<Lancamentos />} />
         </Routes>
 
         <NewsletterSection />

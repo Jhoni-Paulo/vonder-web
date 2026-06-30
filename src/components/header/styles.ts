@@ -152,16 +152,16 @@ export const Navbar = styled.div<{ $open?: boolean }>`
 `;
 
 export const NavItem = styled.div`
-  color: #000;
-  font-family: "Inter", Helvetica;
-  font-size: 17px;
+  color: #000000;
+  font-family: "Swis721 Cn BT-Bold", Helvetica;
+  font-size: 20px;
   font-weight: 700;
   height: 32px;
   letter-spacing: 0;
   line-height: normal;
   flex-shrink: 0;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,7 +171,6 @@ export const NavItem = styled.div`
     color: #ffffff;
     background-color: #343434;
     border-radius: 40px;
-    transition: all 0.4s ease;
   }
 
   @media (max-width: 900px) {

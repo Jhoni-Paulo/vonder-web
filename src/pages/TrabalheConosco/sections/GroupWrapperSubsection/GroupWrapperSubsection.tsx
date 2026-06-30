@@ -621,6 +621,325 @@ interface GroupWrapperSubsectionProps {
   activeTab?: number;
 }
 
+/* ── Formulário Revendedor ── */
+const FormTitle = styled.div`
+  color: #000000;
+  font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
+  font-size: 40px;
+  font-style: italic;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+
+  @media (max-width: 600px) { font-size: 28px; }
+`;
+
+const FormDesc = styled.p`
+  color: #000000;
+  font-family: "Swis721 Cn BT-Roman", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+`;
+
+const SectionHeading = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  p {
+    color: #000000;
+    font-family: "Swis721 Cn BT-Bold", Helvetica;
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+    margin: 0;
+
+    em {
+      font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
+      font-style: italic;
+      font-weight: 700;
+    }
+
+    span {
+      font-family: "Swis721 LtCn BT-LightItalic", Helvetica;
+      font-style: italic;
+      font-weight: 300;
+    }
+  }
+
+  @media (max-width: 600px) {
+    p { font-size: 26px; }
+  }
+`;
+
+const FormBox = styled.div`
+  background-color: #ffffff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 40px 48px;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) { padding: 28px 20px; }
+`;
+
+const FieldsRow = styled.div`
+  display: flex;
+  gap: 28px;
+  width: 100%;
+
+  @media (max-width: 768px) { flex-direction: column; gap: 16px; }
+`;
+
+const FieldsCol = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+const FormField = styled.input`
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 16px;
+  color: #3e3e3e;
+  font-family: "Swis721 LtCn BT-Light", Helvetica;
+  font-size: 18px;
+  font-weight: 300;
+  height: 60px;
+  outline: none;
+  padding: 0 30px;
+  width: 100%;
+  box-sizing: border-box;
+
+  &::placeholder { color: #3e3e3e; }
+  &:focus { border-color: #f6be00; }
+`;
+
+const CheckGrid = styled.div`
+  display: grid;
+  gap: 15px 28px;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 768px)  { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 480px)  { grid-template-columns: 1fr; }
+`;
+
+const CheckItem = styled.label`
+  align-items: center;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  min-height: 60px;
+  padding: 16px 20px;
+  box-sizing: border-box;
+
+  input[type="checkbox"] {
+    accent-color: #f6be00;
+    border: 1px solid #979797;
+    border-radius: 5px;
+    flex-shrink: 0;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+  }
+
+  span {
+    color: #3e3e3e;
+    font-family: "Swis721 LtCn BT-Light", Helvetica;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.3;
+  }
+`;
+
+const MessageArea = styled.textarea`
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 16px;
+  color: #3e3e3e;
+  font-family: "Swis721 LtCn BT-Light", Helvetica;
+  font-size: 18px;
+  font-weight: 300;
+  height: 200px;
+  outline: none;
+  padding: 20px 30px;
+  resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+
+  &::placeholder { color: #3e3e3e; }
+  &:focus { border-color: #f6be00; }
+`;
+
+const PrivacyText = styled.p`
+  color: #000000;
+  font-family: "Swis721 Cn BT-Italic", Helvetica;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  text-align: right;
+  width: 100%;
+`;
+
+const SubmitRow = styled.div`
+  align-items: center;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+`;
+
+const VonderLogo = styled.img`
+  height: 73px;
+  width: 300px;
+  object-fit: contain;
+`;
+
+const SubmitBtn = styled.button`
+  align-items: center;
+  background-color: #000000;
+  border: none;
+  border-radius: 100px;
+  color: #f6be00;
+  cursor: pointer;
+  display: flex;
+  font-family: "Swis721 Cn BT-Bold", Helvetica;
+  font-size: 20px;
+  font-weight: 700;
+  height: 58px;
+  justify-content: center;
+  padding: 17px 0;
+  width: 300px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px #00000040;
+  }
+`;
+
+const products = [
+  "Abrasivos", "Ferramentas manuais", "Metais", "Químicos",
+  "Construção civil", "Jardinagem", "Movimentação de materiais", "Rolamento",
+  "Correias", "Mangueiras", "Máquinas e compressores", "Solda",
+  "EPI", "Materiais elétricos", "Parafusos e fixadores", "Teste",
+  "Ferramentas elétricas", "Medição e teste", "Pintura", "Usinagem e corte",
+];
+
+const segments = [
+  "Água e Esgoto", "Energia Elétrica", "Madeira, Reflorestamento e Beneficiamento", "Papel e Celulose",
+  "Alimentício", "Frigoríficos e Comércio de carnes", "Manutenção Automotiva", "Telecomunicações",
+  "Construção Civil", "Hotéis", "Manutenção Predial e Industrial", "Transporte e Armazenagem",
+  "Construção Naval", "Indústria Química", "Meio Ambiente", "Usina Açúcar e Álcool",
+  "Cozinhas Industriais", "Informática", "Metalurgia", "Ensino",
+  "Limpeza, Conservação e Vigilância", "Moveleiro",
+];
+
+function RevendedorContent() {
+  return (
+    <>
+      <FormTitle>Formulário de cadastro</FormTitle>
+      <FormDesc>
+        Se você é LOJISTA, REVENDEDOR ou ATACADISTA e deseja comercializar os
+        produtos VONDER, preencha o formulário abaixo para que possamos
+        conhecê-lo!
+      </FormDesc>
+
+      <Divider alt="" src={DIVIDER} />
+
+      <SectionHeading>
+        <p><em>Dados da empresa</em><span>*</span></p>
+      </SectionHeading>
+      <FormBox>
+        <FieldsRow>
+          <FieldsCol>
+            <FormField type="text" placeholder="Perfil" />
+            <FormField type="text" placeholder="Nome da empresa" />
+            <FormField type="email" placeholder="E-mail" />
+            <FormField type="text" placeholder="Estado" />
+          </FieldsCol>
+          <FieldsCol>
+            <FormField type="text" placeholder="CNPJ" />
+            <FormField type="tel" placeholder="Telefone" />
+            <FormField type="text" placeholder="Falar com" />
+            <FormField type="text" placeholder="Cidade" />
+          </FieldsCol>
+        </FieldsRow>
+        <FormField type="text" placeholder="Como conheceu a VONDER?" />
+      </FormBox>
+
+      <Divider alt="" src={DIVIDER} />
+
+      <SectionHeading>
+        <p><em>Produtos de interesse</em><span>*</span></p>
+      </SectionHeading>
+      <FormBox>
+        <CheckGrid>
+          {products.map((p) => (
+            <CheckItem key={p}>
+              <input type="checkbox" />
+              <span>{p}</span>
+            </CheckItem>
+          ))}
+        </CheckGrid>
+      </FormBox>
+
+      <Divider alt="" src={DIVIDER} />
+
+      <SectionHeading>
+        <p><em>Segmentos que atende</em><span>*</span></p>
+      </SectionHeading>
+      <FormBox>
+        <CheckGrid>
+          {segments.map((s) => (
+            <CheckItem key={s}>
+              <input type="checkbox" />
+              <span>{s}</span>
+            </CheckItem>
+          ))}
+        </CheckGrid>
+      </FormBox>
+
+      <Divider alt="" src={DIVIDER} />
+
+      <SectionHeading>
+        <p><em>Deixe sua mensagem</em></p>
+      </SectionHeading>
+      <FormBox>
+        <MessageArea placeholder="Complemente seus dados" />
+      </FormBox>
+
+      <Divider alt="" src={DIVIDER} />
+
+      <PrivacyText>
+        Ao enviar este formulário, você declara estar ciente de que seus dados
+        pessoais serão tratados para atendimento à sua solicitação.
+      </PrivacyText>
+      <SubmitRow>
+        <VonderLogo
+          alt="VONDER"
+          src="https://c.animaapp.com/V0zyAfrU/img/image-141@2x.png"
+        />
+        <SubmitBtn type="button">Enviar</SubmitBtn>
+      </SubmitRow>
+    </>
+  );
+}
+
 const collageImages: Record<number, { back: string; front: string }> = {
   0: {
     back: "https://c.animaapp.com/fkOynynE/img/h-3@2x.png",
@@ -631,8 +950,8 @@ const collageImages: Record<number, { back: string; front: string }> = {
     front: "https://c.animaapp.com/V4Bq3Bj7/img/h-2.png",
   },
   2: {
-    back: "https://c.animaapp.com/fkOynynE/img/h-3@2x.png",
-    front: "https://c.animaapp.com/fkOynynE/img/h-2-1.png",
+    back: "https://c.animaapp.com/V0zyAfrU/img/h-3.png",
+    front: "https://c.animaapp.com/V0zyAfrU/img/h-2.png",
   },
 };
 
@@ -656,7 +975,11 @@ export const GroupWrapperSubsection = ({
       </Header>
 
       <GrayBox>
-        {activeTab === 1 ? <RepresentanteContent /> : <ColaboradorContent />}
+        {activeTab === 2
+          ? <RevendedorContent />
+          : activeTab === 1
+          ? <RepresentanteContent />
+          : <ColaboradorContent />}
       </GrayBox>
     </Section>
   );

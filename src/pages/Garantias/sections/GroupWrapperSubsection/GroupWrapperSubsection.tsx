@@ -4,12 +4,17 @@ import styled from "styled-components";
 export const GroupWrapperSubsection = (): React.JSX.Element => {
   return (
     <Wrapper>
-      <Group7>
-        <PngMockVonder
-          alt="Png mock vonder"
-          src="https://c.animaapp.com/Qnwadh4r/img/png-mock-vonder-2.png"
-        />
-        <Group9>
+      <HelpOuter>
+        {/* Imagem fora do box cinza, à esquerda, 30% sobrepõe o box */}
+        <ImageWrap>
+          <HelpImage
+            alt="Suporte Vonder"
+            src="https://c.animaapp.com/Qnwadh4r/img/png-mock-vonder-2.png"
+          />
+        </ImageWrap>
+
+        {/* Box cinza — padding-left acomoda os 30% de sobreposição */}
+        <GrayBox>
           <TextWrapper20>Ainda precisa de ajuda?</TextWrapper20>
           <TextWrapper21>
             Se você não localizou uma revenda próxima ou não encontrou a opção
@@ -21,81 +26,95 @@ export const GroupWrapperSubsection = (): React.JSX.Element => {
             <Rectangle6 />
             <TextWrapper19>Fale Conosco</TextWrapper19>
           </Group10>
-        </Group9>
-      </Group7>
+        </GrayBox>
+      </HelpOuter>
     </Wrapper>
   );
 };
+
+/* ── Layout ── */
 
 const Wrapper = styled.div`
   align-items: center;
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   justify-content: center;
+  margin-top: 50px;
   padding: 0 24px;
   width: 100%;
   box-sizing: border-box;
 `;
 
-const Group7 = styled.div`
-  align-items: center;
+/* Row externo: imagem + box lado a lado */
+const HelpOuter = styled.div`
+  align-items: stretch;
+  display: flex;
+  max-width: 1120px;
+  position: relative;
+  width: 100%;
+`;
+
+/* Wrap da imagem: estica com o box + extrapola 50px acima/abaixo */
+const ImageWrap = styled.div`
+  flex-shrink: 0;
+  margin: -50px 0;
+  margin-right: -162px; /* 30% de 541px */
+  position: relative;
+  width: 541px;
+  z-index: 1;
+
+  /* Tablet: reduz proporcionalmente */
+  @media (max-width: 1200px) {
+    margin-right: -108px; /* 30% de 360px */
+    width: 360px;
+  }
+
+  /* Mobile: esconde a imagem */
+  @media (max-width: 900px) {
+    display: none;
+  }
+`;
+
+const HelpImage = styled.img`
+  border-radius: 16px;
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+`;
+
+/* Box cinza */
+const GrayBox = styled.div`
   background-color: #f2f2f2;
   border-radius: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  justify-content: center;
-  max-width: 1120px;
-  padding: 40px 32px;
-  width: 100%;
   box-sizing: border-box;
-`;
-
-const Group8 = styled.div`
   display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Group9 = styled.div`
-  display: flex;
+  flex: 1;
   flex-direction: column;
+  align-items: flex-end;
   gap: 20px;
-  flex: 1 1 280px;
-  min-width: 260px;
-  max-width: 520px;
-`;
-
-const Group10 = styled.div`
-  display: flex;
-  width: fit-content;
+  padding: 48px 48px 48px 226px; /* 162px overlap + 64px interno */
   position: relative;
-`;
-
-const Rectangle6 = styled.div`
-  background-color: #000000;
-  border-radius: 100px;
-  position: absolute;
-  inset: 0;
   z-index: 0;
+
+  /* Tablet: overlap menor */
+  @media (max-width: 1200px) {
+    padding: 40px 40px 40px 172px; /* 108px overlap + 64px interno */
+  }
+
+  /* Mobile: sem imagem, padding normal, alinha à esquerda */
+  @media (max-width: 900px) {
+    align-items: flex-start;
+    padding: 40px 36px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 32px 20px;
+  }
 `;
 
-const TextWrapper19 = styled.div`
-  color: #f6be00;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: normal;
-  padding: 10px 24px;
-  position: relative;
-  text-align: center;
-  z-index: 1;
-  cursor: pointer;
-`;
+/* ── Conteúdo do box ── */
 
 const TextWrapper20 = styled.div`
   color: #000000;
@@ -105,6 +124,8 @@ const TextWrapper20 = styled.div`
   font-weight: 700;
   letter-spacing: 0;
   line-height: normal;
+  text-align: left;
+  width: 100%;
 `;
 
 const TextWrapper21 = styled.p`
@@ -116,11 +137,35 @@ const TextWrapper21 = styled.p`
   line-height: 1.5;
   margin: 0;
   max-width: 500px;
+  text-align: left;
+  width: 100%;
 `;
 
-const PngMockVonder = styled.img`
-  flex: 0 0 auto;
-  width: min(400px, 90vw);
-  height: auto;
-  display: block;
+const Group10 = styled.div`
+  align-self: flex-start;
+  display: flex;
+  position: relative;
+  width: fit-content;
+`;
+
+const Rectangle6 = styled.div`
+  background-color: #000000;
+  border-radius: 100px;
+  inset: 0;
+  position: absolute;
+  z-index: 0;
+`;
+
+const TextWrapper19 = styled.div`
+  color: #f6be00;
+  cursor: pointer;
+  font-family: "Swis721 Cn BT-Bold", Helvetica;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: normal;
+  padding: 10px 24px;
+  position: relative;
+  text-align: center;
+  z-index: 1;
 `;

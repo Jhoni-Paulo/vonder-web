@@ -1,5 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperType } from "swiper";
+import { Navigation } from "swiper/modules";
+import EffectCarousel from "../../../../lib/effectCarousel";
+import "swiper/css";
+import "swiper/css/navigation";
+import "../../../../lib/effectCarousel.css";
 
 const Container = styled.div`
   align-items: center;
@@ -63,7 +70,7 @@ const Subtitle = styled.p`
   }
 `;
 
-const Carousel = styled.div`
+const CarouselRow = styled.div`
   align-items: center;
   display: flex;
   gap: 24px;
@@ -76,45 +83,36 @@ const Arrow = styled.img`
   cursor: pointer;
   width: 33px;
   height: auto;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
 
   @media (max-width: 700px) {
     display: none;
   }
 `;
 
-const Track = styled.div`
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  padding: 4px;
-  scroll-snap-type: x mandatory;
+const SwiperWrap = styled.div`
+  flex: 1;
+  min-width: 0;
   width: 100%;
-  justify-content: center;
 
-  &::-webkit-scrollbar {
-    height: 6px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #00000022;
-    border-radius: 10px;
-  }
-
-  @media (max-width: 1100px) {
-    justify-content: flex-start;
+  .swiper {
+    padding: 12px 0;
   }
 `;
 
 const Card = styled.div`
   position: relative;
-  flex-shrink: 0;
-  width: 200px;
+  width: 260px;
   aspect-ratio: 286 / 480;
   border-radius: 16px;
   overflow: hidden;
-  scroll-snap-align: center;
 
   @media (max-width: 600px) {
-    width: 160px;
+    width: 208px;
   }
 `;
 
@@ -160,6 +158,8 @@ const categories = [
 ];
 
 export const FrameSubsection = (): React.JSX.Element => {
+  const swiperRef = useRef<SwiperType | null>(null);
+
   return (
     <Container>
       <Heading>
@@ -175,31 +175,56 @@ export const FrameSubsection = (): React.JSX.Element => {
           industriais do mercado
         </Subtitle>
       </Heading>
-      <Carousel>
+      <CarouselRow>
         <Arrow
           alt="Anterior"
           src="https://c.animaapp.com/F8lHzCc8/img/camada-1.svg"
+          onClick={() => swiperRef.current?.slidePrev()}
         />
-        <Track>
-          {categories.map((cat) => (
-            <Card key={cat.label}>
-              <CardImage alt={cat.label} src={cat.img} />
-              <CardLabel>
-                {cat.label.split("\n").map((line, i) => (
-                  <React.Fragment key={i}>
-                    {i > 0 && <br />}
-                    {line}
-                  </React.Fragment>
-                ))}
-              </CardLabel>
-            </Card>
-          ))}
-        </Track>
+        <SwiperWrap>
+          <Swiper
+            modules={[Navigation, EffectCarousel] as never[]}
+            grabCursor
+            rewind
+            slidesPerView="auto"
+            centeredSlides
+            initialSlide={2}
+            className="swiper-carousel"
+            onSwiper={(s) => {
+              swiperRef.current = s;
+            }}
+            {...({
+              effect: "carousel",
+              carouselEffect: {
+                opacityStep: 0.33,
+                scaleStep: 0.2,
+                sideSlides: 2,
+              },
+            } as Record<string, unknown>)}
+          >
+            {categories.map((cat) => (
+              <SwiperSlide key={cat.label} style={{ width: "260px" }}>
+                <Card className="swiper-carousel-animate-opacity">
+                  <CardImage alt={cat.label} src={cat.img} />
+                  <CardLabel>
+                    {cat.label.split("\n").map((line, i) => (
+                      <React.Fragment key={i}>
+                        {i > 0 && <br />}
+                        {line}
+                      </React.Fragment>
+                    ))}
+                  </CardLabel>
+                </Card>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </SwiperWrap>
         <Arrow
           alt="Próximo"
           src="https://c.animaapp.com/F8lHzCc8/img/camada-1-1.svg"
+          onClick={() => swiperRef.current?.slideNext()}
         />
-      </Carousel>
+      </CarouselRow>
     </Container>
   );
 };

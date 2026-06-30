@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { GroupWrapperSubsection } from "../Garantias/sections/GroupWrapperSubsection/GroupWrapperSubsection";
 
 /* ══════════════════════════════════════════════
    HERO — Imagem de fundo + painel de busca
@@ -12,6 +13,7 @@ const Hero = styled.section`
   min-height: 600px;
   display: flex;
   flex-direction: column;
+  margin-top: -12px;
 `;
 
 const HeroBg = styled.img`
@@ -518,11 +520,14 @@ const OptionCard = styled.div`
   }
 `;
 
-const OptionIcon = styled.div`
-  background-color: #f6be00;
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
+const OptionIconWrap = styled.div`
+  display: flex;
+  flex-shrink: 0;
+
+  svg {
+    width: 50px;
+    height: 50px;
+  }
 `;
 
 const OptionTitle = styled.div`
@@ -567,73 +572,6 @@ const OptionBtn = styled(Link)`
   }
 `;
 
-/* ══════════════════════════════════════════════
-   SEÇÃO "AINDA PRECISA DE AJUDA?"
-══════════════════════════════════════════════ */
-
-const HelpSection = styled.div`
-  background-color: #f2f2f2;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  padding: 56px 64px;
-  width: 100%;
-  box-sizing: border-box;
-
-  @media (max-width: 768px) { padding: 40px 36px; }
-  @media (max-width: 600px) { padding: 32px 20px; }
-`;
-
-const HelpTitle = styled.h2`
-  color: #000000;
-  font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-  font-size: 45px;
-  font-style: italic;
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: normal;
-  margin: 0;
-
-  @media (max-width: 600px) { font-size: 32px; }
-`;
-
-const HelpDesc = styled.p`
-  color: #333333;
-  font-family: "Swis721 LtCn BT-Light", Helvetica;
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 1.6;
-  margin: 0;
-  max-width: 560px;
-`;
-
-const HelpBtn = styled(Link)`
-  align-items: center;
-  background-color: #000000;
-  border-radius: 100px;
-  color: #f6be00;
-  display: inline-flex;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 20px;
-  font-weight: 700;
-  height: 56px;
-  justify-content: center;
-  padding: 0 64px;
-  text-decoration: none;
-  align-self: flex-start;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
-  }
-
-  @media (max-width: 600px) {
-    align-self: stretch;
-    padding: 0 32px;
-  }
-`;
 
 /* ══════════════════════════════════════════════
    DADOS
@@ -646,20 +584,54 @@ const marketplaces = [
   { tag: "REVENDEDOR AUTORIZADO", name: "FG.COM.BR",    url: "#" },
 ];
 
+const IconService = () => (
+  <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    {/* Gear */}
+    <circle cx="25" cy="15" r="4.5"/>
+    <path d="M25 7v2M25 21v2M17 15h-2M35 15h-2M19.1 9.1l1.4 1.4M29.5 19.5l1.4 1.4M19.1 20.9l1.4-1.4M29.5 10.5l1.4-1.4"/>
+    {/* Hand / palm */}
+    <path d="M10 32c0-1.1.9-2 2-2h2v-6a2 2 0 0 1 4 0v4h1v-2a2 2 0 0 1 4 0v2h1a2 2 0 0 1 4 0v1a2 2 0 0 1 4 0v5c0 3.3-2.7 6-6 6H18a6 6 0 0 1-6-6v-2h-2z"/>
+  </svg>
+);
+
+const IconShop = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 18l4-10h28l4 10"/>
+    <path d="M6 18v22h36V18"/>
+    <path d="M6 18h36"/>
+    <path d="M16 18v-2a8 8 0 0 0 16 0v2"/>
+    <path d="M4 18a6 6 0 0 0 6 6 6 6 0 0 0 6-6"/>
+    <path d="M16 18a6 6 0 0 0 6 6 6 6 0 0 0 6-6"/>
+    <path d="M28 18a6 6 0 0 0 6 6 6 6 0 0 0 6-6"/>
+    <rect x="18" y="28" width="12" height="12" rx="1"/>
+  </svg>
+);
+
+const IconMessaging = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M8 8h32a2 2 0 0 1 2 2v22a2 2 0 0 1-2 2H16l-8 6V10a2 2 0 0 1 2-2z"/>
+    <line x1="16" y1="20" x2="32" y2="20"/>
+    <line x1="16" y1="28" x2="26" y2="28"/>
+  </svg>
+);
+
 const options = [
   {
+    icon: <IconService />,
     title: "Assistência técnica",
     desc: "Encontre facilmente os centros de assistência autorizados para garantir o bom funcionamento de suas ferramentas VONDER",
     action: "Assistência técnica",
     link: "/assistencia-tecnica",
   },
   {
+    icon: <IconShop />,
     title: "Sou lojista ou revendedor",
     desc: <>Acesse o <span className="bold">B2B VONDER</span>, nossa plataforma digital de vendas exclusiva para lojistas e revendedores, com soluções e condições especiais!</>,
     action: "Acesso clientes",
     link: "/acesso-clientes",
   },
   {
+    icon: <IconMessaging />,
     title: "Perguntas frequentes",
     desc: "Tire suas dúvidas rapidamente com as respostas para as perguntas mais comuns sobre nossos produtos e serviços.",
     action: "Acessar FAQ",
@@ -699,7 +671,7 @@ export const OndeComprarVonder = (): React.JSX.Element => {
               <StoreHeader>
                 <StoreNameRow>
                   <StoreIcon alt="" src="https://c.animaapp.com/LVgJWovb/img/frame-69773.svg" />
-                  <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                     <StoreName>FERRAMENTAS GERAIS</StoreName>
                     <StoreDistance>(1,4 km)</StoreDistance>
                   </div>
@@ -737,7 +709,7 @@ export const OndeComprarVonder = (): React.JSX.Element => {
               <StoreHeader>
                 <StoreNameRow>
                   <StoreFlag alt="" src="https://c.animaapp.com/LVgJWovb/img/br.svg" />
-                  <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                     <StoreName>FERRAMENTAS GERAIS</StoreName>
                     <StoreDistance>(1,4 km)</StoreDistance>
                   </div>
@@ -830,7 +802,7 @@ export const OndeComprarVonder = (): React.JSX.Element => {
         <OptionGrid>
           {options.map((o) => (
             <OptionCard key={o.title}>
-              <OptionIcon />
+              <OptionIconWrap>{o.icon}</OptionIconWrap>
               <OptionTitle>{o.title}</OptionTitle>
               <OptionDesc>{o.desc}</OptionDesc>
               <OptionBtn to={o.link}>{o.action}</OptionBtn>
@@ -840,18 +812,7 @@ export const OndeComprarVonder = (): React.JSX.Element => {
       </Inner>
 
       {/* ── Ainda precisa de ajuda? ── */}
-      <Inner>
-        <HelpSection>
-          <HelpTitle>Ainda precisa de ajuda?</HelpTitle>
-          <HelpDesc>
-            Se você não localizou uma revenda próxima ou não encontrou a opção
-            ideal nos nossos revendedores online, não se preocupe! Clique no
-            botão abaixo e nossa equipe estará pronta para orientá-lo e garantir
-            que você tenha a melhor experiência com nossos produtos.
-          </HelpDesc>
-          <HelpBtn to="/fale-conosco">Fale Conosco</HelpBtn>
-        </HelpSection>
-      </Inner>
+      <GroupWrapperSubsection />
     </Page>
   );
 };
