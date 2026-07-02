@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -61,12 +61,6 @@ const BlogButton = styled.button`
 const CarouselRow = styled.div`
   position: relative;
   width: 100%;
-
-  @media (max-width: 600px) {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
 `;
 
 const Arrow = styled.img`
@@ -91,16 +85,8 @@ const Arrow = styled.img`
     right: -62px;
   }
 
-  @media (max-width: 1000px) and (min-width: 601px) {
+  @media (max-width: 1000px) {
     display: none;
-  }
-
-  @media (max-width: 600px) {
-    position: static;
-    transform: none;
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
   }
 `;
 
@@ -112,7 +98,13 @@ const Track = styled.div`
 
   @media (max-width: 600px) {
     gap: 0;
-    overflow: hidden;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 
@@ -131,11 +123,12 @@ const Card = styled.div<{ $active?: boolean }>`
     width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 
   @media (max-width: 600px) {
+    flex: 0 0 100%;
+    width: 100%;
     height: 420px;
-    flex: ${({ $active }) => ($active ? "1 1 auto" : "0 0 0px")};
-    width: ${({ $active }) => ($active ? "100%" : "0px")};
-    overflow: ${({ $active }) => ($active ? "hidden" : "hidden")};
-    opacity: ${({ $active }) => ($active ? 1 : 0)};
+    scroll-snap-align: start;
+    cursor: default;
+    opacity: 1;
   }
 `;
 
@@ -188,6 +181,11 @@ const CardDesc = styled.p<{ $active?: boolean }>`
   transition:
     max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.4s ease;
+
+  @media (max-width: 600px) {
+    max-height: 200px;
+    opacity: 1;
+  }
 `;
 
 const CardLink = styled.span`
@@ -225,11 +223,31 @@ const posts = [
 ];
 
 export const SectionComponentNodeSubsection = (): React.JSX.Element => {
-  // second from right = index 2 (0-based, 4 cards total)
   const [activeIdx, setActiveIdx] = useState(2);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const isScrolling = useRef(false);
 
   const goLeft = () => setActiveIdx((prev) => (prev + 1) % posts.length);
   const goRight = () => setActiveIdx((prev) => (prev - 1 + posts.length) % posts.length);
+
+  // Scroll track to activeIdx on desktop state change (mobile ignores this via snap)
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    if (window.innerWidth > 600) return;
+    isScrolling.current = true;
+    track.scrollTo({ left: track.clientWidth * activeIdx, behavior: "smooth" });
+    const t = setTimeout(() => { isScrolling.current = false; }, 600);
+    return () => clearTimeout(t);
+  }, [activeIdx]);
+
+  const handleScroll = useCallback(() => {
+    if (isScrolling.current) return;
+    const track = trackRef.current;
+    if (!track) return;
+    const idx = Math.round(track.scrollLeft / track.clientWidth);
+    if (idx !== activeIdx) setActiveIdx(idx);
+  }, [activeIdx]);
 
   return (
     <Container>
@@ -248,7 +266,7 @@ export const SectionComponentNodeSubsection = (): React.JSX.Element => {
           src="https://c.animaapp.com/F8lHzCc8/img/camada-1-4.svg"
           onClick={goLeft}
         />
-        <Track>
+        <Track ref={trackRef} onScroll={handleScroll}>
           {posts.map((post, i) => {
             const isActive = i === activeIdx;
             return (
