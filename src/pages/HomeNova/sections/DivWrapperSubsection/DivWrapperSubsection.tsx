@@ -27,6 +27,8 @@ const Content = styled.div`
 
   @media (max-width: 900px) {
     align-items: center;
+    width: 100%;
+    padding: 40px 0 0;
   }
 `;
 
@@ -90,9 +92,36 @@ const Button = styled.button`
     box-shadow: 0 6px 18px #00000040;
   }
 
-  @media (max-width: 600px) {
-    width: 100%;
-    font-size: 22px;
+  @media (max-width: 900px) {
+    display: none;
+  }
+`;
+
+const MobileButton = styled.button`
+  display: none;
+
+  @media (max-width: 900px) {
+    align-items: center;
+    background-color: #000000;
+    border: none;
+    border-radius: 100px;
+    color: #f6be00;
+    cursor: pointer;
+    display: flex;
+    font-family: "Swis721 Cn BT-Bold", Helvetica;
+    font-size: 20px;
+    font-weight: 700;
+    justify-content: center;
+    padding: 15px 40px;
+    text-align: center;
+    width: 80%;
+    margin: 24px auto 40px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px #00000040;
+    }
   }
 `;
 
@@ -131,6 +160,7 @@ export const DivWrapperSubsection = (): React.JSX.Element => {
           alt="Lavadora e Aspirador LAV 1580"
           src="https://c.animaapp.com/F8lHzCc8/img/prancheta-1-5.png"
         />
+      <MobileButton type="button">Conheça</MobileButton>
     </Banner>
   );
 };

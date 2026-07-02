@@ -13,6 +13,10 @@ const Container = styled.div`
   max-width: 1292px;
   padding: 0 24px;
   box-sizing: border-box;
+
+  @media (max-width: 600px) {
+    gap: 16px;
+  }
 `;
 
 const Title = styled.div`

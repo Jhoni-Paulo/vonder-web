@@ -49,19 +49,24 @@ const Features = styled.div`
   align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 32px;
   justify-content: space-between;
   width: 100%;
+
+  @media (max-width: 600px) {
+    gap: 24px;
+    justify-content: center;
+  }
 `;
 
 const Feature = styled.div`
   align-items: flex-start;
   display: flex;
-  flex: 1 1 220px;
+  flex: 1 1 180px;
   flex-direction: column;
   gap: 8px;
   max-width: 250px;
-  min-width: 200px;
+  min-width: 140px;
 `;
 
 const FeatureIcon = styled.img`

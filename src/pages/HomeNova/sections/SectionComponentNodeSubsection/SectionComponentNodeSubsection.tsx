@@ -61,6 +61,12 @@ const BlogButton = styled.button`
 const CarouselRow = styled.div`
   position: relative;
   width: 100%;
+
+  @media (max-width: 600px) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 `;
 
 const Arrow = styled.img`
@@ -85,16 +91,29 @@ const Arrow = styled.img`
     right: -62px;
   }
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1000px) and (min-width: 601px) {
     display: none;
+  }
+
+  @media (max-width: 600px) {
+    position: static;
+    transform: none;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
   }
 `;
 
 const Track = styled.div`
   display: flex;
-  gap: 16px;
+  gap: 12px;
   width: 100%;
   align-items: stretch;
+
+  @media (max-width: 600px) {
+    gap: 0;
+    overflow: hidden;
+  }
 `;
 
 const Card = styled.div<{ $active?: boolean }>`
@@ -112,9 +131,11 @@ const Card = styled.div<{ $active?: boolean }>`
     width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 
   @media (max-width: 600px) {
-    height: 360px;
-    flex: ${({ $active }) => ($active ? "1 1 auto" : "0 0 90px")};
-    width: ${({ $active }) => ($active ? "auto" : "90px")};
+    height: 420px;
+    flex: ${({ $active }) => ($active ? "1 1 auto" : "0 0 0px")};
+    width: ${({ $active }) => ($active ? "100%" : "0px")};
+    overflow: ${({ $active }) => ($active ? "hidden" : "hidden")};
+    opacity: ${({ $active }) => ($active ? 1 : 0)};
   }
 `;
 

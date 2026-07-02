@@ -6,6 +6,10 @@ const Wrapper = styled.div`
   width: 100%;
   overflow: hidden;
   min-height: calc(445px + 55px + 8px);
+
+  @media (max-width: 900px) {
+    min-height: auto;
+  }
 `;
 
 const Container = styled.div`
@@ -95,6 +99,44 @@ const SeeMore = styled.button`
     transform: translateY(-2px);
     box-shadow: 0 6px 18px #00000040;
   }
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+`;
+
+const MobileButtonRow = styled.div`
+  display: none;
+
+  @media (max-width: 900px) {
+    display: flex;
+    width: 100%;
+    padding: 8px 24px 0;
+    box-sizing: border-box;
+  }
+`;
+
+const MobileSeeMore = styled.button`
+  align-items: center;
+  background-color: #000000;
+  border: none;
+  border-radius: 100px;
+  color: #f6be00;
+  cursor: pointer;
+  display: flex;
+  font-family: "Swis721 Cn BT-Bold", Helvetica;
+  font-size: 19px;
+  font-weight: 700;
+  height: 52px;
+  justify-content: center;
+  padding: 0 40px;
+  width: 100%;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px #00000040;
+  }
 `;
 
 const CardsTrack = styled.div`
@@ -111,6 +153,13 @@ const CardsTrack = styled.div`
     position: static;
     width: 100%;
     padding: 4px 4px 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `;
 
@@ -285,6 +334,9 @@ export const DivSubsection = (): React.JSX.Element => {
           </LaunchCard>
         ))}
       </CardsTrack>
+      <MobileButtonRow>
+        <MobileSeeMore type="button">Veja mais</MobileSeeMore>
+      </MobileButtonRow>
     </Wrapper>
   );
 };

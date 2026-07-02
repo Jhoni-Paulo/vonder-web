@@ -25,8 +25,11 @@ const StyledHOME = styled.div`
   width: 100%;
   gap: 40px;
   padding-bottom: 0;
-  margin-bottom: -34px;
   margin-top: -34px;
+
+  @media (max-width: 600px) {
+    gap: 24px;
+  }
 
   & .camada-5 {
     display: none;

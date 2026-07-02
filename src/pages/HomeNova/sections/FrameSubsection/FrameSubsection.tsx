@@ -18,6 +18,10 @@ const Container = styled.div`
   max-width: 1228px;
   padding: 0 24px;
   box-sizing: border-box;
+
+  @media (max-width: 600px) {
+    gap: 28px;
+  }
 `;
 
 const Heading = styled.div`

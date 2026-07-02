@@ -69,6 +69,11 @@ const StyledFrame1Subsection = styled.div`
     gap: 10px;
     padding: 0;
     box-sizing: border-box;
+
+    @media (max-width: 700px) {
+      flex: 1 1 auto;
+      width: 100%;
+    }
   }
 
   & .element-banner-principal {
@@ -85,9 +90,11 @@ const StyledFrame1Subsection = styled.div`
     gap: 30px;
 
     @media (max-width: 700px) {
-      flex: 1;
+      flex: 1 1 auto;
+      width: 100%;
       align-items: center;
       text-align: center;
+      padding: 24px 0 32px;
     }
   }
 
@@ -145,6 +152,10 @@ const StyledFrame1Subsection = styled.div`
     width: 400px;
     max-width: 100%;
     box-sizing: border-box;
+
+    @media (max-width: 700px) {
+      width: 100%;
+    }
   }
 
   & .text-wrapper-26 {
