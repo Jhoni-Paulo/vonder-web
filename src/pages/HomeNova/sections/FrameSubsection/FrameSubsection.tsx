@@ -9,19 +9,23 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "../../../../lib/effectCarousel.css";
 
-const Container = styled.div`
+const Section = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
   gap: 50px;
   width: 100%;
-  max-width: 1228px;
-  padding: 0 24px;
-  box-sizing: border-box;
 
   @media (max-width: 600px) {
     gap: 28px;
   }
+`;
+
+const HeadingWrapper = styled.div`
+  width: 100%;
+  max-width: 1228px;
+  padding: 0 24px;
+  box-sizing: border-box;
 `;
 
 const Heading = styled.div`
@@ -95,11 +99,11 @@ const Arrow = styled.img`
   }
 
   &.arrow-left {
-    left: -58px;
+    left: calc(max(0px, (100% - 1228px) / 2) + 24px - 58px);
   }
 
   &.arrow-right {
-    right: -58px;
+    right: calc(max(0px, (100% - 1228px) / 2) + 24px - 58px);
   }
 
   @media (max-width: 900px) {
@@ -112,6 +116,12 @@ const SwiperWrap = styled.div`
 
   .swiper {
     padding: 12px 0;
+  }
+
+  @media (max-width: 600px) {
+    .swiper-wrapper {
+      transform: translate3d(-539px, 0px, 0px) !important;
+    }
   }
 `;
 
@@ -172,20 +182,22 @@ export const FrameSubsection = (): React.JSX.Element => {
   const swiperRef = useRef<SwiperType | null>(null);
 
   return (
-    <Container>
-      <Heading>
-        <TitleRow>
-          <TitleText>Ferramenta é</TitleText>
-          <TitleImg
-            alt="VONDER"
-            src="https://c.animaapp.com/F8lHzCc8/img/frame-69690.svg"
-          />
-        </TitleRow>
-        <Subtitle>
-          O melhor e mais completo mix de ferramentas profissionais e
-          industriais do mercado
-        </Subtitle>
-      </Heading>
+    <Section>
+      <HeadingWrapper>
+        <Heading>
+          <TitleRow>
+            <TitleText>Ferramenta é</TitleText>
+            <TitleImg
+              alt="VONDER"
+              src="https://c.animaapp.com/F8lHzCc8/img/frame-69690.svg"
+            />
+          </TitleRow>
+          <Subtitle>
+            O melhor e mais completo mix de ferramentas profissionais e
+            industriais do mercado
+          </Subtitle>
+        </Heading>
+      </HeadingWrapper>
       <CarouselRow>
         <Arrow
           className="arrow-left"
@@ -198,6 +210,8 @@ export const FrameSubsection = (): React.JSX.Element => {
             modules={[Navigation, EffectCarousel] as never[]}
             grabCursor
             rewind
+            observer
+            observeParents
             slidesPerView="auto"
             spaceBetween={64}
             centeredSlides
@@ -240,6 +254,6 @@ export const FrameSubsection = (): React.JSX.Element => {
           onClick={() => swiperRef.current?.slideNext()}
         />
       </CarouselRow>
-    </Container>
+    </Section>
   );
 };
