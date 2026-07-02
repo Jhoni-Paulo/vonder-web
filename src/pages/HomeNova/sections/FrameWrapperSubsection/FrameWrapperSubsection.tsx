@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperType } from "swiper";
+import "swiper/css";
 
 const Container = styled.div`
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -20,7 +23,7 @@ const Title = styled.div`
   font-weight: 700;
   letter-spacing: 0;
   line-height: normal;
-  text-align: center;
+  text-align: left;
 
   @media (max-width: 600px) {
     font-size: 32px;
@@ -35,7 +38,7 @@ const Subtitle = styled.p`
   letter-spacing: 0;
   line-height: normal;
   margin: 0;
-  text-align: center;
+  text-align: left;
 
   @media (max-width: 600px) {
     font-size: 18px;
@@ -43,42 +46,51 @@ const Subtitle = styled.p`
 `;
 
 const Carousel = styled.div`
-  align-items: center;
-  display: flex;
-  gap: 16px;
+  position: relative;
   width: 100%;
 `;
 
 const Arrow = styled.img`
-  flex-shrink: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
-  width: 33px;
-  height: auto;
+  width: 52px;
+  height: 52px;
+  z-index: 2;
+  transition: opacity 0.2s ease;
 
-  @media (max-width: 700px) {
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &.arrow-left {
+    left: -82px;
+  }
+
+  &.arrow-right {
+    right: -82px;
+  }
+
+  @media (max-width: 1000px) {
     display: none;
   }
 `;
 
 const Track = styled.div`
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  padding: 8px 4px;
-  scroll-snap-type: x mandatory;
   width: 100%;
-  justify-content: flex-start;
 
-  &::-webkit-scrollbar {
-    height: 6px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #00000022;
-    border-radius: 10px;
+  .swiper {
+    padding: 8px 4px;
   }
 
-  @media (min-width: 1200px) {
-    justify-content: center;
+  .swiper-wrapper {
+    align-items: stretch;
+  }
+
+  .swiper-slide {
+    width: auto;
+    height: auto;
   }
 `;
 
@@ -181,9 +193,26 @@ const products = [
     name: "Parafusadeira/furadeira de impacto, bateria intercambiável de 18 V...",
     code: "60.04.181.900",
   },
+  {
+    img: "https://c.animaapp.com/F8lHzCc8/img/image-115@2x.png",
+    name: "Parafusadeira/furadeira a bateria, 12 V, fonte de carregamento bivolt...",
+    code: "60.01.112.000",
+  },
+  {
+    img: "https://c.animaapp.com/F8lHzCc8/img/image-116@2x.png",
+    name: "Parafusadeira/furadeira de impacto a bateria, 20 V, fonte de...",
+    code: "60.01.200.200",
+  },
+  {
+    img: "https://c.animaapp.com/F8lHzCc8/img/image-117@2x.png",
+    name: "Parafusadeira furadeira a bateria, 18 V, com bateria e com...",
+    code: "60.04.185.200",
+  },
 ];
 
 export const FrameWrapperSubsection = (): React.JSX.Element => {
+  const swiperRef = useRef<SwiperType | null>(null);
+
   return (
     <Container>
       <Title>
@@ -196,23 +225,39 @@ export const FrameWrapperSubsection = (): React.JSX.Element => {
       </Subtitle>
       <Carousel>
         <Arrow
+          className="arrow-left"
           alt="Anterior"
           src="https://c.animaapp.com/F8lHzCc8/img/camada-1-2.svg"
+          onClick={() => swiperRef.current?.slidePrev()}
         />
         <Track>
-          {products.map((product, i) => (
-            <Card key={i}>
-              <ProductImage alt={product.name} src={product.img} />
-              <ProductInfo>
-                <ProductName>{product.name}</ProductName>
-                <ProductCode>{product.code}</ProductCode>
-              </ProductInfo>
-            </Card>
-          ))}
+          <Swiper
+            grabCursor
+            rewind
+            slidesPerView="auto"
+            spaceBetween={16}
+            onSwiper={(s) => {
+              swiperRef.current = s;
+            }}
+          >
+            {products.map((product, i) => (
+              <SwiperSlide key={i}>
+                <Card>
+                  <ProductImage alt={product.name} src={product.img} />
+                  <ProductInfo>
+                    <ProductName>{product.name}</ProductName>
+                    <ProductCode>{product.code}</ProductCode>
+                  </ProductInfo>
+                </Card>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </Track>
         <Arrow
+          className="arrow-right"
           alt="Próximo"
           src="https://c.animaapp.com/F8lHzCc8/img/camada-1-3.svg"
+          onClick={() => swiperRef.current?.slideNext()}
         />
       </Carousel>
     </Container>

@@ -6,28 +6,16 @@ const Banner = styled.div`
   background-color: #f2f2f2;
   display: flex;
   gap: 40px;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
-  padding: 40px 5%;
+  padding: 0 max(24px, calc((100% - 1164px) / 2 + 24px));
   box-sizing: border-box;
 
   @media (max-width: 900px) {
     flex-direction: column;
     text-align: center;
     gap: 24px;
-  }
-`;
-
-const Inner = styled.div`
-  align-items: center;
-  display: flex;
-  gap: 40px;
-  width: 100%;
-  max-width: 1164px;
-  justify-content: space-between;
-
-  @media (max-width: 900px) {
-    flex-direction: column;
+    padding: 48px 24px;
   }
 `;
 
@@ -89,11 +77,12 @@ const Button = styled.button`
   cursor: pointer;
   display: flex;
   font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 28px;
+  font-size: 23px;
   font-weight: 700;
   justify-content: center;
   padding: 15px 60px;
   text-align: center;
+  width: 80%;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
@@ -108,17 +97,19 @@ const Button = styled.button`
 `;
 
 const ProductImage = styled.img`
-  width: 560px;
-  max-width: 100%;
+  width: 60%;
   height: auto;
   flex-shrink: 0;
   object-fit: contain;
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 
 export const DivWrapperSubsection = (): React.JSX.Element => {
   return (
     <Banner>
-      <Inner>
         <Content>
           <Title>
             Lavadora e Aspirador
@@ -140,7 +131,6 @@ export const DivWrapperSubsection = (): React.JSX.Element => {
           alt="Lavadora e Aspirador LAV 1580"
           src="https://c.animaapp.com/F8lHzCc8/img/prancheta-1-5.png"
         />
-      </Inner>
     </Banner>
   );
 };

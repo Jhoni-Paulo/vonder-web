@@ -35,7 +35,7 @@ const Band = styled.div`
   display: flex;
   justify-content: center;
   margin-top: -120px;
-  padding: 160px 24px 56px;
+  padding: 160px max(24px, calc((100% - 1292px) / 2 + 24px)) 56px;
   width: 100%;
   box-sizing: border-box;
 
@@ -50,9 +50,8 @@ const Features = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
-  max-width: 1120px;
 `;
 
 const Feature = styled.div`

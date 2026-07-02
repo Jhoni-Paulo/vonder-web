@@ -67,6 +67,7 @@ const InstagramIcon = styled.img`
 const SocialButton = styled.img`
   height: 50px;
   width: 50px;
+  border-radius: 50%;
   cursor: pointer;
 `;
 

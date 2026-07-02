@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -58,53 +58,63 @@ const BlogButton = styled.button`
   }
 `;
 
-const Carousel = styled.div`
-  align-items: center;
-  display: flex;
-  gap: 16px;
+const CarouselRow = styled.div`
+  position: relative;
   width: 100%;
 `;
 
 const Arrow = styled.img`
-  flex-shrink: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
   cursor: pointer;
-  width: 33px;
-  height: auto;
+  z-index: 2;
+  transition: opacity 0.2s ease;
 
-  @media (max-width: 700px) {
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &.arrow-left {
+    left: -62px;
+  }
+
+  &.arrow-right {
+    right: -62px;
+  }
+
+  @media (max-width: 1000px) {
     display: none;
   }
 `;
 
 const Track = styled.div`
   display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  padding: 4px;
-  scroll-snap-type: x mandatory;
+  gap: 16px;
   width: 100%;
-
-  &::-webkit-scrollbar {
-    height: 6px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #00000022;
-    border-radius: 10px;
-  }
+  align-items: stretch;
 `;
 
-const Card = styled.div`
+const Card = styled.div<{ $active?: boolean }>`
   position: relative;
-  flex-shrink: 0;
-  width: 286px;
-  height: 351px;
+  height: 480px;
   border-radius: 15px;
   overflow: hidden;
-  scroll-snap-align: center;
+  flex-shrink: 0;
+  flex: ${({ $active }) => ($active ? "1 1 auto" : "0 0 160px")};
+  width: ${({ $active }) => ($active ? "auto" : "160px")};
+  cursor: ${({ $active }) => ($active ? "default" : "pointer")};
+  will-change: flex, width;
+  transition:
+    flex 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 
   @media (max-width: 600px) {
-    width: 240px;
-    height: 320px;
+    height: 360px;
+    flex: ${({ $active }) => ($active ? "1 1 auto" : "0 0 90px")};
+    width: ${({ $active }) => ($active ? "auto" : "90px")};
   }
 `;
 
@@ -114,16 +124,13 @@ const CardImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 `;
 
 const CardOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0) 35%,
-    rgba(0, 0, 0, 0.85) 100%
-  );
+  background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.82) 100%);
 `;
 
 const CardContent = styled.div`
@@ -133,48 +140,76 @@ const CardContent = styled.div`
   right: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 18px;
+  gap: 10px;
+  padding: 22px 18px;
+  box-sizing: border-box;
 `;
 
 const CardTitle = styled.p`
-  color: #ffffff;
+  color: #f6be00;
   font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
-  letter-spacing: 0;
   line-height: 1.25;
   margin: 0;
 `;
 
-const CardLink = styled.div`
-  color: #f6be00;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
+const CardDesc = styled.p<{ $active?: boolean }>`
+  color: #ffffff;
+  font-family: "Swis721 LtCn BT-Light", Helvetica;
   font-size: 16px;
+  font-weight: 300;
+  line-height: 1.4;
+  margin: 0;
+  overflow: hidden;
+  max-height: ${({ $active }) => ($active ? "200px" : "0px")};
+  opacity: ${({ $active }) => ($active ? 1 : 0)};
+  transition:
+    max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease;
+`;
+
+const CardLink = styled.span`
+  color: #ffffff;
+  font-family: "Swis721 Cn BT-Bold", Helvetica;
+  font-size: 17px;
   font-weight: 700;
   cursor: pointer;
 `;
 
+const DESC =
+  "Gosta de pedalar?! Antes do passeio, pense nisso… Nada melhor do que sair de bike para trabalhar, treinar ou simplesmente curtir o dia. Mas, antes de colocar o capacete...";
+
 const posts = [
   {
-    img: "https://c.animaapp.com/F8lHzCc8/img/mask-group-9.png",
+    img: "https://c.animaapp.com/xLq2ckgk/img/mask-group.png",
     title: "Carrinhos, painéis, caixas e armários: qual opção escolher na hora de...",
+    desc: DESC,
   },
   {
-    img: "https://c.animaapp.com/F8lHzCc8/img/mask-group-10.png",
+    img: "https://c.animaapp.com/xLq2ckgk/img/mask-group-1.png",
     title: "Vou de bike – mas antes do passeio, confira algumas dicas de manutenção da sua bicicleta",
+    desc: DESC,
   },
   {
-    img: "https://c.animaapp.com/F8lHzCc8/img/mask-group-11.png",
+    img: "https://c.animaapp.com/xLq2ckgk/img/mask-group-2.png",
     title: "Como os organizadores plásticos aumentam sua produtividade...",
+    desc: DESC,
   },
   {
-    img: "https://c.animaapp.com/F8lHzCc8/img/mask-group-12.png",
+    img: "https://c.animaapp.com/xLq2ckgk/img/mask-group-3.png",
     title: "Produto 2 em 1: Lavadora e Aspirador LAV 1580 VONDER – Um Só...",
+    desc: DESC,
   },
 ];
 
 export const SectionComponentNodeSubsection = (): React.JSX.Element => {
+  // second from right = index 2 (0-based, 4 cards total)
+  const [activeIdx, setActiveIdx] = useState(2);
+
+  const goLeft = () => setActiveIdx((prev) => (prev + 1) % posts.length);
+  const goRight = () => setActiveIdx((prev) => (prev - 1 + posts.length) % posts.length);
+
   return (
     <Container>
       <Header>
@@ -185,28 +220,42 @@ export const SectionComponentNodeSubsection = (): React.JSX.Element => {
         </Title>
         <BlogButton type="button">Acessar o Blog</BlogButton>
       </Header>
-      <Carousel>
+      <CarouselRow>
         <Arrow
+          className="arrow-left"
           alt="Anterior"
           src="https://c.animaapp.com/F8lHzCc8/img/camada-1-4.svg"
+          onClick={goLeft}
         />
         <Track>
-          {posts.map((post, i) => (
-            <Card key={i}>
-              <CardImage alt={post.title} src={post.img} />
-              <CardOverlay />
-              <CardContent>
-                <CardTitle>{post.title}</CardTitle>
-                <CardLink>Ler Mais</CardLink>
-              </CardContent>
-            </Card>
-          ))}
+          {posts.map((post, i) => {
+            const isActive = i === activeIdx;
+            return (
+              <Card
+                key={i}
+                $active={isActive}
+                onClick={!isActive ? () => setActiveIdx(i) : undefined}
+              >
+                <CardImage alt={post.title} src={post.img} />
+                <CardOverlay />
+                <CardContent>
+                  <CardTitle>{post.title}</CardTitle>
+                  {post.desc && (
+                    <CardDesc $active={isActive}>{post.desc}</CardDesc>
+                  )}
+                  <CardLink>Ler Mais</CardLink>
+                </CardContent>
+              </Card>
+            );
+          })}
         </Track>
         <Arrow
+          className="arrow-right"
           alt="Próximo"
           src="https://c.animaapp.com/F8lHzCc8/img/camada-1-5.svg"
+          onClick={goRight}
         />
-      </Carousel>
+      </CarouselRow>
     </Container>
   );
 };

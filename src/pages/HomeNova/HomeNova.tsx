@@ -1,5 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import vitrineImg from "../../assets/vitrine.png";
+import "swiper/css";
 import { DivSubsection } from "./sections/DivSubsection";
 import { DivWrapperSubsection } from "./sections/DivWrapperSubsection";
 import { Frame1Subsection } from "./sections/Frame1Subsection";
@@ -20,7 +24,9 @@ const StyledHOME = styled.div`
   position: relative;
   width: 100%;
   gap: 40px;
-  padding-bottom: 60px;
+  padding-bottom: 0;
+  margin-bottom: -34px;
+  margin-top: -34px;
 
   & .camada-5 {
     display: none;
@@ -38,22 +44,11 @@ const StyledHOME = styled.div`
     width: 100%;
   }
 
-  & .frame-79 {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  & .vitrine-title-wrapper {
     width: 100%;
     max-width: 1292px;
-  }
-
-  & .vitrine-VONDER-wrapper {
-    align-items: center;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    padding: 10px;
-    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
   }
 
   & .vitrine-VONDER {
@@ -64,7 +59,7 @@ const StyledHOME = styled.div`
     font-weight: 700;
     letter-spacing: 0;
     line-height: normal;
-    text-align: center;
+    text-align: left;
 
     @media (max-width: 600px) {
       font-size: 32px;
@@ -74,6 +69,12 @@ const StyledHOME = styled.div`
   & .frame-80 {
     width: 100%;
     height: auto;
+    display: block;
+  }
+
+  & .frame-80-swiper {
+    width: 100%;
+    margin: 0;
   }
 
   & .frame-81 {
@@ -110,20 +111,28 @@ export const HomeNova = (): React.JSX.Element => {
       <DivWrapperSubsection />
       <DivSubsection />
       <GroupWrapperSubsection />
-      <div className="frame-79">
-        <div className="vitrine-VONDER-wrapper">
-          <div className="vitrine-VONDER">
-            Vitrine
-            <br />
-            VONDER
-          </div>
+      <div className="vitrine-title-wrapper">
+        <div className="vitrine-VONDER">
+          Vitrine
+          <br />
+          VONDER
         </div>
-        <img
-          className="frame-80"
-          alt="Frame"
-          src="https://c.animaapp.com/F8lHzCc8/img/frame-235.svg"
-        />
       </div>
+      <Swiper
+        className="frame-80-swiper"
+        modules={[Autoplay]}
+        loop
+        centeredSlides
+        slidesPerView={1.4}
+        spaceBetween={30}
+        autoplay={{ delay: 3500, disableOnInteraction: false }}
+      >
+        {[vitrineImg, vitrineImg, vitrineImg, vitrineImg, vitrineImg, vitrineImg].map((img, i) => (
+          <SwiperSlide key={i}>
+            <img className="frame-80" alt="Vitrine VONDER" src={img} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <SectionComponentNodeSubsection />
       <Frame1Subsection />
       <Frame2Subsection />

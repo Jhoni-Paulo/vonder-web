@@ -14,6 +14,7 @@ export default function EffectCarousel({
       opacityStep: 0.33,
       scaleStep: 0.2,
       sideSlides: 2,
+      backGap: 0,
     },
   });
 
@@ -30,7 +31,7 @@ export default function EffectCarousel({
   });
   on("progress", () => {
     if (swiper.params.effect !== "carousel") return;
-    const { scaleStep, opacityStep } = swiper.params.carouselEffect;
+    const { scaleStep, opacityStep, backGap = 0 } = swiper.params.carouselEffect;
     const sideSlides = Math.max(
       Math.min(swiper.params.carouselEffect.sideSlides, 3),
       1,
@@ -60,6 +61,8 @@ export default function EffectCarousel({
       const opacityEls = slideEl.querySelectorAll(
         ".swiper-carousel-animate-opacity",
       );
+      const direction = slideProgress > 0 ? 1 : slideProgress < 0 ? -1 : 0;
+      const extraGap = absProgress > 1 ? backGap * direction : 0;
       const translate = `${
         slideProgress *
         modify *
@@ -69,7 +72,7 @@ export default function EffectCarousel({
 
       const scale = 1 - absProgress * scaleStep;
       const zIndex = zIndexMax - Math.abs(Math.round(slideProgress));
-      slideEl.style.transform = `translateX(${translate}) scale(${scale})`;
+      slideEl.style.transform = `translateX(calc(${translate} + ${extraGap}px)) scale(${scale})`;
       slideEl.style.zIndex = zIndex;
       if (absProgress > sideSlides + 1) {
         slideEl.style.opacity = 0;

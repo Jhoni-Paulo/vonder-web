@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { Navigation } from "swiper/modules";
 import EffectCarousel from "../../../../lib/effectCarousel";
+import produtoImg from "../../../../assets/produto.png";
 import "swiper/css";
 import "swiper/css/navigation";
 import "../../../../lib/effectCarousel.css";
@@ -71,32 +72,38 @@ const Subtitle = styled.p`
 `;
 
 const CarouselRow = styled.div`
-  align-items: center;
-  display: flex;
-  gap: 24px;
+  position: relative;
   width: 100%;
-  justify-content: center;
 `;
 
 const Arrow = styled.img`
-  flex-shrink: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
   cursor: pointer;
-  width: 33px;
-  height: auto;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 2;
+  transition: opacity 0.2s ease;
 
   &:hover {
     opacity: 0.7;
   }
 
-  @media (max-width: 700px) {
+  &.arrow-left {
+    left: -58px;
+  }
+
+  &.arrow-right {
+    right: -58px;
+  }
+
+  @media (max-width: 900px) {
     display: none;
   }
 `;
 
 const SwiperWrap = styled.div`
-  flex: 1;
-  min-width: 0;
   width: 100%;
 
   .swiper {
@@ -150,11 +157,11 @@ const CardLabel = styled.div`
 `;
 
 const categories = [
-  { label: "EPI", img: "https://c.animaapp.com/F8lHzCc8/img/mask-group@2x.png" },
-  { label: "Linha\nIntercambiável", img: "https://c.animaapp.com/F8lHzCc8/img/mask-group-1@2x.png" },
-  { label: "Abrasivos", img: "https://c.animaapp.com/F8lHzCc8/img/mask-group-2.png" },
-  { label: "Transporte e\nArmazenagem", img: "https://c.animaapp.com/F8lHzCc8/img/mask-group-3.png" },
-  { label: "Ferramentas\nElétricas", img: "https://c.animaapp.com/F8lHzCc8/img/mask-group-4.png" },
+  { label: "EPI", img: produtoImg },
+  { label: "Linha\nIntercambiável", img: produtoImg },
+  { label: "Abrasivos", img: produtoImg },
+  { label: "Transporte e\nArmazenagem", img: produtoImg },
+  { label: "Ferramentas\nElétricas", img: produtoImg },
 ];
 
 export const FrameSubsection = (): React.JSX.Element => {
@@ -177,6 +184,7 @@ export const FrameSubsection = (): React.JSX.Element => {
       </Heading>
       <CarouselRow>
         <Arrow
+          className="arrow-left"
           alt="Anterior"
           src="https://c.animaapp.com/F8lHzCc8/img/camada-1.svg"
           onClick={() => swiperRef.current?.slidePrev()}
@@ -187,6 +195,7 @@ export const FrameSubsection = (): React.JSX.Element => {
             grabCursor
             rewind
             slidesPerView="auto"
+            spaceBetween={64}
             centeredSlides
             initialSlide={2}
             className="swiper-carousel"
@@ -199,6 +208,7 @@ export const FrameSubsection = (): React.JSX.Element => {
                 opacityStep: 0.33,
                 scaleStep: 0.2,
                 sideSlides: 2,
+                backGap: 50,
               },
             } as Record<string, unknown>)}
           >
@@ -220,6 +230,7 @@ export const FrameSubsection = (): React.JSX.Element => {
           </Swiper>
         </SwiperWrap>
         <Arrow
+          className="arrow-right"
           alt="Próximo"
           src="https://c.animaapp.com/F8lHzCc8/img/camada-1-1.svg"
           onClick={() => swiperRef.current?.slideNext()}

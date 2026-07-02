@@ -52,36 +52,40 @@ const StyledFrame1Subsection = styled.div`
   & .frame-55 {
     align-items: center;
     display: flex;
-    flex-wrap: wrap;
     gap: 24px;
     justify-content: space-between;
     width: 100%;
+
+    @media (max-width: 700px) {
+      flex-direction: column;
+    }
   }
 
   & .element-banner-principal-wrapper {
     align-items: flex-start;
     display: flex;
-    flex: 1 1 360px;
+    flex: 0 0 65%;
     flex-direction: column;
     gap: 10px;
-    padding: 10px;
+    padding: 0;
+    box-sizing: border-box;
   }
 
   & .element-banner-principal {
-    align-self: stretch;
-    aspect-ratio: 1.4;
     width: 100%;
     height: auto;
+    display: block;
   }
 
   & .frame-56 {
     align-items: flex-end;
     display: flex;
-    flex: 1 1 360px;
+    flex: 0 0 calc(35% - 24px);
     flex-direction: column;
     gap: 30px;
 
     @media (max-width: 700px) {
+      flex: 1;
       align-items: center;
       text-align: center;
     }
