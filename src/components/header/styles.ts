@@ -50,6 +50,18 @@ export const Topo = styled.div`
   padding: 0 3%;
   box-sizing: border-box;
 
+  @media (max-width: 1200px) {
+    height: 76px;
+    gap: 18px;
+    padding: 0 2%;
+  }
+
+  @media (max-width: 1024px) {
+    height: 64px;
+    gap: 12px;
+    padding: 0 1.5%;
+  }
+
   @media (max-width: 900px) {
     display: none;
   }
@@ -74,6 +86,16 @@ export const BottomHeader = styled.div`
   justify-content: space-between;
   padding: 0 3% !important;
 
+  @media (max-width: 1200px) {
+    height: 80px;
+    padding: 0 2% !important;
+  }
+
+  @media (max-width: 1024px) {
+    height: 70px;
+    padding: 0 1.5% !important;
+  }
+
   @media (max-width: 900px) {
     display: none;
   }
@@ -89,6 +111,17 @@ export const Img = styled.img`
   height: 49px;
   width: 176px;
   position: relative;
+  flex-shrink: 0;
+
+  @media (max-width: 1200px) {
+    height: 44px;
+    width: 158px;
+  }
+
+  @media (max-width: 1024px) {
+    height: 38px;
+    width: 136px;
+  }
 
   @media (max-width: 900px) {
     height: 38px;
@@ -106,6 +139,14 @@ export const TextWrapper = styled.div`
   position: relative;
   white-space: nowrap;
   cursor: pointer;
+
+  @media (max-width: 1200px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 13px;
+  }
 `;
 
 export const LanguageGroup = styled.div`
@@ -144,13 +185,22 @@ export const Navbar = styled.div<{ $open?: boolean }>`
   display: flex;
   height: auto;
   position: relative;
-  width: 70%;
-  padding: 0 6% !important;
+  padding: 0 4% !important;
   box-sizing: border-box;
   align-items: center;
   gap: 30px;
   flex: 1;
   justify-content: space-between;
+
+  @media (max-width: 1200px) {
+    padding: 0 2.5% !important;
+    gap: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 0 1.5% !important;
+    gap: 10px;
+  }
 
   @media (max-width: 900px) {
     display: none;
@@ -177,6 +227,17 @@ export const NavItem = styled.div`
     color: #ffffff;
     background-color: #343434;
     border-radius: 40px;
+  }
+
+  @media (max-width: 1200px) {
+    font-size: 17px;
+    height: auto;
+    padding: 5px 8px !important;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 14px;
+    padding: 4px 6px !important;
   }
 `;
 

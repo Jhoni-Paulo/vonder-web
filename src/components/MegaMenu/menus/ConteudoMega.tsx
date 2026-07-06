@@ -10,6 +10,10 @@ const Root = styled.div`
   width: 100%;
   box-sizing: border-box;
   padding: 24px 5%;
+
+  @media (max-width: 1200px) {
+    min-height: 440px;
+  }
 `;
 
 const ColumnsWrapper = styled.div`
@@ -23,16 +27,25 @@ const ColumnsWrapper = styled.div`
   @media (max-width: 1280px) {
     gap: 28px;
   }
+
+  @media (max-width: 1100px) {
+    gap: 16px;
+  }
 `;
 
 const Column = styled.div`
   align-items: flex-start;
   display: flex;
-  flex: 1 1 320px;
+  flex: 1 1 240px;
   flex-direction: column;
   gap: 18px;
   position: relative;
   max-width: 380px;
+
+  @media (max-width: 1100px) {
+    gap: 12px;
+    flex-basis: 200px;
+  }
 `;
 
 const Element = styled.img`
@@ -41,6 +54,10 @@ const Element = styled.img`
   object-fit: cover;
   width: 100%;
   border-radius: 10px;
+
+  @media (max-width: 1100px) {
+    height: 110px;
+  }
 `;
 
 const TitleText = styled.div`
@@ -51,6 +68,10 @@ const TitleText = styled.div`
   font-weight: 700;
   letter-spacing: 0;
   line-height: normal;
+
+  @media (max-width: 1100px) {
+    font-size: 22px;
+  }
 `;
 
 const DescriptionText = styled.p`
@@ -61,6 +82,10 @@ const DescriptionText = styled.p`
   letter-spacing: 0;
   line-height: normal;
   margin: 0;
+
+  @media (max-width: 1100px) {
+    font-size: 14px;
+  }
 `;
 
 const ButtonBase = `

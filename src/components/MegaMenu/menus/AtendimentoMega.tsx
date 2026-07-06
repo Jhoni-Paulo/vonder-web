@@ -10,6 +10,10 @@ const Root = styled.div`
   width: 100%;
   box-sizing: border-box;
   padding: 24px 5%;
+
+  @media (max-width: 1200px) {
+    min-height: 440px;
+  }
 `;
 
 const FrameContainer = styled.div`
@@ -34,12 +38,16 @@ const CardsRow = styled.div`
   @media (max-width: 1280px) {
     gap: 28px;
   }
+
+  @media (max-width: 1100px) {
+    gap: 16px;
+  }
 `;
 
 const Card = styled.div`
   align-items: flex-start;
   display: flex;
-  flex: 1 1 300px;
+  flex: 1 1 220px;
   flex-direction: column;
   gap: 18px;
   position: relative;
@@ -47,6 +55,11 @@ const Card = styled.div`
 
   @media (max-width: 1280px) {
     gap: 14px;
+  }
+
+  @media (max-width: 1100px) {
+    gap: 10px;
+    flex-basis: 190px;
   }
 `;
 
@@ -57,6 +70,10 @@ const CardImage = styled.img`
   width: 100%;
   object-fit: cover;
   border-radius: 10px;
+
+  @media (max-width: 1100px) {
+    height: 110px;
+  }
 `;
 
 const Title = styled.div`
@@ -71,6 +88,10 @@ const Title = styled.div`
   letter-spacing: 0;
   line-height: normal;
   position: relative;
+
+  @media (max-width: 1100px) {
+    font-size: 22px;
+  }
 `;
 
 const Description = styled.p`
@@ -83,6 +104,10 @@ const Description = styled.p`
   line-height: normal;
   margin: 0;
   position: relative;
+
+  @media (max-width: 1100px) {
+    font-size: 14px;
+  }
 `;
 
 const cardActionStyles = `

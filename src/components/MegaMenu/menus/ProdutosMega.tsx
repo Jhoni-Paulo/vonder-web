@@ -22,9 +22,7 @@ const FrameContainer = styled.div`
     gap: 48px;
   }
 
-  @media (max-width: 1080px) {
-    flex-direction: column;
-    align-items: flex-start;
+  @media (max-width: 1100px) {
     gap: 28px;
   }
 `;
@@ -39,13 +37,13 @@ const LeftColumn = styled.div`
   flex-shrink: 0;
 
   @media (max-width: 1280px) {
-    width: 320px;
-    gap: 20px;
+    width: 300px;
+    gap: 16px;
   }
 
-  @media (max-width: 1080px) {
-    width: 100%;
-    max-width: 460px;
+  @media (max-width: 1100px) {
+    width: 220px;
+    gap: 12px;
   }
 `;
 
@@ -56,6 +54,10 @@ const ElementImage = styled.img`
   width: 100%;
   object-fit: cover;
   border-radius: 10px;
+
+  @media (max-width: 1100px) {
+    height: 110px;
+  }
 `;
 
 const Title = styled.div`
@@ -88,6 +90,10 @@ const Group = styled.div`
   height: 40px;
   position: relative;
   width: 300px;
+
+  @media (max-width: 1200px) {
+    width: 100%;
+  }
 `;
 
 const DivWrapper = styled.div`
@@ -108,6 +114,11 @@ const DivWrapper = styled.div`
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 18px #00000059;
+  }
+
+  @media (max-width: 1200px) {
+    width: 100%;
+    padding: 8px 16px;
   }
 `;
 
@@ -137,7 +148,9 @@ const RightGrid = styled.div`
     gap: 24px 48px;
   }
 
-  @media (max-width: 1080px) {
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, fit-content(100%));
+    grid-template-rows: unset;
     gap: 18px 40px;
   }
 `;
@@ -183,6 +196,14 @@ const GridItem = styled.div<GridItemProps>`
 
   @media (max-width: 1280px) {
     font-size: 17px;
+  }
+
+  @media (max-width: 1100px) {
+    font-size: 15px;
+    grid-column: auto;
+    grid-row: auto;
+    width: auto;
+    white-space: nowrap;
   }
 `;
 
