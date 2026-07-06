@@ -14,8 +14,29 @@ import {
   Vector,
   Navbar,
   NavItem,
-  Hamburger,
   RightControls,
+  MobileHeader,
+  MobileHamburgerBtn,
+  MobileLogo,
+  MobileRightIcons,
+  MobileOverlay,
+  MobilePanel,
+  MobilePanelTopBar,
+  MobilePanelLogo,
+  MobilePanelLang,
+  MobilePanelLangFlag,
+  MobilePanelLangText,
+  MobilePanelContent,
+  MobilePrimaryMenu,
+  MobilePrimaryItem,
+  MobileSecondaryMenu,
+  MobileSecondaryItem,
+  MobileCloseBtnCol,
+  MobileCloseBtn,
+  MobileAccordionItem,
+  MobileAccordionTrigger,
+  MobileSubmenu,
+  MobileSubmenuItem,
 } from "./styles";
 import { MegaMenu } from "../MegaMenu/MegaMenu";
 import { ProdutosMega } from "../MegaMenu/menus/ProdutosMega";
@@ -38,117 +59,296 @@ const StyledLink = styled(Link)`
   display: inline-block;
 `;
 
+const StyledA = styled.a`
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+`;
+
+const produtosLinks = [
+  { text: "Abrasivos", to: "/categorias-e-produtos" },
+  { text: "Mangueiras", to: "/categorias-e-produtos" },
+  { text: "Pintura", to: "/categorias-e-produtos" },
+  { text: "Construção civil", to: "/categorias-e-produtos" },
+  { text: "Material Elétrico", to: "/categorias-e-produtos" },
+  { text: "Químicos", to: "/categorias-e-produtos" },
+  { text: "Correias", to: "/categorias-e-produtos" },
+  { text: "Medição e Teste", to: "/categorias-e-produtos" },
+  { text: "Rolamento", to: "/categorias-e-produtos" },
+  { text: "EPI", to: "/categorias-e-produtos" },
+  { text: "Metais", to: "/categorias-e-produtos" },
+  { text: "Solda", to: "/categorias-e-produtos" },
+  { text: "Ferramentas Elétricas", to: "/categorias-e-produtos" },
+  { text: "Movimentação de Materiais", to: "/categorias-e-produtos" },
+  { text: "Ferramentas Manuais", to: "/categorias-e-produtos" },
+  { text: "Máquinas e Compressores", to: "/categorias-e-produtos" },
+  { text: "Usinagem e Corte", to: "/categorias-e-produtos" },
+  { text: "Jardinagem", to: "/categorias-e-produtos" },
+  { text: "Parafusos e Fixadores", to: "/categorias-e-produtos" },
+  { text: "Ver Tudo em VONDER", to: "/categorias-e-produtos", highlight: true },
+];
+
+const conhecaLinks = [
+  { text: "Nossa história", to: "/conheca-a-vonder" },
+  { text: "Nossos diferenciais", to: "/conheca-a-vonder" },
+  { text: "Nossa presença", to: "/conheca-a-vonder" },
+];
+
+const atendimentoLinks = [
+  { text: "Fale conosco", to: "/fale-conosco" },
+  { text: "Trabalhe conosco", to: "/trabalhe-conosco" },
+  { text: "FAQ", to: "/faq" },
+];
+
+const conteudoLinks: Array<{ text: string; to?: string; href?: string }> = [
+  { text: "Blog VONDER", to: "/blog" },
+  { text: "VONDER.tv", href: "https://www.youtube.com/@vonderferramentas" },
+];
+
+type SubmenuKey = "produtos" | "conheca" | "atendimento" | "conteudo" | null;
+
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeMega, setActiveMega] = useState<MegaKey | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileClosing, setMobileClosing] = useState(false);
+  const [activeSubmenu, setActiveSubmenu] = useState<SubmenuKey>(null);
 
   const closeMenu = () => setMenuOpen(false);
+  const closeMobile = () => {
+    setMobileClosing(true);
+    setTimeout(() => {
+      setMobileOpen(false);
+      setMobileClosing(false);
+      setActiveSubmenu(null);
+    }, 320);
+  };
+
+  const toggleSubmenu = (key: SubmenuKey) => {
+    setActiveSubmenu((prev) => (prev === key ? null : key));
+  };
 
   return (
-    <HeaderWrapper onMouseLeave={() => setActiveMega(null)}>
-      <Topo className="container-full-align">
-        <StyledLink
-          to="/acesso-clientes"
-          onMouseEnter={() => setActiveMega(null)}
-        >
-          <TextWrapper>Acesso clientes</TextWrapper>
-        </StyledLink>
-        <StyledLink
-          to="/assistencia-tecnica"
-          onMouseEnter={() => setActiveMega(null)}
-        >
-          <TextWrapper>Assistência Técnica</TextWrapper>
-        </StyledLink>
-        <StyledLink to="/blog" onMouseEnter={() => setActiveMega("conteudo")}>
-          <TextWrapper>Conteúdo</TextWrapper>
-        </StyledLink>
-        <StyledLink to="/garantia" onMouseEnter={() => setActiveMega(null)}>
-          <TextWrapper>Garantia</TextWrapper>
-        </StyledLink>
-        <LanguageGroup>
-          <VectorImage
-            alt="Vector"
-            src="https://c.animaapp.com/EUbsVkCm/img/vector.svg"
-          />
-          <TextWrapper>AC</TextWrapper>
-        </LanguageGroup>
-        <LanguageGroup>
-          <BrImage
-            alt="Br"
-            src="https://c.animaapp.com/EUbsVkCm/img/br.svg"
-          />
-          <TextWrapper>PT</TextWrapper>
-        </LanguageGroup>
-      </Topo>
+    <>
+      {/* ── Desktop Header (hidden on mobile via CSS) ── */}
+      <HeaderWrapper onMouseLeave={() => setActiveMega(null)}>
+        <Topo className="container-full-align">
+          <StyledLink to="/acesso-clientes" onMouseEnter={() => setActiveMega(null)}>
+            <TextWrapper>Acesso clientes</TextWrapper>
+          </StyledLink>
+          <StyledLink to="/assistencia-tecnica" onMouseEnter={() => setActiveMega(null)}>
+            <TextWrapper>Assistência Técnica</TextWrapper>
+          </StyledLink>
+          <StyledLink to="/blog" onMouseEnter={() => setActiveMega("conteudo")}>
+            <TextWrapper>Conteúdo</TextWrapper>
+          </StyledLink>
+          <StyledLink to="/garantia" onMouseEnter={() => setActiveMega(null)}>
+            <TextWrapper>Garantia</TextWrapper>
+          </StyledLink>
+          <LanguageGroup>
+            <VectorImage alt="Vector" src="https://c.animaapp.com/EUbsVkCm/img/vector.svg" />
+            <TextWrapper>AC</TextWrapper>
+          </LanguageGroup>
+          <LanguageGroup>
+            <BrImage alt="Br" src="https://c.animaapp.com/EUbsVkCm/img/br.svg" />
+            <TextWrapper>PT</TextWrapper>
+          </LanguageGroup>
+        </Topo>
 
-      <NavArea>
-        <BottomHeader className="container-full-align">
-          <StyledLink to="/" onClick={closeMenu}>
-            <Img
-              alt="Camada"
-              src="https://c.animaapp.com/7nCxdmTD/img/camada-1-1.svg"
+        <NavArea>
+          <BottomHeader className="container-full-align">
+            <StyledLink to="/" onClick={closeMenu}>
+              <Img alt="Camada" src="https://c.animaapp.com/7nCxdmTD/img/camada-1-1.svg" />
+            </StyledLink>
+
+            <Navbar $open={menuOpen}>
+              <NavItem style={{ cursor: "default" }} onMouseEnter={() => setActiveMega("produtos")}>
+                Nossos Produtos
+              </NavItem>
+              <NavItem style={{ cursor: "default" }} onMouseEnter={() => setActiveMega("conheca")}>
+                Conheça a VONDER
+              </NavItem>
+              <StyledLink to="/lancamentos" onClick={closeMenu} onMouseEnter={() => setActiveMega(null)}>
+                <NavItem>Lançamentos</NavItem>
+              </StyledLink>
+              <StyledLink to="/onde-comprar" onClick={closeMenu} onMouseEnter={() => setActiveMega(null)}>
+                <NavItem>Onde Comprar</NavItem>
+              </StyledLink>
+              <StyledLink to="/fale-conosco" onClick={closeMenu} onMouseEnter={() => setActiveMega("atendimento")}>
+                <NavItem>Central de Atendimento</NavItem>
+              </StyledLink>
+            </Navbar>
+
+            <RightControls>
+              <Vector alt="Vector" src="https://c.animaapp.com/7nCxdmTD/img/vector.svg" />
+            </RightControls>
+          </BottomHeader>
+
+          <MegaMenu open={activeMega !== null}>
+            {activeMega ? megaContent[activeMega] : null}
+          </MegaMenu>
+        </NavArea>
+
+        {/* ── Mobile Closed Header Bar ── */}
+        <MobileHeader>
+          <MobileHamburgerBtn
+            type="button"
+            aria-label="Abrir menu"
+            onClick={() => setMobileOpen(true)}
+          >
+            <span />
+            <span />
+            <span />
+          </MobileHamburgerBtn>
+
+          <StyledLink to="/" onClick={closeMobile}>
+            <MobileLogo
+              alt="VONDER"
+              src="https://c.animaapp.com/Z0Vn4sNT/img/frame-69817.svg"
             />
           </StyledLink>
 
-          <Navbar $open={menuOpen}>
-            <NavItem
-              style={{ cursor: "default" }}
-              onMouseEnter={() => setActiveMega("produtos")}
-            >
-              Nossos Produtos
-            </NavItem>
-            <NavItem
-              style={{ cursor: "default" }}
-              onMouseEnter={() => setActiveMega("conheca")}
-            >
-              Conheça a VONDER
-            </NavItem>
-            <StyledLink
-              to="/lancamentos"
-              onClick={closeMenu}
-              onMouseEnter={() => setActiveMega(null)}
-            >
-              <NavItem>Lançamentos</NavItem>
-            </StyledLink>
-            <StyledLink
-              to="/onde-comprar"
-              onClick={closeMenu}
-              onMouseEnter={() => setActiveMega(null)}
-            >
-              <NavItem>Onde Comprar</NavItem>
-            </StyledLink>
-            <StyledLink
-              to="/fale-conosco"
-              onClick={closeMenu}
-              onMouseEnter={() => setActiveMega("atendimento")}
-            >
-              <NavItem>Central de Atendimento</NavItem>
-            </StyledLink>
-          </Navbar>
+          <MobileRightIcons
+            alt="Ícones"
+            src="https://c.animaapp.com/Z0Vn4sNT/img/frame-69818.svg"
+          />
+        </MobileHeader>
+      </HeaderWrapper>
 
-          <RightControls>
-            <Vector
-              alt="Vector"
-              src="https://c.animaapp.com/7nCxdmTD/img/vector.svg"
-            />
-            <Hamburger
-              type="button"
-              aria-label="Abrir menu"
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              <span />
-              <span />
-              <span />
-            </Hamburger>
-          </RightControls>
-        </BottomHeader>
+      {/* ── Mobile Overlay / Lightbox ── */}
+      <MobileOverlay $open={mobileOpen} $closing={mobileClosing}>
+        <MobilePanel $closing={mobileClosing}>
+          <MobilePanelTopBar>
+            <StyledLink to="/" onClick={closeMobile}>
+              <MobilePanelLogo
+                alt="VONDER"
+                src="https://c.animaapp.com/tUaZaNaq/img/frame-69906.svg"
+              />
+            </StyledLink>
+            <MobilePanelLang>
+              <MobilePanelLangFlag
+                alt="BR"
+                src="https://c.animaapp.com/tUaZaNaq/img/br.svg"
+              />
+              <MobilePanelLangText>PT</MobilePanelLangText>
+            </MobilePanelLang>
+          </MobilePanelTopBar>
 
-        <MegaMenu open={activeMega !== null}>
-          {activeMega ? megaContent[activeMega] : null}
-        </MegaMenu>
-      </NavArea>
-    </HeaderWrapper>
+          <MobilePanelContent>
+            {/* ── Primary Menu ── */}
+            <MobilePrimaryMenu>
+              {/* Nossos produtos — accordion */}
+              <MobileAccordionItem>
+                <MobileAccordionTrigger
+                  $open={activeSubmenu === "produtos"}
+                  onClick={() => toggleSubmenu("produtos")}
+                >
+                  Nossos produtos
+                </MobileAccordionTrigger>
+                <MobileSubmenu $open={activeSubmenu === "produtos"}>
+                  {produtosLinks.map((item) => (
+                    <StyledLink key={item.text} to={item.to} onClick={closeMobile}>
+                      <MobileSubmenuItem className={item.highlight ? "highlight" : ""}>
+                        {item.text}
+                      </MobileSubmenuItem>
+                    </StyledLink>
+                  ))}
+                </MobileSubmenu>
+              </MobileAccordionItem>
+
+              {/* Conheça a VONDER — accordion */}
+              <MobileAccordionItem>
+                <MobileAccordionTrigger
+                  $open={activeSubmenu === "conheca"}
+                  onClick={() => toggleSubmenu("conheca")}
+                >
+                  Conheça a VONDER
+                </MobileAccordionTrigger>
+                <MobileSubmenu $open={activeSubmenu === "conheca"}>
+                  {conhecaLinks.map((item) => (
+                    <StyledLink key={item.text} to={item.to} onClick={closeMobile}>
+                      <MobileSubmenuItem>{item.text}</MobileSubmenuItem>
+                    </StyledLink>
+                  ))}
+                </MobileSubmenu>
+              </MobileAccordionItem>
+
+              {/* Lançamentos — sem link */}
+              <MobilePrimaryItem>Lançamentos</MobilePrimaryItem>
+
+              {/* Onde comprar — sem link */}
+              <MobilePrimaryItem>Onde comprar</MobilePrimaryItem>
+
+              {/* Central de atendimento — accordion */}
+              <MobileAccordionItem>
+                <MobileAccordionTrigger
+                  $open={activeSubmenu === "atendimento"}
+                  onClick={() => toggleSubmenu("atendimento")}
+                >
+                  Central de atendimento
+                </MobileAccordionTrigger>
+                <MobileSubmenu $open={activeSubmenu === "atendimento"}>
+                  {atendimentoLinks.map((item) => (
+                    <StyledLink key={item.text} to={item.to} onClick={closeMobile}>
+                      <MobileSubmenuItem>{item.text}</MobileSubmenuItem>
+                    </StyledLink>
+                  ))}
+                </MobileSubmenu>
+              </MobileAccordionItem>
+            </MobilePrimaryMenu>
+
+            {/* ── Secondary Menu ── */}
+            <MobileSecondaryMenu>
+              <StyledLink to="/acesso-clientes" onClick={closeMobile}>
+                <MobileSecondaryItem>Acesso clientes</MobileSecondaryItem>
+              </StyledLink>
+              <StyledLink to="/assistencia-tecnica" onClick={closeMobile}>
+                <MobileSecondaryItem>Assistência Técnica</MobileSecondaryItem>
+              </StyledLink>
+
+              {/* Conteúdo — accordion */}
+              <MobileAccordionItem>
+                <MobileAccordionTrigger
+                  $open={activeSubmenu === "conteudo"}
+                  onClick={() => toggleSubmenu("conteudo")}
+                  style={{ fontSize: "18px", fontFamily: '"Swis721 Cn BT-Roman", Helvetica', fontWeight: 400 }}
+                >
+                  Conteúdo
+                </MobileAccordionTrigger>
+                <MobileSubmenu $open={activeSubmenu === "conteudo"}>
+                  {conteudoLinks.map((item) =>
+                    item.href ? (
+                      <StyledA key={item.text} href={item.href} target="_blank" rel="noopener noreferrer" onClick={closeMobile}>
+                        <MobileSubmenuItem>{item.text}</MobileSubmenuItem>
+                      </StyledA>
+                    ) : (
+                      <StyledLink key={item.text} to={item.to!} onClick={closeMobile}>
+                        <MobileSubmenuItem>{item.text}</MobileSubmenuItem>
+                      </StyledLink>
+                    )
+                  )}
+                </MobileSubmenu>
+              </MobileAccordionItem>
+
+              <StyledLink to="/garantia" onClick={closeMobile}>
+                <MobileSecondaryItem>Garantia</MobileSecondaryItem>
+              </StyledLink>
+            </MobileSecondaryMenu>
+          </MobilePanelContent>
+        </MobilePanel>
+
+        <MobileCloseBtnCol>
+          <MobileCloseBtn
+            type="button"
+            aria-label="Fechar menu"
+            onClick={closeMobile}
+          >
+            <span />
+            <span />
+          </MobileCloseBtn>
+        </MobileCloseBtnCol>
+      </MobileOverlay>
+    </>
   );
 }
 
