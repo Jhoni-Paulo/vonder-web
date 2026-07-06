@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination, EffectFade } from "swiper/modules";
 import vitrineImg from "../../assets/vitrine.png";
 import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/pagination";
 import { DivSubsection } from "./sections/DivSubsection";
 import { DivWrapperSubsection } from "./sections/DivWrapperSubsection";
 import { Frame1Subsection } from "./sections/Frame1Subsection";
@@ -13,6 +15,9 @@ import { FrameSubsection } from "./sections/FrameSubsection";
 import { FrameWrapperSubsection } from "./sections/FrameWrapperSubsection/FrameWrapperSubsection";
 import { GroupWrapperSubsection } from "./sections/GroupWrapperSubsection";
 import { SectionComponentNodeSubsection } from "./sections/SectionComponentNodeSubsection";
+
+const BANNER_SRC = "https://c.animaapp.com/F8lHzCc8/img/banner-institucional-site-1.png";
+
 
 const StyledHOME = styled.div`
   align-items: center;
@@ -33,18 +38,6 @@ const StyledHOME = styled.div`
 
   & .camada-5 {
     display: none;
-  }
-
-  & .banner-institucional-wrapper {
-    display: flex;
-    width: 100%;
-  }
-
-  & .banner-institucional {
-    aspect-ratio: 2.55;
-    height: auto;
-    object-fit: cover;
-    width: 100%;
   }
 
   & .vitrine-title-wrapper {
@@ -98,17 +91,104 @@ const StyledHOME = styled.div`
   }
 `;
 
+const HeroBanner = styled.div`
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  .hero-swiper {
+    width: 100%;
+  }
+
+  .swiper-slide {
+    overflow: hidden;
+  }
+
+  /* Gradient overlay inferior */
+  .hero-slide::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 55%,
+      rgba(0, 0, 0, 0.45) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Paginação */
+  .swiper-pagination {
+    bottom: 20px;
+  }
+
+  .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.6);
+    opacity: 1;
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #f6be00;
+    transform: scale(1.3);
+  }
+
+  @media (max-width: 600px) {
+    .swiper-pagination {
+      bottom: 12px;
+    }
+  }
+`;
+
+const HeroSlide = styled.div`
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+`;
+
+const HeroImg = styled.img`
+  aspect-ratio: 2.55;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+
+  @media (max-width: 600px) {
+    aspect-ratio: 1.2;
+    object-position: left center;
+  }
+`;
+
+const banners = [BANNER_SRC, BANNER_SRC, BANNER_SRC];
+
 export const HomeNova = (): React.JSX.Element => {
   return (
     <StyledHOME data-model-id="126:1454">
       <div className="camada-5" />
-      <div className="banner-institucional-wrapper">
-        <img
-          className="banner-institucional"
-          alt="Banner institucional"
-          src="https://c.animaapp.com/F8lHzCc8/img/banner-institucional-site-1.png"
-        />
-      </div>
+
+      <HeroBanner>
+        <Swiper
+          className="hero-swiper"
+          modules={[Autoplay, Pagination, EffectFade]}
+          effect="fade"
+          fadeEffect={{ crossFade: true }}
+          loop
+          autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+          pagination={{ clickable: true }}
+          speed={900}
+        >
+          {banners.map((src, i) => (
+            <SwiperSlide key={i}>
+              <HeroSlide className="hero-slide">
+                <HeroImg className="hero-img" alt={`Banner ${i + 1}`} src={src} />
+              </HeroSlide>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </HeroBanner>
+
       <FrameSubsection />
       <FrameWrapperSubsection />
       <DivWrapperSubsection />

@@ -281,6 +281,11 @@ const ProductGrid = styled.div`
   justify-content: space-between;
   gap: 50px 22px;
   width: 100%;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 `;
 
 /* ── Card de produto ─────────────────────────────────── */
