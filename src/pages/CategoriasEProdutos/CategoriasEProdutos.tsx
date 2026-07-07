@@ -69,6 +69,7 @@ const Body = styled.div`
 
   @media (max-width: 1024px) {
     flex-direction: column;
+    align-items: stretch;
     gap: 32px;
   }
 `;
@@ -281,6 +282,12 @@ const ProductGrid = styled.div`
   justify-content: space-between;
   gap: 50px 22px;
   width: 100%;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    justify-content: start;
+    gap: 32px 20px;
+  }
 
   @media (max-width: 600px) {
     grid-template-columns: 1fr;

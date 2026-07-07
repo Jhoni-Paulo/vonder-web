@@ -45,7 +45,6 @@ const StyledFrame1Subsection = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  max-width: 1171px;
   padding: 0 24px;
   box-sizing: border-box;
 
@@ -64,7 +63,8 @@ const StyledFrame1Subsection = styled.div`
   & .element-banner-principal-wrapper {
     align-items: flex-start;
     display: flex;
-    flex: 0 0 65%;
+    flex: 0 1 65%;
+    min-width: 0;
     flex-direction: column;
     gap: 10px;
     padding: 0;
@@ -85,7 +85,8 @@ const StyledFrame1Subsection = styled.div`
   & .frame-56 {
     align-items: flex-end;
     display: flex;
-    flex: 0 0 calc(35% - 24px);
+    flex: 0 1 calc(35% - 24px);
+    min-width: 0;
     flex-direction: column;
     gap: 30px;
 

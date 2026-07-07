@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { LockIcon } from "../../LockIcon/LockIcon";
 
 const Root = styled.div`
   align-items: center;
@@ -164,7 +165,12 @@ export function ConhecaVonderMega(): React.JSX.Element {
             <Image alt={card.title} src={card.img} />
             <TitleText>{card.title}</TitleText>
             <DescriptionText>{card.description}</DescriptionText>
-            <ButtonLink to={card.link}>
+            <ButtonLink
+              to={card.link}
+              onClick={(e) => e.preventDefault()}
+              style={{ opacity: 0.35, cursor: "not-allowed", pointerEvents: "none", gap: 8 }}
+            >
+              <LockIcon size={14} color="#ffc600" />
               <ButtonText>{card.action}</ButtonText>
             </ButtonLink>
           </Column>

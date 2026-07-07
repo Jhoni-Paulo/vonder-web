@@ -2,9 +2,25 @@ import styled, { keyframes, css } from "styled-components";
 
 /* ── Animações ─────────────────────────────────────────── */
 
+const writeReveal = keyframes`
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+`;
+
+const penMove = keyframes`
+  0%   { left: 0%;   opacity: 1; }
+  88%  { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+`;
+
+const penPulse = keyframes`
+  0%, 100% { transform: scaleY(1);   opacity: 1; }
+  50%       { transform: scaleY(0.7); opacity: 0.7; }
+`;
+
 const fadeIn = keyframes`
-  from { opacity: 0; transform: scale(0.88); }
-  to   { opacity: 1; transform: scale(1); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 `;
 
 const barFill = keyframes`
@@ -12,6 +28,11 @@ const barFill = keyframes`
   60%  { width: 80%; }
   90%  { width: 95%; }
   100% { width: 100%; }
+`;
+
+const shimmer = keyframes`
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
 `;
 
 const fadeOut = keyframes`
@@ -22,11 +43,6 @@ const fadeOut = keyframes`
 const slideUp = keyframes`
   from { transform: translateY(0); opacity: 1; }
   to   { transform: translateY(-24px); opacity: 0; }
-`;
-
-const shimmer = keyframes`
-  0%   { background-position: -400px 0; }
-  100% { background-position: 400px 0; }
 `;
 
 const diagonalScroll = keyframes`
@@ -46,7 +62,7 @@ const Container = styled.div`
   align-items: center;
   z-index: 9999;
   overflow: hidden;
-  animation: ${fadeOut} 0.5s ease 1.35s forwards;
+  animation: ${fadeOut} 0.5s ease 1.55s forwards;
 `;
 
 /* ── Padrão de linhas diagonais no fundo ─────────────────── */
@@ -74,13 +90,17 @@ const Content = styled.div`
   gap: 40px;
   position: relative;
   z-index: 1;
-  animation: ${slideUp} 0.45s ease 1.1s forwards;
+  animation: ${slideUp} 0.45s ease 1.3s forwards;
 `;
 
-/* ── Logo ────────────────────────────────────────────────── */
+/* ── Logo com efeito de escrita ──────────────────────────── */
 
 const LogoWrap = styled.div`
-  animation: ${fadeIn} 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+  position: relative;
+  width: 220px;
+  height: auto;
+  display: flex;
+  align-items: center;
 `;
 
 const Logo = styled.img`
@@ -88,6 +108,34 @@ const Logo = styled.img`
   height: auto;
   filter: brightness(0) invert(1);
   display: block;
+  animation: ${writeReveal} 1.0s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
+`;
+
+/* Cursor de caneta que acompanha o traçado */
+const PenCursor = styled.span`
+  position: absolute;
+  top: 10%;
+  height: 80%;
+  width: 2.5px;
+  border-radius: 2px;
+  background: #f6be00;
+  box-shadow: 0 0 8px 2px rgba(246, 190, 0, 0.7);
+  animation:
+    ${penMove}  1.0s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both,
+    ${penPulse} 0.12s ease-in-out 0.15s 8;
+`;
+
+/* Ponto brilhante na ponta do cursor */
+const PenTip = styled.span`
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #f6be00;
+  box-shadow: 0 0 6px 3px rgba(246, 190, 0, 0.9);
 `;
 
 /* ── Barra de progresso ──────────────────────────────────── */
@@ -98,7 +146,7 @@ const BarTrack = styled.div`
   background: rgba(255, 255, 255, 0.12);
   border-radius: 100px;
   overflow: hidden;
-  animation: ${css`${fadeIn} 0.4s ease 0.4s both`};
+  animation: ${css`${fadeIn} 0.4s ease 0.6s both`};
 `;
 
 const BarFill = styled.div`
@@ -112,8 +160,8 @@ const BarFill = styled.div`
   );
   background-size: 400px 100%;
   animation:
-    ${barFill} 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both,
-    ${shimmer} 1.5s linear 0.3s infinite;
+    ${barFill} 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both,
+    ${shimmer} 1.5s linear 0.5s infinite;
 `;
 
 /* ── Tagline ─────────────────────────────────────────────── */
@@ -126,10 +174,8 @@ const Tagline = styled.p`
   letter-spacing: 4px;
   text-transform: uppercase;
   margin: 0;
-  animation: ${css`${fadeIn} 0.5s ease 0.6s both`};
+  animation: ${css`${fadeIn} 0.5s ease 0.8s both`};
 `;
-
-/* ── Ponto central decorativo ────────────────────────────── */
 
 const Dot = styled.span`
   display: inline-block;
@@ -153,6 +199,9 @@ export function LoadingScreen() {
             src="https://c.animaapp.com/7nCxdmTD/img/camada-1-1.svg"
             alt="Vonder"
           />
+          <PenCursor>
+            <PenTip />
+          </PenCursor>
         </LogoWrap>
         <BarTrack>
           <BarFill />

@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import facebookSvg from "../../../../assets/facebook.svg";
+import linkedinSvg from "../../../../assets/linkedin.svg";
+import youtubeSvg from "../../../../assets/youtube.svg";
 
 const Container = styled.div`
   align-items: center;
@@ -38,6 +41,12 @@ const Buttons = styled.div`
   flex-wrap: wrap;
   gap: 12px;
   justify-content: center;
+
+  @media (max-width: 600px) {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+  }
 `;
 
 const InstagramButton = styled.div`
@@ -50,6 +59,11 @@ const InstagramButton = styled.div`
   height: 50px;
   justify-content: center;
   padding: 0 28px;
+
+  @media (max-width: 600px) {
+    height: 44px;
+    padding: 0 20px;
+  }
 `;
 
 const InstagramText = styled.div`
@@ -69,6 +83,12 @@ const SocialButton = styled.img`
   width: 50px;
   border-radius: 50%;
   cursor: pointer;
+  object-fit: contain;
+
+  @media (max-width: 600px) {
+    height: 44px;
+    width: 44px;
+  }
 `;
 
 const PostsRow = styled.div`
@@ -168,9 +188,9 @@ const posts = [
 ];
 
 const socialButtons = [
-  "https://c.animaapp.com/F8lHzCc8/img/frame-142.svg",
-  "https://c.animaapp.com/F8lHzCc8/img/frame-144.svg",
-  "https://c.animaapp.com/F8lHzCc8/img/frame-143.svg",
+  facebookSvg,
+  linkedinSvg,
+  youtubeSvg,
 ];
 
 export const Frame2Subsection = (): React.JSX.Element => {

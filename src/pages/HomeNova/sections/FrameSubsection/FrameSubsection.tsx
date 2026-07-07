@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
@@ -111,7 +111,7 @@ const Arrow = styled.img`
   }
 `;
 
-const SwiperWrap = styled.div`
+const SwiperWrap = styled.div<{ $locked: boolean }>`
   width: 100%;
 
   .swiper {
@@ -120,7 +120,7 @@ const SwiperWrap = styled.div`
 
   @media (max-width: 600px) {
     .swiper-wrapper {
-      transform: translate3d(-539px, 0px, 0px) !important;
+      ${({ $locked }) => $locked ? "transform: translate3d(-539px, 0px, 0px) !important;" : ""}
     }
   }
 `;
@@ -180,6 +180,9 @@ const categories = [
 
 export const FrameSubsection = (): React.JSX.Element => {
   const swiperRef = useRef<SwiperType | null>(null);
+  const [swiperLocked, setSwiperLocked] = useState(true);
+
+  const unlock = () => setSwiperLocked(false);
 
   return (
     <Section>
@@ -205,7 +208,7 @@ export const FrameSubsection = (): React.JSX.Element => {
           src="https://c.animaapp.com/F8lHzCc8/img/camada-1.svg"
           onClick={() => swiperRef.current?.slidePrev()}
         />
-        <SwiperWrap>
+        <SwiperWrap $locked={swiperLocked}>
           <Swiper
             modules={[Navigation, EffectCarousel] as never[]}
             grabCursor
@@ -220,6 +223,8 @@ export const FrameSubsection = (): React.JSX.Element => {
             onSwiper={(s) => {
               swiperRef.current = s;
             }}
+            onTouchStart={unlock}
+            onSliderMove={unlock}
             {...({
               effect: "carousel",
               carouselEffect: {

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { LockIcon } from "../../LockIcon/LockIcon";
 
 const Root = styled.div`
   align-items: center;
@@ -146,7 +147,12 @@ export function ConteudoMega(): React.JSX.Element {
             ferramentas e inovações do setor. Mergulhe conosco nesse universo de
             ferramentas!
           </DescriptionText>
-          <ButtonLink to="/blog">
+          <ButtonLink
+            to="/blog"
+            onClick={(e) => e.preventDefault()}
+            style={{ opacity: 0.35, cursor: "not-allowed", pointerEvents: "none", gap: 8 }}
+          >
+            <LockIcon size={14} color="#ffc600" />
             <ButtonText>Acessar o Blog</ButtonText>
           </ButtonLink>
         </Column>

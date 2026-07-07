@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { LockIcon } from "../LockIcon/LockIcon"
 import {
   HeaderWrapper,
   Topo,
@@ -65,6 +66,7 @@ const StyledA = styled.a`
   display: inline-block;
 `;
 
+
 const produtosLinks = [
   { text: "Abrasivos", to: "/categorias-e-produtos" },
   { text: "Mangueiras", to: "/categorias-e-produtos" },
@@ -88,10 +90,10 @@ const produtosLinks = [
   { text: "Ver Tudo em VONDER", to: "/categorias-e-produtos", highlight: true },
 ];
 
-const conhecaLinks = [
-  { text: "Nossa história", to: "/conheca-a-vonder" },
-  { text: "Nossos diferenciais", to: "/conheca-a-vonder" },
-  { text: "Nossa presença", to: "/conheca-a-vonder" },
+const conhecaLinks: Array<{ text: string; to?: string; disabled?: boolean }> = [
+  { text: "Nossa história", disabled: true },
+  { text: "Nossos diferenciais", disabled: true },
+  { text: "Nossa presença", disabled: true },
 ];
 
 const atendimentoLinks = [
@@ -100,8 +102,8 @@ const atendimentoLinks = [
   { text: "FAQ", to: "/faq" },
 ];
 
-const conteudoLinks: Array<{ text: string; to?: string; href?: string }> = [
-  { text: "Blog VONDER", to: "/blog" },
+const conteudoLinks: Array<{ text: string; to?: string; href?: string; disabled?: boolean }> = [
+  { text: "Blog VONDER", disabled: true },
   { text: "VONDER.tv", href: "https://www.youtube.com/@vonderferramentas" },
 ];
 
@@ -133,13 +135,22 @@ export function Header() {
       {/* ── Desktop Header (hidden on mobile via CSS) ── */}
       <HeaderWrapper onMouseLeave={() => setActiveMega(null)}>
         <Topo className="container-full-align">
-          <StyledLink to="/acesso-clientes" onMouseEnter={() => setActiveMega(null)}>
-            <TextWrapper>Acesso clientes</TextWrapper>
-          </StyledLink>
-          <StyledLink to="/assistencia-tecnica" onMouseEnter={() => setActiveMega(null)}>
-            <TextWrapper>Assistência Técnica</TextWrapper>
-          </StyledLink>
-          <StyledLink to="/blog" onMouseEnter={() => setActiveMega("conteudo")}>
+          <TextWrapper style={{ opacity: 0.35, cursor: "not-allowed", display: "flex", alignItems: "center", gap: 5 }}>
+            <LockIcon size={12} color="#f6be00" />Acesso clientes
+          </TextWrapper>
+          <TextWrapper style={{ opacity: 0.35, cursor: "not-allowed", display: "flex", alignItems: "center", gap: 5 }}>
+            <LockIcon size={12} color="#f6be00" />Assistência Técnica
+          </TextWrapper>
+          <StyledLink
+            to="/blog"
+            onClick={(e) => {
+              if (window.innerWidth <= 1200 && window.innerWidth > 600) {
+                e.preventDefault();
+                setActiveMega(prev => prev === "conteudo" ? null : "conteudo");
+              }
+            }}
+            onMouseEnter={() => setActiveMega("conteudo")}
+          >
             <TextWrapper>Conteúdo</TextWrapper>
           </StyledLink>
           <StyledLink to="/garantia" onMouseEnter={() => setActiveMega(null)}>
@@ -174,7 +185,18 @@ export function Header() {
               <StyledLink to="/onde-comprar" onClick={closeMenu} onMouseEnter={() => setActiveMega(null)}>
                 <NavItem>Onde Comprar</NavItem>
               </StyledLink>
-              <StyledLink to="/fale-conosco" onClick={closeMenu} onMouseEnter={() => setActiveMega("atendimento")}>
+              <StyledLink
+                to="/fale-conosco"
+                onClick={(e) => {
+                  if (window.innerWidth <= 1200 && window.innerWidth > 600) {
+                    e.preventDefault();
+                    setActiveMega(prev => prev === "atendimento" ? null : "atendimento");
+                  } else {
+                    closeMenu();
+                  }
+                }}
+                onMouseEnter={() => setActiveMega("atendimento")}
+              >
                 <NavItem>Central de Atendimento</NavItem>
               </StyledLink>
             </Navbar>
@@ -265,19 +287,27 @@ export function Header() {
                   Conheça a VONDER
                 </MobileAccordionTrigger>
                 <MobileSubmenu $open={activeSubmenu === "conheca"}>
-                  {conhecaLinks.map((item) => (
-                    <StyledLink key={item.text} to={item.to} onClick={closeMobile}>
-                      <MobileSubmenuItem>{item.text}</MobileSubmenuItem>
-                    </StyledLink>
-                  ))}
+                  {conhecaLinks.map((item) =>
+                    item.disabled ? (
+                      <MobileSubmenuItem key={item.text} style={{ opacity: 0.35, cursor: "not-allowed", display: "flex", alignItems: "center", gap: 6 }}>
+                        <LockIcon size={12} color="#000" />{item.text}
+                      </MobileSubmenuItem>
+                    ) : (
+                      <StyledLink key={item.text} to={item.to!} onClick={closeMobile}>
+                        <MobileSubmenuItem>{item.text}</MobileSubmenuItem>
+                      </StyledLink>
+                    )
+                  )}
                 </MobileSubmenu>
               </MobileAccordionItem>
 
-              {/* Lançamentos — sem link */}
-              <MobilePrimaryItem>Lançamentos</MobilePrimaryItem>
+              <StyledLink to="/lancamentos" onClick={closeMobile}>
+                <MobilePrimaryItem>Lançamentos</MobilePrimaryItem>
+              </StyledLink>
 
-              {/* Onde comprar — sem link */}
-              <MobilePrimaryItem>Onde comprar</MobilePrimaryItem>
+              <StyledLink to="/onde-comprar" onClick={closeMobile}>
+                <MobilePrimaryItem>Onde comprar</MobilePrimaryItem>
+              </StyledLink>
 
               {/* Central de atendimento — accordion */}
               <MobileAccordionItem>
@@ -299,12 +329,12 @@ export function Header() {
 
             {/* ── Secondary Menu ── */}
             <MobileSecondaryMenu>
-              <StyledLink to="/acesso-clientes" onClick={closeMobile}>
-                <MobileSecondaryItem>Acesso clientes</MobileSecondaryItem>
-              </StyledLink>
-              <StyledLink to="/assistencia-tecnica" onClick={closeMobile}>
-                <MobileSecondaryItem>Assistência Técnica</MobileSecondaryItem>
-              </StyledLink>
+              <MobileSecondaryItem style={{ opacity: 0.35, cursor: "not-allowed", display: "flex", alignItems: "center", gap: 6 }}>
+                <LockIcon size={13} color="#000" />Acesso clientes
+              </MobileSecondaryItem>
+              <MobileSecondaryItem style={{ opacity: 0.35, cursor: "not-allowed", display: "flex", alignItems: "center", gap: 6 }}>
+                <LockIcon size={13} color="#000" />Assistência Técnica
+              </MobileSecondaryItem>
 
               {/* Conteúdo — accordion */}
               <MobileAccordionItem>
@@ -317,7 +347,11 @@ export function Header() {
                 </MobileAccordionTrigger>
                 <MobileSubmenu $open={activeSubmenu === "conteudo"}>
                   {conteudoLinks.map((item) =>
-                    item.href ? (
+                    item.disabled ? (
+                      <MobileSubmenuItem key={item.text} style={{ opacity: 0.35, cursor: "not-allowed", display: "flex", alignItems: "center", gap: 6 }}>
+                        <LockIcon size={12} color="#000" />{item.text}
+                      </MobileSubmenuItem>
+                    ) : item.href ? (
                       <StyledA key={item.text} href={item.href} target="_blank" rel="noopener noreferrer" onClick={closeMobile}>
                         <MobileSubmenuItem>{item.text}</MobileSubmenuItem>
                       </StyledA>
