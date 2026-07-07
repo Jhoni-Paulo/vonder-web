@@ -141,18 +141,13 @@ export function Header() {
           <TextWrapper style={{ opacity: 0.35, cursor: "not-allowed", display: "flex", alignItems: "center", gap: 5 }}>
             <LockIcon size={12} color="#f6be00" />Assistência Técnica
           </TextWrapper>
-          <StyledLink
-            to="/blog"
-            onClick={(e) => {
-              if (window.innerWidth <= 1200 && window.innerWidth > 600) {
-                e.preventDefault();
-                setActiveMega(prev => prev === "conteudo" ? null : "conteudo");
-              }
-            }}
+          <TextWrapper
+            style={{ cursor: "pointer" }}
             onMouseEnter={() => setActiveMega("conteudo")}
+            onClick={() => setActiveMega(prev => prev === "conteudo" ? null : "conteudo")}
           >
-            <TextWrapper>Conteúdo</TextWrapper>
-          </StyledLink>
+            Conteúdo
+          </TextWrapper>
           <StyledLink to="/garantia" onMouseEnter={() => setActiveMega(null)}>
             <TextWrapper>Garantia</TextWrapper>
           </StyledLink>
@@ -185,20 +180,13 @@ export function Header() {
               <StyledLink to="/onde-comprar" onClick={closeMenu} onMouseEnter={() => setActiveMega(null)}>
                 <NavItem>Onde Comprar</NavItem>
               </StyledLink>
-              <StyledLink
-                to="/fale-conosco"
-                onClick={(e) => {
-                  if (window.innerWidth <= 1200 && window.innerWidth > 600) {
-                    e.preventDefault();
-                    setActiveMega(prev => prev === "atendimento" ? null : "atendimento");
-                  } else {
-                    closeMenu();
-                  }
-                }}
+              <NavItem
+                style={{ cursor: "default" }}
                 onMouseEnter={() => setActiveMega("atendimento")}
+                onClick={() => setActiveMega(prev => prev === "atendimento" ? null : "atendimento")}
               >
-                <NavItem>Central de Atendimento</NavItem>
-              </StyledLink>
+                Central de Atendimento
+              </NavItem>
             </Navbar>
 
             <RightControls>
