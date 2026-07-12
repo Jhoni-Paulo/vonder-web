@@ -1,5 +1,9 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
+import {
+  ExpandableCardCarousel,
+  type ExpandableCardCarouselItem,
+} from "../../../../components/ExpandableCardCarousel/ExpandableCardCarousel";
 
 const Container = styled.div`
   align-items: center;
@@ -58,197 +62,37 @@ const BlogButton = styled.button`
   }
 `;
 
-const CarouselRow = styled.div`
-  position: relative;
-  width: 100%;
-`;
-
-const Arrow = styled.img`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 52px;
-  height: 52px;
-  cursor: pointer;
-  z-index: 2;
-  transition: opacity 0.2s ease;
-
-  &:hover {
-    opacity: 0.7;
-  }
-
-  &.arrow-left {
-    left: -62px;
-  }
-
-  &.arrow-right {
-    right: -62px;
-  }
-
-  @media (max-width: 1000px) {
-    display: none;
-  }
-`;
-
-const Track = styled.div`
-  display: flex;
-  gap: 12px;
-  width: 100%;
-  align-items: stretch;
-
-  @media (max-width: 600px) {
-    gap: 0;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-`;
-
-const Card = styled.div<{ $active?: boolean }>`
-  position: relative;
-  height: 480px;
-  border-radius: 15px;
-  overflow: hidden;
-  flex-shrink: 0;
-  flex: ${({ $active }) => ($active ? "1 1 auto" : "0 0 160px")};
-  width: ${({ $active }) => ($active ? "auto" : "160px")};
-  cursor: ${({ $active }) => ($active ? "default" : "pointer")};
-  will-change: flex, width;
-  transition:
-    flex 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-
-  @media (max-width: 600px) {
-    flex: 0 0 100%;
-    width: 100%;
-    height: 420px;
-    scroll-snap-align: start;
-    cursor: default;
-    opacity: 1;
-  }
-`;
-
-const CardImage = styled.img`
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-`;
-
-const CardOverlay = styled.div`
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(0,0,0,0.82) 100%);
-`;
-
-const CardContent = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 22px 18px;
-  box-sizing: border-box;
-`;
-
-const CardTitle = styled.p`
-  color: #f6be00;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.25;
-  margin: 0;
-`;
-
-const CardDesc = styled.p<{ $active?: boolean }>`
-  color: #ffffff;
-  font-family: "Swis721 LtCn BT-Light", Helvetica;
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 1.4;
-  margin: 0;
-  overflow: hidden;
-  max-height: ${({ $active }) => ($active ? "200px" : "0px")};
-  opacity: ${({ $active }) => ($active ? 1 : 0)};
-  transition:
-    max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.4s ease;
-
-  @media (max-width: 600px) {
-    max-height: 200px;
-    opacity: 1;
-  }
-`;
-
-const CardLink = styled.span`
-  color: #ffffff;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 17px;
-  font-weight: 700;
-  cursor: pointer;
-`;
-
 const DESC =
   "Gosta de pedalar?! Antes do passeio, pense nisso… Nada melhor do que sair de bike para trabalhar, treinar ou simplesmente curtir o dia. Mas, antes de colocar o capacete...";
 
-const posts = [
+const posts: ExpandableCardCarouselItem[] = [
   {
     img: "https://c.animaapp.com/xLq2ckgk/img/mask-group.png",
     title: "Carrinhos, painéis, caixas e armários: qual opção escolher na hora de...",
     desc: DESC,
+    linkText: "Ler Mais",
   },
   {
     img: "https://c.animaapp.com/xLq2ckgk/img/mask-group-1.png",
     title: "Vou de bike – mas antes do passeio, confira algumas dicas de manutenção da sua bicicleta",
     desc: DESC,
+    linkText: "Ler Mais",
   },
   {
     img: "https://c.animaapp.com/xLq2ckgk/img/mask-group-2.png",
     title: "Como os organizadores plásticos aumentam sua produtividade...",
     desc: DESC,
+    linkText: "Ler Mais",
   },
   {
     img: "https://c.animaapp.com/xLq2ckgk/img/mask-group-3.png",
     title: "Produto 2 em 1: Lavadora e Aspirador LAV 1580 VONDER – Um Só...",
     desc: DESC,
+    linkText: "Ler Mais",
   },
 ];
 
 export const SectionComponentNodeSubsection = (): React.JSX.Element => {
-  const [activeIdx, setActiveIdx] = useState(2);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const isScrolling = useRef(false);
-
-  const goLeft = () => setActiveIdx((prev) => (prev + 1) % posts.length);
-  const goRight = () => setActiveIdx((prev) => (prev - 1 + posts.length) % posts.length);
-
-  // Scroll track to activeIdx on desktop state change (mobile ignores this via snap)
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    if (window.innerWidth > 600) return;
-    isScrolling.current = true;
-    track.scrollTo({ left: track.clientWidth * activeIdx, behavior: "smooth" });
-    const t = setTimeout(() => { isScrolling.current = false; }, 600);
-    return () => clearTimeout(t);
-  }, [activeIdx]);
-
-  const handleScroll = useCallback(() => {
-    if (isScrolling.current) return;
-    const track = trackRef.current;
-    if (!track) return;
-    const idx = Math.round(track.scrollLeft / track.clientWidth);
-    if (idx !== activeIdx) setActiveIdx(idx);
-  }, [activeIdx]);
-
   return (
     <Container>
       <Header>
@@ -259,42 +103,7 @@ export const SectionComponentNodeSubsection = (): React.JSX.Element => {
         </Title>
         <BlogButton type="button">Acessar o Blog</BlogButton>
       </Header>
-      <CarouselRow>
-        <Arrow
-          className="arrow-left"
-          alt="Anterior"
-          src="https://c.animaapp.com/F8lHzCc8/img/camada-1-4.svg"
-          onClick={goLeft}
-        />
-        <Track ref={trackRef} onScroll={handleScroll}>
-          {posts.map((post, i) => {
-            const isActive = i === activeIdx;
-            return (
-              <Card
-                key={i}
-                $active={isActive}
-                onClick={!isActive ? () => setActiveIdx(i) : undefined}
-              >
-                <CardImage alt={post.title} src={post.img} />
-                <CardOverlay />
-                <CardContent>
-                  <CardTitle>{post.title}</CardTitle>
-                  {post.desc && (
-                    <CardDesc $active={isActive}>{post.desc}</CardDesc>
-                  )}
-                  <CardLink>Ler Mais</CardLink>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </Track>
-        <Arrow
-          className="arrow-right"
-          alt="Próximo"
-          src="https://c.animaapp.com/F8lHzCc8/img/camada-1-5.svg"
-          onClick={goRight}
-        />
-      </CarouselRow>
+      <ExpandableCardCarousel items={posts} />
     </Container>
   );
 };

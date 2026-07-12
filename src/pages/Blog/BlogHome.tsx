@@ -2,78 +2,60 @@ import React from "react";
 import styled from "styled-components";
 import { DivSubsection } from "./sections/DivSubsection/DivSubsection";
 import { DivWrapperSubsection } from "./sections/DivWrapperSubsection/DivWrapperSubsection";
-import { Group1Subsection } from "./sections/Group1Subsection/Group1Subsection";
-import { Group2Subsection } from "./sections/Group2Subsection/Group2Subsection";
-import { GroupSubsection } from "./sections/GroupSubsection";
+import { Frame1Subsection } from "./sections/Frame1Subsection/Frame1Subsection";
+import { FrameSubsection } from "./sections/FrameSubsection/FrameSubsection";
+import { FrameWrapperSubsection } from "./sections/FrameWrapperSubsection/FrameWrapperSubsection";
 import { GroupWrapperSubsection } from "./sections/GroupWrapperSubsection/GroupWrapperSubsection";
 import { SectionComponentNodeSubsection } from "./sections/SectionComponentNodeSubsection/SectionComponentNodeSubsection";
 
 const StyledBlogHome = styled.div`
-  margin-top: -174px;
+  align-items: center;
   background-color: #ffffff;
-  min-height: 5333px;
-  min-width: 1440px;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
   position: relative;
-  width: 100%;
-`;
 
-const Overlap = styled.div`
-  height: 1426px;
-  left: 106px;
-  position: absolute;
-  top: 1996px;
-  width: 1266px;
-`;
+  & .frame-42 {
+    align-items: center;
+    background-color: #000000;
+    border-radius: 100px;
+    display: flex;
+    gap: 10px;
+    height: 60px;
+    justify-content: center;
+    padding: 15px 1px;
+    position: relative;
+    width: 400px;
+  }
 
-const Group45 = styled.div`
-  height: 60px;
-  left: 520px;
-  position: absolute;
-  top: 5163px;
-  width: 402px;
-`;
-
-const Rectangle6 = styled.div`
-  background-color: #000000;
-  border-radius: 100px;
-  height: 60px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 400px;
-`;
-
-const TextWrapper29 = styled.div`
-  color: #f6be00;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 25px;
-  font-weight: 700;
-  left: calc(50.00% - 200px);
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: center;
-  top: calc(50.00% - 15px);
-  width: 398px;
+  & .text-wrapper-30 {
+    color: #f6be00;
+    font-family: "Swis721 Cn BT-Bold", Helvetica;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    width: 398px;
+  }
 `;
 
 export const BlogHome = (): React.JSX.Element => {
   return (
-    <StyledBlogHome data-model-id="1:6818">
-      <GroupSubsection />
-      <GroupWrapperSubsection />
+    <StyledBlogHome data-model-id="272:1473">
+      <FrameSubsection />
+      <FrameWrapperSubsection />
       <DivWrapperSubsection />
-      <Overlap>
-        <DivSubsection />
-        <SectionComponentNodeSubsection />
-      </Overlap>
-      <Group1Subsection />
-      <Group2Subsection />
-      <Group45>
-        <Rectangle6 />
-        <TextWrapper29>Ver todos os conteúdos</TextWrapper29>
-      </Group45>
+      <GroupWrapperSubsection />
+      <DivSubsection />
+      <SectionComponentNodeSubsection />
+      <Frame1Subsection />
+      <div className="frame-42">
+        <div className="text-wrapper-30">Ver todos os conteúdos</div>
+      </div>
     </StyledBlogHome>
   );
 };

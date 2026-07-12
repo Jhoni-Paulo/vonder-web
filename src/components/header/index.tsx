@@ -103,7 +103,7 @@ const atendimentoLinks = [
 ];
 
 const conteudoLinks: Array<{ text: string; to?: string; href?: string; disabled?: boolean }> = [
-  { text: "Blog VONDER", disabled: true },
+  { text: "Blog VONDER", to: "/blog" },
   { text: "VONDER.tv", href: "https://www.youtube.com/@vonderferramentas" },
 ];
 
