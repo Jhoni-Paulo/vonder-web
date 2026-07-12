@@ -1,14 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import {
+  TripleSlider,
+  type TripleSliderItem,
+} from "../../../../components/TripleSlider/TripleSlider";
 
 const SectionComponentNodeSubsectionWrapper = styled.div`
   align-items: flex-start;
+  box-sizing: border-box;
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
   gap: 40px;
+  max-width: 1228px;
+  padding: 0 24px;
   position: relative;
-  width: 1228px;
+  width: 100%;
 `;
 
 const Frame28 = styled.div`
@@ -17,6 +24,7 @@ const Frame28 = styled.div`
   flex: 0 0 auto;
   flex-direction: column;
   gap: 20px;
+  max-width: 100%;
   position: relative;
   width: 452px;
 `;
@@ -32,6 +40,10 @@ const SectionTitle = styled.div`
   line-height: normal;
   margin-top: -1px;
   position: relative;
+
+  @media (max-width: 600px) {
+    font-size: 32px;
+  }
 `;
 
 const Description = styled.p`
@@ -41,68 +53,39 @@ const Description = styled.p`
   font-weight: 300;
   letter-spacing: 0;
   line-height: normal;
+  max-width: 100%;
   position: relative;
   width: 400px;
+
+  @media (max-width: 600px) {
+    font-size: 18px;
+  }
 `;
 
-const Frame29 = styled.div`
-  align-items: center;
-  align-self: stretch;
-  display: flex;
-  flex: 0 0 auto;
-  gap: 22px;
-  position: relative;
+const SlideImage = styled.img`
+  height: 100%;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
   width: 100%;
 `;
 
-const Camada2 = styled.img`
-  flex: 0 0 auto;
-  position: relative;
-`;
-
-const Group6 = styled.div`
-  height: 500px;
-  position: relative;
-  width: 1118px;
-`;
-
-const Frame30 = styled.div`
-  align-items: center;
-  aspect-ratio: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 450px;
-  justify-content: flex-end;
-  left: 668px;
-  opacity: 0.3;
-  padding: 40px 25px;
-  position: absolute;
-  top: 25px;
-  width: 450px;
-`;
-
-const MaskGroup = styled.img`
-  height: 450px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 450px;
-`;
-
-const Frame31 = styled.div`
+const NameBadge = styled.div`
   -webkit-backdrop-filter: blur(30px) brightness(100%);
   align-items: center;
   backdrop-filter: blur(30px) brightness(100%);
   background-color: #0e0e0e99;
   border-radius: 100px;
+  bottom: 24px;
   display: flex;
-  gap: 10px;
-  height: 60px;
   justify-content: center;
-  padding: 15px 0px 18px;
-  position: relative;
-  width: 400px;
+  left: 50%;
+  max-width: calc(100% - 32px);
+  padding: 15px 24px;
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
 `;
 
 const NameText = styled.p`
@@ -112,10 +95,12 @@ const NameText = styled.p`
   font-weight: 400;
   letter-spacing: 0;
   line-height: normal;
-  margin-top: -1px;
-  position: relative;
+  margin: 0;
   text-align: center;
-  width: 400px;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
 const TextWrapper23 = styled.span`
@@ -129,78 +114,42 @@ const TextWrapper24 = styled.span`
   font-style: italic;
 `;
 
-const Frame32 = styled.div`
-  align-items: center;
-  aspect-ratio: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 450px;
-  justify-content: flex-end;
-  left: 0;
-  opacity: 0.6;
-  padding: 40px 25px;
-  position: absolute;
-  top: 25px;
-  width: 450px;
-`;
+const supporters: { id: string; img: string; name: string; handle: string }[] = [
+  {
+    id: "sylvio",
+    img: "https://c.animaapp.com/bNHZtEYo/img/mask-group-8@2x.png",
+    name: "Sylvio Guisard",
+    handle: "@plantascomalegria_",
+  },
+  {
+    id: "alexsandra",
+    img: "https://c.animaapp.com/bNHZtEYo/img/mask-group-9@2x.png",
+    name: "Alexsandra",
+    handle: "@umagurianamarcenaria",
+  },
+  {
+    id: "mari",
+    img: "https://c.animaapp.com/bNHZtEYo/img/mask-group-10.png",
+    name: "Mari Pavan",
+    handle: "@agilizalab",
+  },
+];
 
-const Frame33 = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 500px;
-  justify-content: flex-end;
-  left: 309px;
-  padding: 40px 50px;
-  position: absolute;
-  top: 0;
-  width: 500px;
-`;
-
-const Group7 = styled.div`
-  background-image: url(https://c.animaapp.com/bNHZtEYo/img/mask-group-10.png);
-  background-size: 100% 100%;
-  height: 500px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 500px;
-`;
-
-const MariPavanWrapper = styled.div`
-  -webkit-backdrop-filter: blur(30px) brightness(100%);
-  align-items: center;
-  backdrop-filter: blur(30px) brightness(100%);
-  background-color: #0e0e0e99;
-  border-radius: 100px;
-  display: flex;
-  gap: 10px;
-  height: 60px;
-  justify-content: center;
-  padding: 15px 0px;
-  position: relative;
-  width: 400px;
-`;
-
-const MariPavanText = styled.p`
-  color: #ffffff;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 25px;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: normal;
-  margin-top: -1px;
-  position: relative;
-  text-align: center;
-  width: 400px;
-`;
-
-const Camada3 = styled.img`
-  position: relative;
-  width: 33px;
-`;
+const sliderItems: TripleSliderItem[] = supporters.map((supporter) => ({
+  id: supporter.id,
+  content: (
+    <>
+      <SlideImage alt={supporter.name} src={supporter.img} />
+      <NameBadge>
+        <NameText>
+          <TextWrapper23>{supporter.name} </TextWrapper23>
+          <TextWrapper24>do</TextWrapper24>
+          <TextWrapper23> {supporter.handle}</TextWrapper23>
+        </NameText>
+      </NameBadge>
+    </>
+  ),
+}));
 
 export const SectionComponentNodeSubsection = (): React.JSX.Element => {
   return (
@@ -216,54 +165,7 @@ export const SectionComponentNodeSubsection = (): React.JSX.Element => {
           que confiam, usam e recomendam VONDER
         </Description>
       </Frame28>
-      <Frame29>
-        <Camada2
-          alt="Camada"
-          src="https://c.animaapp.com/bNHZtEYo/img/camada-1-1.svg"
-        />
-        <Group6>
-          <Frame30>
-            <MaskGroup
-              alt="Mask group"
-              src="https://c.animaapp.com/bNHZtEYo/img/mask-group-8@2x.png"
-            />
-            <Frame31>
-              <NameText>
-                <TextWrapper23>Sylvio Guisard </TextWrapper23>
-                <TextWrapper24>do</TextWrapper24>
-                <TextWrapper23> @plantascomalegria_</TextWrapper23>
-              </NameText>
-            </Frame31>
-          </Frame30>
-          <Frame32>
-            <MaskGroup
-              alt="Mask group"
-              src="https://c.animaapp.com/bNHZtEYo/img/mask-group-9@2x.png"
-            />
-            <Frame31>
-              <NameText>
-                <TextWrapper23>Alexsandra </TextWrapper23>
-                <TextWrapper24>do</TextWrapper24>
-                <TextWrapper23> @umagurianamarcenaria</TextWrapper23>
-              </NameText>
-            </Frame31>
-          </Frame32>
-          <Frame33>
-            <Group7 />
-            <MariPavanWrapper>
-              <MariPavanText>
-                <TextWrapper23>Mari Pavan </TextWrapper23>
-                <TextWrapper24>do</TextWrapper24>
-                <TextWrapper23> @agilizalab</TextWrapper23>
-              </MariPavanText>
-            </MariPavanWrapper>
-          </Frame33>
-        </Group6>
-        <Camada3
-          alt="Camada"
-          src="https://c.animaapp.com/bNHZtEYo/img/camada-1-2.svg"
-        />
-      </Frame29>
+      <TripleSlider items={sliderItems} />
     </SectionComponentNodeSubsectionWrapper>
   );
 };

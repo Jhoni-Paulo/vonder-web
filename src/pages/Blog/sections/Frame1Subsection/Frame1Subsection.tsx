@@ -7,12 +7,15 @@ import {
 
 const StyledFrame1Subsection = styled.div`
   align-items: flex-start;
+  box-sizing: border-box;
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
   gap: 15px;
+  max-width: 1248px;
+  padding: 0 24px;
   position: relative;
-  width: 1248px;
+  width: 100%;
 `;
 
 const Frame34 = styled.div`
@@ -21,6 +24,7 @@ const Frame34 = styled.div`
   flex: 0 0 auto;
   flex-direction: column;
   gap: 10px;
+  max-width: 100%;
   padding: 10px;
   position: relative;
   width: 488.71px;
@@ -47,8 +51,13 @@ const TextWrapper25 = styled.div`
   letter-spacing: 0;
   line-height: normal;
   margin-top: -1px;
+  max-width: 100%;
   position: relative;
   width: 448.71px;
+
+  @media (max-width: 600px) {
+    font-size: 32px;
+  }
 `;
 
 const Frame36 = styled.div`
@@ -56,6 +65,8 @@ const Frame36 = styled.div`
   align-self: stretch;
   display: flex;
   flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 16px;
   justify-content: space-between;
   position: relative;
   width: 100%;
@@ -78,21 +89,35 @@ const TudoOQueVoc = styled.p`
   letter-spacing: 0;
   line-height: normal;
   margin-top: -1px;
+  max-width: 100%;
   position: relative;
   width: 401.06px;
+
+  @media (max-width: 600px) {
+    font-size: 18px;
+  }
 `;
 
 const Frame37 = styled.div`
   align-items: center;
   background-color: #000000;
   border-radius: 100px;
+  box-sizing: border-box;
+  cursor: pointer;
   display: flex;
   gap: 10px;
   height: 50px;
   justify-content: center;
+  max-width: 100%;
   padding: 15px 78px;
   position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   width: 286px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px #00000040;
+  }
 `;
 
 const TextWrapper26 = styled.div`

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 /* ── Página ────────────────────────────────────────────── */
 
@@ -307,6 +308,7 @@ const ProductCard = styled.div`
   overflow: hidden;
   box-sizing: border-box;
   cursor: pointer;
+  text-decoration: none;
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease;
@@ -504,7 +506,11 @@ export const CategoriasEProdutos = (): React.JSX.Element => {
 
           <ProductGrid>
             {products.map((p, i) => (
-              <ProductCard key={i}>
+              <ProductCard
+                key={i}
+                as={i === 0 ? Link : "div"}
+                to={i === 0 ? `/produto/${p.code}` : undefined}
+              >
                 <CardImageArea>
                   <CardImage alt={p.name} src={p.img} />
                 </CardImageArea>

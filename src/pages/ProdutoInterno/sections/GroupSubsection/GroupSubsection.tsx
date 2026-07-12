@@ -2,22 +2,18 @@ import React from "react";
 import styled from "styled-components";
 
 const GroupSubsectionContainer = styled.div`
+  align-items: flex-start;
   display: flex;
-  height: 471px;
-  justify-content: center;
-  left: 776px;
-  position: absolute;
-  top: 327px;
-  width: 564px;
+  flex: 1 1 320px;
+  max-width: 564px;
+  width: 100%;
 `;
 
 const Group = styled.div`
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
-  height: 471px;
-  margin-left: 6px;
-  width: 570px;
+  width: 100%;
 `;
 
 const TextWrapper = styled.p`
@@ -25,11 +21,14 @@ const TextWrapper = styled.p`
   font-family: "Swis721 Cn BT-Bold", Helvetica;
   font-size: 30px;
   font-weight: 700;
-  height: 70px;
   letter-spacing: 0;
   line-height: 35px;
-  margin-left: -6px;
-  width: 564px;
+  margin: 0;
+  width: 100%;
+
+  @media (max-width: 600px) {
+    font-size: 24px;
+  }
 `;
 
 const CodeDiv = styled.div`
@@ -37,13 +36,10 @@ const CodeDiv = styled.div`
   font-family: "Swis721 LtCn BT-Light", Helvetica;
   font-size: 18px;
   font-weight: 300;
-  height: 30px;
   letter-spacing: 0;
   line-height: 35px;
-  margin-left: -383.4px;
   margin-top: 10px;
   white-space: nowrap;
-  width: 186.65px;
 `;
 
 const BombaComTecnologia = styled.p`
@@ -51,12 +47,14 @@ const BombaComTecnologia = styled.p`
   font-family: "Swis721 LtCn BT-Light", Helvetica;
   font-size: 20px;
   font-weight: 300;
-  height: 336px;
   letter-spacing: 0;
   line-height: normal;
-  margin-left: -6px;
-  margin-top: 25px;
-  width: 564px;
+  margin: 25px 0 0;
+  width: 100%;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
 export const GroupSubsection = (): React.JSX.Element => {

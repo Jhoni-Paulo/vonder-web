@@ -7,25 +7,39 @@ import { GroupWrapperSubsection } from "./sections/GroupWrapperSubsection/GroupW
 import { SectionComponentNodeSubsection } from "./sections/SectionComponentNodeSubsection/SectionComponentNodeSubsection";
 
 const Container = styled.div`
+  align-items: center;
   background-color: #ffffff;
-  margin-top: -238px;
-  min-height: 3664px;
-  min-width: 1440px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  overflow-x: hidden;
+  padding: 40px 0 96px;
   position: relative;
   width: 100%;
+
+  @media (max-width: 600px) {
+    gap: 40px;
+    padding: 24px 0 56px;
+  }
 `;
 
 const Breadcrumb = styled.p`
+  box-sizing: border-box;
   color: #000000;
   font-family: "Swis721 LtCn BT-Light", Helvetica;
   font-size: 18px;
   font-weight: 400;
-  left: calc(50.00% - 619px);
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
-  top: 216px;
-  width: 628px;
+  margin: 0;
+  max-width: 1244px;
+  padding: 0 24px;
+  width: 100%;
+
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
 `;
 
 const BreadcrumbLight = styled.span`
@@ -37,46 +51,64 @@ const BreadcrumbBold = styled.span`
   font-weight: 700;
 `;
 
+const HeroRow = styled.div`
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  max-width: 1244px;
+  padding: 0 24px;
+  width: 100%;
+`;
+
+const ImageRow = styled.div`
+  align-items: center;
+  display: flex;
+  gap: 24px;
+`;
+
+const NavArrow = styled.img`
+  cursor: pointer;
+  flex: 0 0 auto;
+  height: 33px;
+  transition: opacity 0.2s ease;
+  width: 33px;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 600px) {
+    height: 24px;
+    width: 24px;
+  }
+`;
+
 const MainImage = styled.img`
   aspect-ratio: 0.63;
+  border-radius: 15px;
   height: 500px;
-  left: 254px;
   object-fit: cover;
-  position: absolute;
-  top: 327px;
   width: 317px;
+
+  @media (max-width: 600px) {
+    height: 340px;
+    width: 214px;
+  }
 `;
 
-const LayerImage = styled.img`
+const DividerImage = styled.img`
   height: 33px;
-  left: 693px;
-  position: absolute;
-  top: 561px;
-  width: 33px;
+  max-width: 1251px;
+  width: 100%;
 `;
 
-const LayerImageTwo = styled.img`
-  height: 33px;
-  left: 100px;
-  position: absolute;
-  top: 561px;
-  width: 33px;
-`;
-
-const GroupImage32 = styled.img`
-  height: 33px;
-  left: 95px;
-  position: absolute;
-  top: 931px;
-  width: 1251px;
-`;
-
-const GroupImage33 = styled.img`
-  height: 120px;
-  left: 153px;
-  position: absolute;
-  top: 887px;
-  width: 1135px;
+const FeatureIcons = styled.img`
+  height: auto;
+  max-width: 1135px;
+  width: 100%;
 `;
 
 export const ProdutoInterno = (): React.JSX.Element => {
@@ -88,24 +120,28 @@ export const ProdutoInterno = (): React.JSX.Element => {
         </BreadcrumbLight>
         <BreadcrumbBold>6864222220</BreadcrumbBold>
       </Breadcrumb>
-      <MainImage
-        alt="Image"
-        src="https://c.animaapp.com/C1uOODCl/img/image-135.png"
-      />
-      <GroupSubsection />
-      <LayerImage
-        alt="Camada"
-        src="https://c.animaapp.com/C1uOODCl/img/camada-1.svg"
-      />
-      <LayerImageTwo
-        alt="Camada"
-        src="https://c.animaapp.com/C1uOODCl/img/camada-1-1.svg"
-      />
-      <GroupImage32
+      <HeroRow>
+        <ImageRow>
+          <NavArrow
+            alt="Anterior"
+            src="https://c.animaapp.com/C1uOODCl/img/camada-1-1.svg"
+          />
+          <MainImage
+            alt="Image"
+            src="https://c.animaapp.com/C1uOODCl/img/image-135.png"
+          />
+          <NavArrow
+            alt="Próximo"
+            src="https://c.animaapp.com/C1uOODCl/img/camada-1.svg"
+          />
+        </ImageRow>
+        <GroupSubsection />
+      </HeroRow>
+      <DividerImage
         alt="Group"
         src="https://c.animaapp.com/C1uOODCl/img/group-307.png"
       />
-      <GroupImage33
+      <FeatureIcons
         alt="Group"
         src="https://c.animaapp.com/C1uOODCl/img/group-362.png"
       />

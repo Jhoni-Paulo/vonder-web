@@ -3,12 +3,15 @@ import styled from "styled-components";
 
 const StyledFrameWrapperSubsection = styled.div`
   align-items: center;
+  box-sizing: border-box;
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
   gap: 6px;
+  max-width: 820px;
+  padding: 0 24px;
   position: relative;
-  width: 820px;
+  width: 100%;
 
   & .frame-2 {
     align-items: center;
@@ -33,6 +36,10 @@ const StyledFrameWrapperSubsection = styled.div`
     text-align: center;
     white-space: nowrap;
     width: fit-content;
+
+    @media (max-width: 600px) {
+      font-size: 30px;
+    }
   }
 
   & .frame-3 {
@@ -41,6 +48,7 @@ const StyledFrameWrapperSubsection = styled.div`
     flex: 0 0 auto;
     flex-direction: column;
     gap: 10px;
+    max-width: 100%;
     position: relative;
     width: 428px;
   }
@@ -49,7 +57,9 @@ const StyledFrameWrapperSubsection = styled.div`
     align-items: center;
     display: inline-flex;
     flex: 0 0 auto;
+    flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
     margin-right: -10px;
     position: relative;
   }
@@ -67,11 +77,20 @@ const StyledFrameWrapperSubsection = styled.div`
     text-align: center;
     white-space: nowrap;
     width: fit-content;
+
+    @media (max-width: 600px) {
+      font-size: 52px;
+    }
   }
 
   & .camada {
+    max-width: 150px;
     position: relative;
     width: 250px;
+
+    @media (max-width: 600px) {
+      width: 130px;
+    }
   }
 
   & .frame-5 {
@@ -94,22 +113,36 @@ const StyledFrameWrapperSubsection = styled.div`
     letter-spacing: 0;
     line-height: normal;
     margin-top: -1px;
+    max-width: 100%;
     position: relative;
     text-align: center;
     width: 800px;
+
+    @media (max-width: 600px) {
+      font-size: 18px;
+    }
   }
 
   & .frame-6 {
     align-items: center;
     background-color: #000000;
     border-radius: 100px;
+    box-sizing: border-box;
+    cursor: pointer;
     display: flex;
     gap: 10px;
     height: 50px;
     justify-content: center;
+    max-width: 100%;
     padding: 15px 45px 11px 43px;
     position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     width: 286px;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px #00000040;
+    }
   }
 
   & .text-wrapper-6 {

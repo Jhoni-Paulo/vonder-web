@@ -1,195 +1,144 @@
 import React from "react";
 import styled from "styled-components";
 
-export const DivWrapperSubsection = (): React.JSX.Element => {
-  return (
-    <Container>
-      <Title>
-        Características
-        <br />
-        do produto
-      </Title>
-      <Description>
-        Tudo o que você precisa saber sobre
-        <br />
-        as funcionalidades e vantagens desse item
-      </Description>
-      <Group13>
-        <Group14>
-          <Group15>
-            <Rectangle />
-            <TextWrapper4>Conteúdo da embalagem</TextWrapper4>
-          </Group15>
-          <ExpandMore
-            alt="Expand more"
-            src="https://c.animaapp.com/C1uOODCl/img/expand-more.svg"
-          />
-        </Group14>
-        <Group16>
-          <Group15>
-            <Rectangle />
-            <TextWrapper4>Detalhes técnicos</TextWrapper4>
-          </Group15>
-          <ExpandMore
-            alt="Expand more"
-            src="https://c.animaapp.com/C1uOODCl/img/expand-more-1.svg"
-          />
-        </Group16>
-        <Group17>
-          <Group15>
-            <Rectangle />
-            <TextWrapper5>Arquivos para download</TextWrapper5>
-          </Group15>
-          <ExpandMoreTwo
-            alt="Expand more"
-            src="https://c.animaapp.com/C1uOODCl/img/expand-more-2.svg"
-          />
-        </Group17>
-        <Group18>
-          <Group15>
-            <Rectangle />
-            <TextWrapper6>Conteúdo para web</TextWrapper6>
-          </Group15>
-          <ExpandMoreThree
-            alt="Expand more"
-            src="https://c.animaapp.com/C1uOODCl/img/expand-more-3.svg"
-          />
-        </Group18>
-      </Group13>
-    </Container>
-  );
-};
-
 const Container = styled.div`
+  align-items: center;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  height: 558px;
-  left: calc(50.00% - 620px);
-  position: absolute;
-  top: 1087px;
-  width: 1244px;
+  gap: 30px;
+  max-width: 1244px;
+  padding: 0 24px;
+  width: 100%;
+`;
+
+const Header = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 `;
 
 const Title = styled.div`
-  align-self: center;
   color: #000000;
   font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
   font-size: 45px;
   font-style: italic;
   font-weight: 700;
-  height: 108px;
   letter-spacing: 0;
   line-height: normal;
-  margin-left: -760px;
-  width: 452px;
+  text-align: center;
+
+  @media (max-width: 600px) {
+    font-size: 32px;
+  }
 `;
 
 const Description = styled.p`
-  align-self: center;
   color: #333333;
   font-family: "Swis721 LtCn BT-Light", Helvetica;
   font-size: 24px;
   font-weight: 300;
-  height: 58px;
   letter-spacing: 0;
   line-height: normal;
-  margin-left: -808px;
-  margin-top: 20px;
-  width: 404px;
+  margin: 0;
+  max-width: 404px;
+  text-align: center;
+
+  @media (max-width: 600px) {
+    font-size: 18px;
+  }
 `;
 
-const Group13 = styled.div`
-  height: 342px;
-  margin-top: 30px;
-  position: relative;
-  width: 1240px;
+const AccordionList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
 `;
 
-const Group14 = styled.div`
-  height: 78px;
-  left: 0;
-  position: absolute;
-  top: calc(50.00% - 171px);
-  width: 1240px;
-`;
-
-const Group16 = styled(Group14)`
-  top: calc(50.00% - 83px);
-`;
-
-const Group17 = styled(Group14)`
-  top: calc(50.00% + 5px);
-`;
-
-const Group18 = styled(Group14)`
-  top: calc(50.00% + 93px);
-`;
-
-const Group15 = styled.div`
-  height: 78px;
-  left: calc(50.00% - 620px);
-  position: absolute;
-  top: 0;
-  width: 1242px;
-`;
-
-const Rectangle = styled.div`
+const AccordionRow = styled.div`
+  align-items: center;
   background-color: #f2f2f2;
   border-radius: 20px;
-  height: 78px;
-  left: calc(50.00% - 621px);
-  position: absolute;
-  top: 0;
-  width: 1240px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 50px;
+  transition: background-color 0.2s ease;
+  width: 100%;
+
+  &:hover {
+    background-color: #e8e8e8;
+  }
+
+  @media (max-width: 600px) {
+    padding: 18px 24px;
+  }
 `;
 
-const TextWrapperBase = styled.div`
-  align-items: center;
+const AccordionLabel = styled.div`
   color: #000000;
-  display: flex;
   font-family: "Swis721 Cn BT-Bold", Helvetica;
   font-size: 24px;
   font-weight: 700;
-  height: 29px;
-  left: 50px;
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
+
+  @media (max-width: 600px) {
+    font-size: 18px;
+  }
 `;
 
-const TextWrapper4 = styled(TextWrapperBase)`
-  top: calc(50.00% - 15px);
-`;
-
-const TextWrapper5 = styled(TextWrapperBase)`
-  top: calc(50.00% - 14px);
-`;
-
-const TextWrapper6 = styled(TextWrapperBase)`
-  justify-content: center;
-  left: calc(50.00% - 571px);
-  text-align: center;
-  top: calc(50.00% - 14px);
-`;
-
-const ExpandMoreIconBase = styled.img`
-  aspect-ratio: 1;
+const ExpandIcon = styled.img`
+  flex: 0 0 auto;
   height: 25px;
-  position: absolute;
   width: 25px;
 `;
 
-const ExpandMore = styled(ExpandMoreIconBase)`
-  left: 1190px;
-  top: calc(50.00% - 12px);
-`;
+const items = [
+  {
+    label: "Conteúdo da embalagem",
+    icon: "https://c.animaapp.com/C1uOODCl/img/expand-more.svg",
+  },
+  {
+    label: "Detalhes técnicos",
+    icon: "https://c.animaapp.com/C1uOODCl/img/expand-more-1.svg",
+  },
+  {
+    label: "Arquivos para download",
+    icon: "https://c.animaapp.com/C1uOODCl/img/expand-more-2.svg",
+  },
+  {
+    label: "Conteúdo para web",
+    icon: "https://c.animaapp.com/C1uOODCl/img/expand-more-3.svg",
+  },
+];
 
-const ExpandMoreTwo = styled(ExpandMoreIconBase)`
-  left: 1195px;
-  top: calc(50.00% - 10px);
-`;
-
-const ExpandMoreThree = styled(ExpandMoreIconBase)`
-  left: 1190px;
-  top: calc(50.00% - 10px);
-`;
+export const DivWrapperSubsection = (): React.JSX.Element => {
+  return (
+    <Container>
+      <Header>
+        <Title>
+          Características
+          <br />
+          do produto
+        </Title>
+        <Description>
+          Tudo o que você precisa saber sobre
+          <br />
+          as funcionalidades e vantagens desse item
+        </Description>
+      </Header>
+      <AccordionList>
+        {items.map((item) => (
+          <AccordionRow key={item.label}>
+            <AccordionLabel>{item.label}</AccordionLabel>
+            <ExpandIcon alt="Expand more" src={item.icon} />
+          </AccordionRow>
+        ))}
+      </AccordionList>
+    </Container>
+  );
+};

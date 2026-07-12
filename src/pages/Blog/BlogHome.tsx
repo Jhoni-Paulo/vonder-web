@@ -14,19 +14,35 @@ const StyledBlogHome = styled.div`
   display: flex;
   flex-direction: column;
   gap: 56px;
+  overflow-x: hidden;
+  padding-bottom: 96px;
   position: relative;
+  width: 100%;
+
+  @media (max-width: 600px) {
+    gap: 40px;
+    padding-bottom: 56px;
+  }
 
   & .frame-42 {
     align-items: center;
     background-color: #000000;
     border-radius: 100px;
+    cursor: pointer;
     display: flex;
     gap: 10px;
     height: 60px;
     justify-content: center;
+    max-width: 100%;
     padding: 15px 1px;
     position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     width: 400px;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px #00000040;
+    }
   }
 
   & .text-wrapper-30 {
@@ -40,6 +56,11 @@ const StyledBlogHome = styled.div`
     position: relative;
     text-align: center;
     width: 398px;
+
+    @media (max-width: 600px) {
+      font-size: 20px;
+      width: auto;
+    }
   }
 `;
 

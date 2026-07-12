@@ -7,18 +7,23 @@ import {
 
 const StyledDivSubsection = styled.div`
   align-items: flex-start;
+  box-sizing: border-box;
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
   gap: 30px;
+  max-width: 1228px;
+  padding: 0 24px;
   position: relative;
-  width: 1228px;
+  width: 100%;
 
   & .frame-21 {
     align-items: flex-end;
     align-self: stretch;
     display: flex;
     flex: 0 0 auto;
+    flex-wrap: wrap;
+    gap: 16px;
     justify-content: space-between;
     position: relative;
     width: 100%;
@@ -29,6 +34,7 @@ const StyledDivSubsection = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+    max-width: 100%;
     position: relative;
     width: 452px;
   }
@@ -44,6 +50,10 @@ const StyledDivSubsection = styled.div`
     line-height: normal;
     margin-top: -1px;
     position: relative;
+
+    @media (max-width: 600px) {
+      font-size: 32px;
+    }
   }
 
   & .temas-e-artigos-mais {
@@ -53,21 +63,35 @@ const StyledDivSubsection = styled.div`
     font-weight: 300;
     letter-spacing: 0;
     line-height: normal;
+    max-width: 100%;
     position: relative;
     width: 289px;
+
+    @media (max-width: 600px) {
+      font-size: 18px;
+    }
   }
 
   & .frame-23 {
     align-items: center;
     background-color: #000000;
     border-radius: 100px;
+    box-sizing: border-box;
+    cursor: pointer;
     display: flex;
     gap: 10px;
     height: 50px;
     justify-content: center;
+    max-width: 100%;
     padding: 15px 78px;
     position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
     width: 286px;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px #00000040;
+    }
   }
 
   & .text-wrapper-17 {
