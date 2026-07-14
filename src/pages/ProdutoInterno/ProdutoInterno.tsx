@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import matriz18 from "../../assets/matriz_18.webp";
+import { ProductViewer360 } from "../../components/ProductViewer360/ProductViewer360";
 import { DivSubsection } from "./sections/DivSubsection/DivSubsection";
 import { DivWrapperSubsection } from "./sections/DivWrapperSubsection";
 import { GroupSubsection } from "./sections/GroupSubsection";
@@ -63,39 +65,14 @@ const HeroRow = styled.div`
   width: 100%;
 `;
 
-const ImageRow = styled.div`
-  align-items: center;
-  display: flex;
-  gap: 24px;
-`;
-
-const NavArrow = styled.img`
-  cursor: pointer;
-  flex: 0 0 auto;
-  height: 33px;
-  transition: opacity 0.2s ease;
-  width: 33px;
-
-  &:hover {
-    opacity: 0.7;
-  }
-
-  @media (max-width: 600px) {
-    height: 24px;
-    width: 24px;
-  }
-`;
-
-const MainImage = styled.img`
-  aspect-ratio: 0.63;
+const ViewerWrap = styled.div`
   border-radius: 15px;
-  height: 500px;
-  object-fit: cover;
-  width: 317px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  width: 420px;
 
   @media (max-width: 600px) {
-    height: 340px;
-    width: 214px;
+    width: 280px;
   }
 `;
 
@@ -121,20 +98,9 @@ export const ProdutoInterno = (): React.JSX.Element => {
         <BreadcrumbBold>6864222220</BreadcrumbBold>
       </Breadcrumb>
       <HeroRow>
-        <ImageRow>
-          <NavArrow
-            alt="Anterior"
-            src="https://c.animaapp.com/C1uOODCl/img/camada-1-1.svg"
-          />
-          <MainImage
-            alt="Image"
-            src="https://c.animaapp.com/C1uOODCl/img/image-135.png"
-          />
-          <NavArrow
-            alt="Próximo"
-            src="https://c.animaapp.com/C1uOODCl/img/camada-1.svg"
-          />
-        </ImageRow>
+        <ViewerWrap>
+          <ProductViewer360 imageUrl={matriz18} />
+        </ViewerWrap>
         <GroupSubsection />
       </HeroRow>
       <DividerImage
