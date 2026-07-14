@@ -95,6 +95,10 @@ body {
   padding: 0;
 }
 
+header{
+  background-color: #F6BE00 !important;
+}
+
 /* Utilidades Globais */
 .container {
   width: 100%;

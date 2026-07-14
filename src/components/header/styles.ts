@@ -28,13 +28,10 @@ export const HeaderWrapper = styled.header`
   max-width: 100%;
   margin: 0;
   padding: 0;
-  background-color: #F6BE00;
+  /* Transparent so the page content (e.g. blog cover) shows through the
+     rounded-corner cutouts of Topo/BottomHeader instead of a solid fill. */
+  background-color: transparent;
   border-radius: 0px 0px 20px 20px;
-
-  @media (max-width: 900px) {
-    background-color: transparent;
-    border-radius: 0;
-  }
 `;
 
 export const Topo = styled.div`

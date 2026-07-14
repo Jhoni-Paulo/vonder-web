@@ -13,9 +13,11 @@ const FrameSubsectionContainer = styled.div`
   flex-direction: column;
   gap: 39px;
   height: 564px;
+  margin-top: -20px;
   padding: 55px 696px 123px 96px;
   position: relative;
   width: 100%;
+  z-index: 1;
 
   @media (max-width: 1200px) {
     padding: 55px 96px 123px;

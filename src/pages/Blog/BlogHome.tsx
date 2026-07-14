@@ -14,7 +14,9 @@ const StyledBlogHome = styled.div`
   display: flex;
   flex-direction: column;
   gap: 56px;
-  overflow-x: hidden;
+  /* No overflow-x: hidden here: it would turn this into a clip container
+     (overflow-y computes to auto) and cut off the cover's -20px overlap
+     that must slide under the header. The app root already clips x. */
   padding-bottom: 96px;
   position: relative;
   width: 100%;
