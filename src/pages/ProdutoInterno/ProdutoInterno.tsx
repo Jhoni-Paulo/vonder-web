@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import image111 from "../../assets/image 111.png";
+import image112 from "../../assets/image 112.png";
+import image116 from "../../assets/image 116.png";
+import image137 from "../../assets/image 137.png";
+import image138 from "../../assets/image 138.png";
 import matriz18 from "../../assets/matriz_18.webp";
+import {
+  ImageCarousel,
+  type ImageCarouselItem,
+} from "../../components/ImageCarousel/ImageCarousel";
 import { ProductViewer360 } from "../../components/ProductViewer360/ProductViewer360";
 import { DivSubsection } from "./sections/DivSubsection/DivSubsection";
 import { DivWrapperSubsection } from "./sections/DivWrapperSubsection";
@@ -66,8 +75,12 @@ const HeroRow = styled.div`
 `;
 
 const ViewerWrap = styled.div`
+  align-items: center;
+  aspect-ratio: 1;
   border-radius: 15px;
+  display: flex;
   flex: 0 0 auto;
+  justify-content: center;
   overflow: hidden;
   width: 420px;
 
@@ -76,19 +89,40 @@ const ViewerWrap = styled.div`
   }
 `;
 
-const DividerImage = styled.img`
-  height: 33px;
-  max-width: 1251px;
+const StaticProductImage = styled.img`
+  height: 100%;
+  object-fit: contain;
   width: 100%;
 `;
 
-const FeatureIcons = styled.img`
-  height: auto;
-  max-width: 1135px;
+const GalleryWrap = styled.div`
+  box-sizing: border-box;
+  max-width: 1244px;
+  padding: 0 24px;
   width: 100%;
 `;
+
+const galleryImages: ImageCarouselItem[] = [
+  {
+    id: "116",
+    src: image116,
+    alt: "Foto do produto — visualização 360",
+    is360: true,
+    matrixSrc: matriz18,
+  },
+  { id: "111", src: image111, alt: "Foto do produto 1" },
+  { id: "112", src: image112, alt: "Foto do produto 2" },
+  { id: "137", src: image137, alt: "Foto do produto 3" },
+  { id: "138", src: image138, alt: "Foto do produto 4" },
+  { id: "111-dup", src: image111, alt: "Foto do produto 1" },
+  { id: "112-dup", src: image112, alt: "Foto do produto 2" },
+];
 
 export const ProdutoInterno = (): React.JSX.Element => {
+  const [selectedImage, setSelectedImage] = useState<ImageCarouselItem>(
+    galleryImages[0]
+  );
+
   return (
     <Container data-model-id="1:5723">
       <Breadcrumb>
@@ -99,18 +133,27 @@ export const ProdutoInterno = (): React.JSX.Element => {
       </Breadcrumb>
       <HeroRow>
         <ViewerWrap>
-          <ProductViewer360 imageUrl={matriz18} />
+          {selectedImage.is360 ? (
+            <ProductViewer360
+              key={selectedImage.matrixSrc}
+              imageUrl={selectedImage.matrixSrc}
+            />
+          ) : (
+            <StaticProductImage
+              alt={selectedImage.alt}
+              src={selectedImage.src}
+            />
+          )}
         </ViewerWrap>
         <GroupSubsection />
       </HeroRow>
-      <DividerImage
-        alt="Group"
-        src="https://c.animaapp.com/C1uOODCl/img/group-307.png"
-      />
-      <FeatureIcons
-        alt="Group"
-        src="https://c.animaapp.com/C1uOODCl/img/group-362.png"
-      />
+      <GalleryWrap>
+        <ImageCarousel
+          items={galleryImages}
+          selectedId={selectedImage.id}
+          onItemSelect={setSelectedImage}
+        />
+      </GalleryWrap>
       <GroupWrapperSubsection />
       <DivWrapperSubsection />
       <DivSubsection />

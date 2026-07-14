@@ -276,6 +276,13 @@ export const ProductViewer360: React.FC<ProductViewer360Props> = ({ imageUrl, cl
       // Fast follow immediately without easing during drag
       state.current.panX = state.current.targetPanX;
       state.current.panY = state.current.targetPanY;
+
+      // Apply the transform directly: target and current are equal here
+      // (fast follow, no easing), so the animation loop's diff-based gate
+      // would never detect a change and the canvas would never repaint.
+      if (canvasRef.current) {
+        canvasRef.current.style.transform = `scale(${state.current.zoom}) translate(${state.current.panX}px, ${state.current.panY}px)`;
+      }
     } else {
       // Rotating mode
       const frameDelta = deltaX * SENSITIVITY_DRAG * DRAG_MOMENTUM_MULTIPLIER;
@@ -403,31 +410,31 @@ export const ProductViewer360: React.FC<ProductViewer360Props> = ({ imageUrl, cl
 
       {/* Zoom UI Toolbar Overlay */}
       {isLoaded && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center p-1 bg-white/85 backdrop-blur-md border border-slate-200 shadow-md rounded-full z-20 transition-all">
-          <button onClick={handleZoomOut} className="p-2.5 rounded-full text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition focus:outline-none" title="Reduzir Zoom (Ctrl + Scroll)">
-            <ZoomOut className="w-4 h-4" />
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1 px-4 py-2 bg-white/85 backdrop-blur-md border border-slate-200 shadow-md rounded-full z-20 transition-all">
+          <button onClick={handleZoomOut} className="p-4 rounded-full text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition focus:outline-none" title="Reduzir Zoom (Ctrl + Scroll)">
+            <ZoomOut className="w-6 h-6" />
           </button>
 
-          <button onClick={handleZoomIn} className="p-2.5 rounded-full text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition focus:outline-none" title="Ampliar Zoom (Duplo Clique)">
-            <ZoomIn className="w-4 h-4" />
+          <button onClick={handleZoomIn} className="p-4 rounded-full text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition focus:outline-none" title="Ampliar Zoom (Duplo Clique)">
+            <ZoomIn className="w-6 h-6" />
           </button>
 
           {isZoomed && (
             <>
-              <div className="w-px h-6 bg-slate-300/80 mx-1"></div>
+              <div className="w-px h-8 bg-slate-300/80 mx-1.5"></div>
 
-              <button onClick={() => setMode('rotate')} className={`p-2.5 rounded-full transition focus:outline-none ${mode === 'rotate' ? 'bg-blue-100/90 text-blue-700 shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`} title="Modo Rotação">
-                <Rotate3D className="w-4 h-4" />
+              <button onClick={() => setMode('rotate')} className={`p-4 rounded-full transition focus:outline-none ${mode === 'rotate' ? 'bg-blue-100/90 text-blue-700 shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`} title="Modo Rotação">
+                <Rotate3D className="w-6 h-6" />
               </button>
 
-              <button onClick={() => setMode('pan')} className={`p-2.5 rounded-full transition focus:outline-none ${mode === 'pan' ? 'bg-blue-100/90 text-blue-700 shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`} title="Modo de Movimento Livre">
-                <Hand className="w-4 h-4" />
+              <button onClick={() => setMode('pan')} className={`p-4 rounded-full transition focus:outline-none ${mode === 'pan' ? 'bg-blue-100/90 text-blue-700 shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`} title="Modo de Movimento Livre">
+                <Hand className="w-6 h-6" />
               </button>
 
-              <div className="w-px h-6 bg-slate-300/80 mx-1"></div>
+              <div className="w-px h-8 bg-slate-300/80 mx-1.5"></div>
 
-              <button onClick={handleResetZoom} className="p-2.5 rounded-full text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition focus:outline-none" title="Restaurar Visão Normal">
-                <RefreshCcw className="w-4 h-4" />
+              <button onClick={handleResetZoom} className="p-4 rounded-full text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition focus:outline-none" title="Restaurar Visão Normal">
+                <RefreshCcw className="w-6 h-6" />
               </button>
             </>
           )}
