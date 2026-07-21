@@ -1,5 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { LaunchDetailModal } from "../../components/LaunchDetailModal/LaunchDetailModal";
+
+/* Conteúdo do popup do primeiro card (lançamento em destaque) */
+const featuredLaunch = {
+  title: "Aspirador de Pó Vertical APV 1350 Turbo VONDER",
+  description:
+    "Leve, compacto e versátil. Ideal para limpeza de pisos, carpetes, móveis, veículos e muito mais!",
+  images: [
+    "https://c.animaapp.com/Ll7qOVax/img/4045-01-1.png",
+    "https://c.animaapp.com/Ll7qOVax/img/4045-02-1.png",
+    "https://c.animaapp.com/Ll7qOVax/img/4045-03-1.png",
+    "https://c.animaapp.com/Ll7qOVax/img/4045-04-1.png",
+  ],
+};
 
 /* ══════════════════════════════════════════════
    DADOS
@@ -280,6 +294,8 @@ const CardLink = styled.span`
 ══════════════════════════════════════════════ */
 
 export const Lancamentos = (): React.JSX.Element => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <Page>
       <Breadcrumb>
@@ -308,7 +324,7 @@ export const Lancamentos = (): React.JSX.Element => {
       {/* Grid de produtos */}
       <CardGrid>
         {allCards.map((card, i) => (
-          <Card key={i}>
+          <Card key={i} onClick={i === 0 ? () => setModalOpen(true) : undefined}>
             <CardImageWrap>
               <CardImage alt={card.title} src={card.img} />
               <CardOverlay />
@@ -338,6 +354,14 @@ export const Lancamentos = (): React.JSX.Element => {
           <NextBtn alt="" src="https://c.animaapp.com/wSrmTlud/img/frame-389-1.svg" />
         </Pagination>
       </Controls>
+
+      <LaunchDetailModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title={featuredLaunch.title}
+        description={featuredLaunch.description}
+        images={featuredLaunch.images}
+      />
     </Page>
   );
 };

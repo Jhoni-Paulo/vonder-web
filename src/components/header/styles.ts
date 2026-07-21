@@ -28,10 +28,16 @@ export const HeaderWrapper = styled.header`
   max-width: 100%;
   margin: 0;
   padding: 0;
-  /* Transparent so the page content (e.g. blog cover) shows through the
-     rounded-corner cutouts of Topo/BottomHeader instead of a solid fill. */
-  background-color: transparent;
+  /* Yellow fills the rounded-corner cutout of the black Topo bar. This
+     wrapper is rounded with the SAME radius as BottomHeader, so at the very
+     bottom corners the yellow is cut out too and the page content behind
+     (e.g. blog cover) shows through there instead. */
+  background-color: #F6BE00;
   border-radius: 0px 0px 20px 20px;
+
+  @media (max-width: 900px) {
+    background-color: transparent;
+  }
 `;
 
 export const Topo = styled.div`

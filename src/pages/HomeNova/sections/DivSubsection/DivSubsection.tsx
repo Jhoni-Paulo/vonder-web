@@ -171,6 +171,9 @@ const LaunchCard = styled.div<{ $hidden?: boolean }>`
   position: relative;
   border-radius: 15px;
   width: 286px;
+  /* Small spacing between cards. The first (hidden) card overrides this with
+     a tuck margin below, so the gap between the 1st and 2nd stays tighter. */
+  margin-right: 16px;
   transform: scale(1);
   filter: brightness(1);
   will-change: opacity, margin-right, transform, filter;
