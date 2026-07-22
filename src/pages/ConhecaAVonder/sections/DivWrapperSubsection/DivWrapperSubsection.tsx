@@ -1,107 +1,232 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperType } from "swiper";
+import "swiper/css";
+import arrowLeft from "../../../../assets/Camada_1.png";
 
-const Container = styled.div`
-  height: 290px;
-  left: calc(50.00% - 614px);
-  position: absolute;
-  top: 760px;
-  width: 1230px;
+const Section = styled.div`
+  align-items: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 40px;
+  padding-left: calc((100% - 1440px) / 2);
+  position: relative;
+  width: 100%;
+
+  @media (max-width: 1480px) {
+    padding-left: 24px;
+  }
+
+  @media (max-width: 600px) {
+    gap: 28px;
+    padding-left: 20px;
+  }
 `;
 
-const Group = styled.div`
-  align-items: center;
+const Header = styled.div`
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 202px;
-  left: calc(50.00% - 615px);
-  position: absolute;
-  top: 44px;
-  width: 404px;
+  width: 282px;
 `;
 
-const Title = styled.div`
+const Eyebrow = styled.div`
   color: #f6be00;
   font-family: "Swis721 Cn BT-Bold", Helvetica;
   font-size: 25px;
   font-weight: 700;
-  height: 30px;
   letter-spacing: 0;
   line-height: normal;
-  margin-left: -261px;
-  white-space: nowrap;
-  width: 143px;
 `;
 
-const Subtitle = styled.div`
+const Title = styled.div`
   color: #000000;
   font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
   font-size: 45px;
   font-style: italic;
   font-weight: 700;
-  height: 162px;
   letter-spacing: 0;
   line-height: normal;
-  margin-left: -4px;
-  width: 400px;
+
+  @media (max-width: 600px) {
+    font-size: 32px;
+  }
 `;
 
-const Description = styled.p`
+const Carousel = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const Arrow = styled.img`
+  position: absolute;
+  top: 68px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 33px;
+  height: 33px;
+  z-index: 2;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &.arrow-left {
+    left: 24px;
+  }
+
+  &.arrow-right {
+    right: 24px;
+  }
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+
+const Track = styled.div`
+  width: 100%;
+
+  .swiper {
+    padding: 4px 0;
+  }
+
+  .swiper-wrapper {
+    justify-content: space-between;
+  }
+
+  .swiper-slide {
+    width: auto;
+    height: auto;
+  }
+`;
+
+const Card = styled.div`
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 200px;
+`;
+
+const CardImage = styled.img`
+  height: 150px;
+  object-fit: contain;
+  object-position: left center;
+  width: auto;
+  max-width: 100%;
+`;
+
+const Year = styled.div`
+  color: #000000;
+  font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
+  font-size: 45px;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: normal;
+
+  @media (max-width: 600px) {
+    font-size: 34px;
+  }
+`;
+
+const Text = styled.p`
   color: #000000;
   font-family: "Swis721 LtCn BT-Light", Helvetica;
-  font-size: 24px;
-  font-weight: 400;
-  left: calc(50.00% - 187px);
+  font-size: 18px;
+  font-weight: 300;
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
-  text-align: justify;
-  top: calc(50.00% - 145px);
-  width: 800px;
+  margin: 0;
 `;
 
-const LightText = styled.span`
-  font-weight: 300;
-`;
-
-const BoldText = styled.span`
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-weight: 700;
-`;
+const milestones = [
+  {
+    img: "https://c.animaapp.com/HXGo4e2k/img/trena-1@2x.png",
+    year: "HOJE",
+    text: "O primeiro perfil brasileiro oficial do segmento de ferragens e ferramentas a atingir 500 mil seguidores no Instagram.",
+  },
+  {
+    img: "https://c.animaapp.com/HXGo4e2k/img/ellipse-5@2x.png",
+    year: "2024",
+    text: "Inauguração do CD-PE em Serra Talhada, consolidando a área Logística da VONDER nas principais regiões do Brasil.",
+  },
+  {
+    img: "https://c.animaapp.com/HXGo4e2k/img/ellipse-6@2x.png",
+    year: "2023",
+    text: "Lançamento da linha de Máquinas de Pintura Airless, que trouxe ao mercado de equipamentos de pintura no Brasil uma nova perspectiva em termos de acabamento e performance.",
+  },
+  {
+    img: "https://c.animaapp.com/HXGo4e2k/img/ellipse-7@2x.png",
+    year: "2021",
+    text: "Apoio à equipe da Stock Car como marca oficial de ferramentas de equipes com Pole Motorsport e Scuderia Bandeiras na principal categoria do automobilismo brasileiro.",
+  },
+  {
+    img: "https://c.animaapp.com/HXGo4e2k/img/ellipse-8@2x.png",
+    year: "2020",
+    text: "Desengraxante VONDER eleito o melhor do Brasil na categoria pela coluna Palavra do Especialista da Revista Quatro Rodas.",
+  },
+  {
+    img: "https://c.animaapp.com/HXGo4e2k/img/frame-69962.svg",
+    year: "2016",
+    text: "Primeira participação junto à Equipe SELF no Rally dos Sertões, numa categoria em que os pilotos participam da competição sem suporte mecânico, fazendo as próprias manutenções em suas motos",
+  },
+];
 
 export const DivWrapperSubsection = (): React.JSX.Element => {
+  const swiperRef = useRef<SwiperType | null>(null);
+
   return (
-    <Container>
-      <Group>
-        <Title>QUEM SOMOS</Title>
-        <Subtitle>
-          FORÇA BRASILEIRA
+    <Section className="div-wrapper-subsection">
+      <Header>
+        <Eyebrow>NOSSA HISTÓRIA</Eyebrow>
+        <Title>
+          EVOLUÇÃO QUE
           <br />
-          QUE CONSTRÓI
-          <br />
-          SOLUÇÕES.
-        </Subtitle>
-      </Group>
-      <Description>
-        <LightText>A </LightText>
-        <BoldText>VONDER</BoldText>
-        <LightText>
-          {" "}
-          é uma das marcas mais completas do Brasil em sua categoria, sendo
-          detentora do melhor e mais completo mix de ferragens, ferramentas,
-          máquinas e equipamentos para uso profissional do mercado. Um histórico
-          de trabalho e crescimento muito expressivo, incrementando seus
-          produtos ano a ano e surpreendendo por sua evolução e aprimoramento em
-          diversos segmentos e linhas, sempre primando pela máxima qualidade de
-          suas ferramentas e ampla variedade de produtos destinados a diferentes
-          segmentos de atuação profissional.
-          <br />
-          <br />A VONDER é a principal marca do Grupo OVD, um dos maiores
-          atacadistas de ferragens e ferramentas do país, com 55 anos de mercado
-          e dedicação aos seus parceiros e clientes.
-        </LightText>
-      </Description>
-    </Container>
+          NOS MOVE.
+        </Title>
+      </Header>
+      <Carousel>
+        <Arrow
+          className="arrow-left"
+          alt="Anterior"
+          src={arrowLeft}
+          onClick={() => swiperRef.current?.slidePrev()}
+        />
+        <Track>
+          <Swiper
+            grabCursor
+            rewind
+            slidesPerView="auto"
+            spaceBetween={0}
+            onSwiper={(s) => {
+              swiperRef.current = s;
+            }}
+          >
+            {milestones.map((m) => (
+              <SwiperSlide key={m.year}>
+                <Card>
+                  <CardImage alt={m.year} src={m.img} />
+                  <Year>{m.year}</Year>
+                  <Text>{m.text}</Text>
+                </Card>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Track>
+        <Arrow
+          className="arrow-right"
+          alt="Próximo"
+          src="https://c.animaapp.com/HXGo4e2k/img/camada-1.svg"
+          onClick={() => swiperRef.current?.slideNext()}
+        />
+      </Carousel>
+    </Section>
   );
 };

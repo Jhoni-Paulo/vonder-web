@@ -137,6 +137,7 @@ const cards = [
       "Explore a jornada da VONDER, destacando marcos importantes e a trajetória que nos tornou referência no setor de ferramentas.",
     action: "Conheça nossa trajetória",
     link: "/conheca-a-vonder",
+    unlocked: true,
   },
   {
     img: "https://c.animaapp.com/tE2W9na7/img/05-2@2x.png",
@@ -160,21 +161,32 @@ export function ConhecaVonderMega(): React.JSX.Element {
   return (
     <Root>
       <ColumnsWrapper>
-        {cards.map((card) => (
-          <Column key={card.title}>
-            <Image alt={card.title} src={card.img} />
-            <TitleText>{card.title}</TitleText>
-            <DescriptionText>{card.description}</DescriptionText>
-            <ButtonLink
-              to={card.link}
-              onClick={(e) => e.preventDefault()}
-              style={{ opacity: 0.35, cursor: "not-allowed", pointerEvents: "none", gap: 8 }}
-            >
-              <LockIcon size={14} color="#ffc600" />
-              <ButtonText>{card.action}</ButtonText>
-            </ButtonLink>
-          </Column>
-        ))}
+        {cards.map((card) =>
+          card.unlocked ? (
+            <Column key={card.title}>
+              <Image alt={card.title} src={card.img} />
+              <TitleText>{card.title}</TitleText>
+              <DescriptionText>{card.description}</DescriptionText>
+              <ButtonLink to={card.link} style={{ gap: 8 }}>
+                <ButtonText>{card.action}</ButtonText>
+              </ButtonLink>
+            </Column>
+          ) : (
+            <Column key={card.title}>
+              <Image alt={card.title} src={card.img} />
+              <TitleText>{card.title}</TitleText>
+              <DescriptionText>{card.description}</DescriptionText>
+              <ButtonLink
+                to={card.link}
+                onClick={(e) => e.preventDefault()}
+                style={{ opacity: 0.35, cursor: "not-allowed", pointerEvents: "none", gap: 8 }}
+              >
+                <LockIcon size={14} color="#ffc600" />
+                <ButtonText>{card.action}</ButtonText>
+              </ButtonLink>
+            </Column>
+          )
+        )}
       </ColumnsWrapper>
     </Root>
   );

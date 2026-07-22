@@ -2,103 +2,170 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledGroupWrapperSubsection = styled.div`
-  height: 319px;
-  left: 106px;
-  position: absolute;
-  top: 4863px;
-  width: 1230px;
-`;
-
-const Group3 = styled.div`
+  align-items: flex-start;
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
-  gap: 9.6px;
-  height: 200px;
-  left: calc(50.00% + 213px);
-  position: absolute;
-  top: 44px;
-  width: 404px;
-`;
+  gap: 10px;
+  position: relative;
+  width: 100%;
 
-const TextWrapper5 = styled.div`
-  color: #f6be00;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 25px;
-  font-weight: 700;
-  height: 30px;
-  letter-spacing: 0;
-  line-height: normal;
-  white-space: nowrap;
-  width: 260px;
-`;
+  & .group {
+    height: 566px;
+    position: relative;
+    width: 100%;
+  }
 
-const ASolucaoInteligente = styled.p`
-  align-self: center;
-  color: #000000;
-  font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-  font-size: 45px;
-  font-style: italic;
-  font-weight: 700;
-  height: 160.4px;
-  letter-spacing: 0;
-  line-height: normal;
-  margin-left: -4px;
-  width: 400px;
-`;
+  & .group-2 {
+    background-color: #f2f2f2;
+    height: 443px;
+    left: 0;
+    position: absolute;
+    top: calc(50% - 234px);
+    width: 100%;
+  }
 
-const AVonderAcredita = styled.p`
-  color: #000000;
-  font-family: "Swis721 LtCn BT-Light", Helvetica;
-  font-size: 24px;
-  font-weight: 400;
-  left: 0;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: justify;
-  top: calc(50.00% - 160px);
-  width: 750px;
-`;
+  & .frame-wrapper {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    left: calc((100% - 1440px) / 2);
+    position: absolute;
+    top: 0;
+    width: 1440px;
+  }
 
-const TextWrapper6 = styled.span`
-  font-weight: 300;
-`;
+  & .frame-4 {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+  }
 
-const TextWrapper7 = styled.span`
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-weight: 700;
+  & .desde-o-lan-amento-wrapper {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    position: relative;
+  }
+
+  & .desde-o-lan-amento {
+    color: #000000;
+    font-family: "Swis721 LtCn BT-Light", Helvetica;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    text-align: justify;
+    width: 700px;
+  }
+
+  & .text-wrapper-8 {
+    font-weight: 300;
+  }
+
+  & .text-wrapper-9 {
+    font-family: "Swis721 Cn BT-Bold", Helvetica;
+    font-weight: 700;
+  }
+
+  & .img {
+    flex: 0 0 auto;
+    position: relative;
+  }
+
+  @media (max-width: 1440px) {
+    background-color: #f2f2f2;
+    box-sizing: border-box;
+    padding: 48px 24px;
+
+    & .group {
+      height: auto;
+    }
+
+    & .group-2 {
+      display: none;
+    }
+
+    & .frame-wrapper {
+      left: auto;
+      position: static;
+      width: 100%;
+    }
+
+    & .frame-4 {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    & .desde-o-lan-amento {
+      width: 100%;
+    }
+
+    & .img {
+      align-self: center;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 40px 20px;
+
+    & .desde-o-lan-amento {
+      font-size: 18px;
+    }
+  }
 `;
 
 export const GroupWrapperSubsection = (): React.JSX.Element => {
   return (
-    <StyledGroupWrapperSubsection>
-      <Group3>
-        <TextWrapper5>TECNOLOGIA E INOVAÇÃO</TextWrapper5>
-        <ASolucaoInteligente>
-          A SOLUÇÃO INTELIGENTE DO
-          <br />
-          SEU SUCESSO
-        </ASolucaoInteligente>
-      </Group3>
-      <AVonderAcredita>
-        <TextWrapper6>A </TextWrapper6>
-        <TextWrapper7>VONDER</TextWrapper7>
-        <TextWrapper6>
-          {" "}
-          acredita que a tecnologia e uma forte infraestrutura são a base para o
-          desenvolvimento de novos produtos, além do acompanhamento técnico e
-          aprimoramento constante de cada uma das suas linhas.
-          <br />
-          Cada produto passa por um crivo técnico que acompanha todo processo de
-          desenvolvimento, desde a análise do projeto até a aceitação e
-          necessidade do mercado. Além disso, a VONDER acredita que uma marca
-          forte investe constantemente na exposição dos produtos no ponto de
-          venda, proporcionando ao revendedor uma apresentação estratégica e
-          atrativa, assegurando ótimo retorno comercial, através de projetos e
-          consultoria técnica de Comunicação, Marketing e Vendas para nortear
-          suas ações de Trade no mercado.
-        </TextWrapper6>
-      </AVonderAcredita>
+    <StyledGroupWrapperSubsection className="group-wrapper-subsection">
+      <div className="group">
+        <div className="group-2" />
+        <div className="frame-wrapper">
+          <div className="frame-4">
+            <div className="desde-o-lan-amento-wrapper">
+              <p className="desde-o-lan-amento">
+                <span className="text-wrapper-8">
+                  Desde o lançamento do seu primeiro produto, o{" "}
+                </span>
+                <span className="text-wrapper-9">VONDER LUB</span>
+                <span className="text-wrapper-8">
+                  , em 1997, a VONDER não parou de crescer e evoluir. O que
+                  começou com uma solução inovadora para o mercado de
+                  lubrificantes, se transformou em uma jornada de excelência e
+                  confiança. Hoje, a marca é reconhecida como referência no
+                  desenvolvimento de ferramentas robustas, modernas e de alta
+                  performance, voltadas para uso profissional e industrial. Com
+                  uma trajetória sólida, a VONDER conquistou a preferência de
+                  profissionais e lojistas em diversas categorias, sendo
+                  constantemente apontada pelos meios especializados do setor
+                  industrial e revendedores como uma das marcas mais confiáveis
+                  e preferidas do mercado. Ao longo dos anos, tornou-se uma das
+                  mais premiadas e respeitadas no segmento, consolidando-se como
+                  líder em inovação e qualidade.
+                </span>
+              </p>
+            </div>
+            <img
+              className="img"
+              alt="Frame"
+              src="https://c.animaapp.com/HXGo4e2k/img/frame-69366.svg"
+            />
+          </div>
+        </div>
+      </div>
     </StyledGroupWrapperSubsection>
   );
 };

@@ -25,7 +25,11 @@ const Overlay = styled.div`
   z-index: 1000;
 
   @media (max-width: 600px) {
-    padding: 16px;
+    padding: 12px;
+  }
+
+  @media (max-width: 400px) {
+    padding: 0;
   }
 `;
 
@@ -46,6 +50,11 @@ const Dialog = styled.div`
     gap: 24px;
     padding: 24px 20px 32px;
   }
+
+  @media (max-width: 400px) {
+    border-radius: 0;
+    min-height: 100%;
+  }
 `;
 
 const Header = styled.div`
@@ -54,6 +63,13 @@ const Header = styled.div`
   gap: 20px;
   justify-content: space-between;
   width: 100%;
+
+  @media (max-width: 600px) {
+    /* Stack with the close button on top and the content below, full width. */
+    align-items: stretch;
+    flex-direction: column-reverse;
+    gap: 16px;
+  }
 `;
 
 const ProductDetails = styled.div`
@@ -106,6 +122,13 @@ const Actions = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+
+  @media (max-width: 600px) {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
 `;
 
 const ActionButton = styled.a<{ $variant: "download" | "share" }>`
@@ -131,6 +154,13 @@ const ActionButton = styled.a<{ $variant: "download" | "share" }>`
     transform: translateY(-2px);
     box-shadow: 0 6px 18px #00000040;
   }
+
+  @media (max-width: 600px) {
+    display: flex;
+    font-size: 18px;
+    padding: 0 24px;
+    width: 100%;
+  }
 `;
 
 const ActionIcon = styled.img`
@@ -153,6 +183,10 @@ const CloseButton = styled.button`
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  @media (max-width: 600px) {
+    align-self: flex-end;
   }
 `;
 

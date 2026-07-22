@@ -1,138 +1,123 @@
 import React from "react";
 import styled from "styled-components";
-import { DivSubsection } from "./sections/DivSubsection/DivSubsection";
-import { DivWrapperSubsection } from "./sections/DivWrapperSubsection/DivWrapperSubsection";
-import { Group1Subsection } from "./sections/Group1Subsection";
-import { Group2Subsection } from "./sections/Group2Subsection";
-import { Group3Subsection } from "./sections/Group3Subsection/Group3Subsection";
-import { Group4Subsection } from "./sections/Group4Subsection";
-import { GroupSubsection } from "./sections/GroupSubsection/GroupSubsection";
-import { ConfiraRedesSociais } from "../../components/ConfiraRedesSociais";
+import { BannerCarousel } from "./sections/BannerCarousel";
+import { DivSubsection } from "./sections/DivSubsection";
+import { DivWrapperSubsection } from "./sections/DivWrapperSubsection";
+import { Frame1Subsection } from "./sections/Frame1Subsection";
+import { Frame2Subsection } from "./sections/Frame2Subsection";
+import { Frame3Subsection } from "./sections/Frame3Subsection";
+import { Frame4Subsection } from "./sections/Frame4Subsection";
+import { FrameSubsection } from "./sections/FrameSubsection";
+import { FrameWrapperSubsection } from "./sections/FrameWrapperSubsection";
 import { GroupWrapperSubsection } from "./sections/GroupWrapperSubsection";
 import { SectionComponentNodeSubsection } from "./sections/SectionComponentNodeSubsection";
 
 const StyledConheaAVonder = styled.div`
+  align-items: center;
   background-color: #ffffff;
-  margin-top: -180px;
-  min-height: 7494px;
-  min-width: 1440px;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 107px;
+  /* clip horizontal overflow (wide/full-bleed sections) but keep vertical
+     visible so the hero's -20px overlap can sit behind the sticky header. */
+  overflow-x: clip;
   position: relative;
   width: 100%;
 
-  & .camada-3 {
-    aspect-ratio: 5.46;
-    height: 306px;
-    left: 69px;
-    position: absolute;
-    top: 2408px;
-    width: 1371px;
+  .frame-29 {
+    align-self: stretch;
+    height: 440px;
+    position: relative;
+    width: 100%;
   }
 
-  & .mask-group-5 {
-    height: 500px;
-    left: 0;
-    position: absolute;
-    top: 5282px;
-    width: 1440px;
+  .mask-group-wrapper {
+    align-items: flex-start;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    width: 100%;
   }
 
-  & .text-wrapper-36 {
+  .mask-group-5 {
+    display: block;
+    height: auto;
+    position: relative;
+    width: 100%;
+  }
+
+  .frame-30 {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    justify-content: center;
+    max-width: 100%;
+    padding: 10px 24px;
+    position: relative;
+  }
+
+  .text-wrapper-36 {
     color: #000000;
     font-family: "Swis721 LtCn BT-Light", Helvetica;
     font-size: 24px;
     font-weight: 300;
-    left: calc(50.00% - 614px);
     letter-spacing: 0;
     line-height: normal;
-    position: absolute;
+    margin-top: -1px;
+    max-width: 100%;
+    position: relative;
     text-align: center;
-    top: 5820px;
     width: 1228px;
+
+    @media (max-width: 600px) {
+      font-size: 18px;
+    }
   }
 
-  & .group-52 {
-    height: 420px;
-    left: 0;
-    position: absolute;
-    top: 1152px;
-    width: 1440px;
+  @media (max-width: 900px) {
+    gap: 72px;
   }
 
-  & .camada-4 {
-    height: 33px;
-    left: 1359px;
-    position: absolute;
-    top: 1345px;
-    width: 33px;
-  }
-
-  & .group-53 {
-    height: 400px;
-    left: 0;
-    position: absolute;
-    top: 3818px;
-    width: 1440px;
-  }
-
-  & .camada-5 {
-    height: 33px;
-    left: 53px;
-    position: absolute;
-    top: 1345px;
-    width: 33px;
+  @media (max-width: 600px) {
+    gap: 48px;
   }
 `;
 
 export const ConheaAVonder = (): React.JSX.Element => {
   return (
-    <StyledConheaAVonder className="CONHEA-a-VONDER" data-model-id="1:5099">
-      <img
-        className="camada-3"
-        alt="Camada"
-        src="https://c.animaapp.com/fomi9SZH/img/camada-1-1.png"
-      />
-      <GroupSubsection />
-      <img
-        className="mask-group-5"
-        alt="Mask group"
-        src="https://c.animaapp.com/fomi9SZH/img/mask-group.png"
-      />
+    <StyledConheaAVonder className="CONHEA-a-VONDER" data-model-id="298:1266">
+      <FrameSubsection />
+      <FrameWrapperSubsection />
+      <BannerCarousel />
       <GroupWrapperSubsection />
-      <p className="text-wrapper-36">
-        A evolução contínua de suas ferramentas comprova como é bom trabalhar
-        com a VONDER, refletindo na satisfação de seus clientes e revendedores,
-        um dos motivos que a tornaram uma das mais importantes marcas de
-        ferramentas do mercado brasileiro.
-      </p>
       <DivWrapperSubsection />
       <DivSubsection />
       <SectionComponentNodeSubsection />
-      <Group1Subsection />
-      <img
-        className="group-52"
-        alt="Group"
-        src="https://c.animaapp.com/fomi9SZH/img/group-69271.png"
-      />
-      <Group2Subsection />
-      <img
-        className="camada-4"
-        alt="Camada"
-        src="https://c.animaapp.com/fomi9SZH/img/camada-1.svg"
-      />
-      <img
-        className="group-53"
-        alt="Group"
-        src="https://c.animaapp.com/fomi9SZH/img/group-69297.png"
-      />
-      <img
-        className="camada-5"
-        alt="Camada"
-        src="https://c.animaapp.com/fomi9SZH/img/camada-1-2.svg"
-      />
-      <Group3Subsection />
-      <Group4Subsection />
-      <ConfiraRedesSociais top="5980px" />
+      <Frame1Subsection />
+      <Frame2Subsection />
+      <div className="mask-group-wrapper">
+        <img
+          className="mask-group-5"
+          alt="Mask group"
+          src="https://c.animaapp.com/HXGo4e2k/img/mask-group-4.png"
+        />
+      </div>
+      <div className="frame-30">
+        <p className="text-wrapper-36">
+          A evolução contínua de suas ferramentas comprova como é bom trabalhar
+          com a VONDER, refletindo na satisfação de seus clientes e
+          revendedores, um dos motivos que a tornaram uma das mais importantes
+          marcas de ferramentas do mercado brasileiro.
+        </p>
+      </div>
+      <Frame3Subsection />
+      <Frame4Subsection />
     </StyledConheaAVonder>
   );
 };
+
+export default ConheaAVonder;

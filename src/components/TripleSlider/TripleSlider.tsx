@@ -13,20 +13,48 @@ export interface TripleSliderItem {
 
 interface TripleSliderProps {
   items: TripleSliderItem[];
+  showArrows?: boolean;
+  prevArrowSrc?: string;
+  nextArrowSrc?: string;
+  /** Size (px) of the main slide (width & height). Defaults to 500. */
+  size?: number;
 }
 
 const Root = styled.div`
+  align-items: center;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
   padding: 32px 0;
-  perspective: 1200px;
   position: relative;
   width: 100%;
 `;
 
-const MainSwiperWrap = styled.div`
+const CenterStack = styled.div`
+  flex: 1 1 0;
+  min-width: 0;
+  perspective: 1200px;
+  position: relative;
+`;
+
+const Arrow = styled.img`
+  cursor: pointer;
+  flex: 0 0 auto;
+  height: 44px;
+  transition: opacity 0.2s ease;
+  width: 44px;
+  z-index: 20;
+
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+const MainSwiperWrap = styled.div<{ $size: number }>`
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
-  height: 500px;
+  height: ${({ $size }) => $size}px;
   margin: 0 auto;
-  max-width: 500px;
+  max-width: ${({ $size }) => $size}px;
   position: relative;
   width: 100%;
   z-index: 10;
@@ -50,15 +78,15 @@ const MainSwiperWrap = styled.div`
   }
 `;
 
-const SideSwiperWrap = styled.div<{ $side: "prev" | "next" }>`
+const SideSwiperWrap = styled.div<{ $side: "prev" | "next"; $size: number }>`
   cursor: pointer;
-  height: 500px;
+  height: ${({ $size }) => $size}px;
   opacity: 0.25;
   position: absolute;
   top: 50%;
   transition: opacity 0.25s ease;
   user-select: none;
-  width: 500px;
+  width: ${({ $size }) => $size}px;
 
   .swiper {
     -webkit-mask-image: -webkit-radial-gradient(white, black);
@@ -93,7 +121,13 @@ const rotateToFront = <T,>(arr: T[]): T[] =>
 const rotateToBack = <T,>(arr: T[]): T[] =>
   arr.length > 1 ? [...arr.slice(1), arr[0]] : arr;
 
-export const TripleSlider = ({ items }: TripleSliderProps): React.JSX.Element => {
+export const TripleSlider = ({
+  items,
+  showArrows = false,
+  prevArrowSrc = "https://c.animaapp.com/F8lHzCc8/img/camada-1-2.svg",
+  nextArrowSrc = "https://c.animaapp.com/F8lHzCc8/img/camada-1-3.svg",
+  size = 500,
+}: TripleSliderProps): React.JSX.Element => {
   const mainRef = useRef<SwiperType | null>(null);
   const prevRef = useRef<SwiperType | null>(null);
   const nextRef = useRef<SwiperType | null>(null);
@@ -116,57 +150,81 @@ export const TripleSlider = ({ items }: TripleSliderProps): React.JSX.Element =>
 
   return (
     <Root>
-      <SideSwiperWrap $side="prev" onClick={() => mainRef.current?.slidePrev()}>
-        <Swiper
-          modules={[Controller, Parallax]}
-          speed={600}
-          loop
-          parallax
-          allowTouchMove={false}
-          onSwiper={(s) => {
-            prevRef.current = s;
-            bumpReady();
-          }}
+      {showArrows && (
+        <Arrow
+          alt="Anterior"
+          src={prevArrowSrc}
+          onClick={() => mainRef.current?.slidePrev()}
+        />
+      )}
+      <CenterStack>
+        <SideSwiperWrap
+          $side="prev"
+          $size={size}
+          onClick={() => mainRef.current?.slidePrev()}
         >
-          {prevItems.map((item) => (
-            <SwiperSlide key={item.id}>{item.content}</SwiperSlide>
-          ))}
-        </Swiper>
-      </SideSwiperWrap>
-      <MainSwiperWrap>
-        <Swiper
-          modules={[Controller, Parallax]}
-          speed={600}
-          loop
-          parallax
-          grabCursor
-          onSwiper={(s) => {
-            mainRef.current = s;
-            bumpReady();
-          }}
+          <Swiper
+            modules={[Controller, Parallax]}
+            speed={600}
+            loop
+            parallax
+            allowTouchMove={false}
+            onSwiper={(s) => {
+              prevRef.current = s;
+              bumpReady();
+            }}
+          >
+            {prevItems.map((item) => (
+              <SwiperSlide key={item.id}>{item.content}</SwiperSlide>
+            ))}
+          </Swiper>
+        </SideSwiperWrap>
+        <MainSwiperWrap $size={size}>
+          <Swiper
+            modules={[Controller, Parallax]}
+            speed={600}
+            loop
+            parallax
+            grabCursor
+            onSwiper={(s) => {
+              mainRef.current = s;
+              bumpReady();
+            }}
+          >
+            {items.map((item) => (
+              <SwiperSlide key={item.id}>{item.content}</SwiperSlide>
+            ))}
+          </Swiper>
+        </MainSwiperWrap>
+        <SideSwiperWrap
+          $side="next"
+          $size={size}
+          onClick={() => mainRef.current?.slideNext()}
         >
-          {items.map((item) => (
-            <SwiperSlide key={item.id}>{item.content}</SwiperSlide>
-          ))}
-        </Swiper>
-      </MainSwiperWrap>
-      <SideSwiperWrap $side="next" onClick={() => mainRef.current?.slideNext()}>
-        <Swiper
-          modules={[Controller, Parallax]}
-          speed={600}
-          loop
-          parallax
-          allowTouchMove={false}
-          onSwiper={(s) => {
-            nextRef.current = s;
-            bumpReady();
-          }}
-        >
-          {nextItems.map((item) => (
-            <SwiperSlide key={item.id}>{item.content}</SwiperSlide>
-          ))}
-        </Swiper>
-      </SideSwiperWrap>
+          <Swiper
+            modules={[Controller, Parallax]}
+            speed={600}
+            loop
+            parallax
+            allowTouchMove={false}
+            onSwiper={(s) => {
+              nextRef.current = s;
+              bumpReady();
+            }}
+          >
+            {nextItems.map((item) => (
+              <SwiperSlide key={item.id}>{item.content}</SwiperSlide>
+            ))}
+          </Swiper>
+        </SideSwiperWrap>
+      </CenterStack>
+      {showArrows && (
+        <Arrow
+          alt="Próximo"
+          src={nextArrowSrc}
+          onClick={() => mainRef.current?.slideNext()}
+        />
+      )}
     </Root>
   );
 };
