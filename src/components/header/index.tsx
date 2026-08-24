@@ -141,19 +141,15 @@ export function Header() {
           <TextWrapper style={{ opacity: 0.35, cursor: "not-allowed", display: "flex", alignItems: "center", gap: 5 }}>
             <LockIcon size={12} color="#f6be00" />Assistência Técnica
           </TextWrapper>
-          <TextWrapper
-            style={{ cursor: "pointer" }}
-            onMouseEnter={() => setActiveMega("conteudo")}
-            onClick={() => setActiveMega(prev => prev === "conteudo" ? null : "conteudo")}
-          >
-            Conteúdo
+          <TextWrapper style={{ opacity: 0.35, cursor: "not-allowed", display: "flex", alignItems: "center", gap: 5 }}>
+            <LockIcon size={12} color="#f6be00" />RoHs
           </TextWrapper>
           <StyledLink to="/garantia" onMouseEnter={() => setActiveMega(null)}>
             <TextWrapper>Garantia</TextWrapper>
           </StyledLink>
           <LanguageGroup>
             <VectorImage alt="Vector" src="https://c.animaapp.com/EUbsVkCm/img/vector.svg" />
-            <TextWrapper>AC</TextWrapper>
+            <TextWrapper>Acessibilidade</TextWrapper>
           </LanguageGroup>
           <LanguageGroup>
             <BrImage alt="Br" src="https://c.animaapp.com/EUbsVkCm/img/br.svg" />
@@ -180,6 +176,13 @@ export function Header() {
               <StyledLink to="/onde-comprar" onClick={closeMenu} onMouseEnter={() => setActiveMega(null)}>
                 <NavItem>Onde Comprar</NavItem>
               </StyledLink>
+              <NavItem
+                style={{ cursor: "default" }}
+                onMouseEnter={() => setActiveMega("conteudo")}
+                onClick={() => setActiveMega(prev => prev === "conteudo" ? null : "conteudo")}
+              >
+                Conteúdo
+              </NavItem>
               <NavItem
                 style={{ cursor: "default" }}
                 onMouseEnter={() => setActiveMega("atendimento")}

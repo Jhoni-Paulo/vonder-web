@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { CadastrarGarantiaSubsection } from "./sections/CadastrarGarantiaSubsection/CadastrarGarantiaSubsection";
 import { ConfiabilidadeSubsection } from "./sections/ConfiabilidadeSubsection";
-import { ConfianaSuporteESubsection } from "./sections/ConfianaSuporteESubsection/ConfianaSuporteESubsection";
+import { ConfianaSuporteESubsection } from "./sections/ConfianASuporteESubsection/ConfianASuporteESubsection";
 import { FrameSubsection } from "./sections/FrameSubsection";
 import { FrameWrapperSubsection } from "./sections/FrameWrapperSubsection";
 import { GroupWrapperSubsection } from "./sections/GroupWrapperSubsection/GroupWrapperSubsection";

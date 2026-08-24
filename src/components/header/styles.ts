@@ -43,7 +43,7 @@ export const HeaderWrapper = styled.header`
 export const Topo = styled.div`
   background-color: #0e0e0e;
   border-radius: 0px 0px 20px 20px;
-  height: 91px;
+  height: 60px;
   width: 100%;
   max-width: 100%;
   display: flex;
@@ -54,13 +54,11 @@ export const Topo = styled.div`
   box-sizing: border-box;
 
   @media (max-width: 1200px) {
-    height: 76px;
     gap: 18px;
     padding: 0 2%;
   }
 
   @media (max-width: 1024px) {
-    height: 64px;
     gap: 12px;
     padding: 0 1.5%;
   }
@@ -80,7 +78,7 @@ export const BottomHeader = styled.div`
   z-index: 2;
   background-color: #F6BE00;
   border-radius: 0px 0px 20px 20px;
-  height: 91px;
+  height: 90px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -90,12 +88,12 @@ export const BottomHeader = styled.div`
   padding: 0 3% !important;
 
   @media (max-width: 1200px) {
-    height: 80px;
+    height: 90px;
     padding: 0 2% !important;
   }
 
   @media (max-width: 1024px) {
-    height: 70px;
+    height: 80px;
     padding: 0 1.5% !important;
   }
 
@@ -188,20 +186,17 @@ export const Navbar = styled.div<{ $open?: boolean }>`
   display: flex;
   height: auto;
   position: relative;
-  padding: 0 4% !important;
+  margin-left: auto;
+  padding: 0;
   box-sizing: border-box;
   align-items: center;
   gap: 30px;
-  flex: 1;
-  justify-content: space-between;
 
   @media (max-width: 1200px) {
-    padding: 0 2.5% !important;
     gap: 20px;
   }
 
   @media (max-width: 1024px) {
-    padding: 0 1.5% !important;
     gap: 10px;
   }
 
@@ -220,6 +215,7 @@ export const NavItem = styled.div`
   line-height: normal;
   flex-shrink: 0;
   cursor: pointer;
+  border-radius: 40px;
   transition: color 0.3s ease, background-color 0.3s ease;
   display: flex;
   align-items: center;
@@ -229,7 +225,6 @@ export const NavItem = styled.div`
   &:hover {
     color: #ffffff;
     background-color: #343434;
-    border-radius: 40px;
   }
 
   @media (max-width: 1200px) {
@@ -274,6 +269,11 @@ export const RightControls = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  margin-left: 24px;
+
+  @media (max-width: 1024px) {
+    margin-left: 16px;
+  }
 `;
 
 /* ── Mobile Header ── */

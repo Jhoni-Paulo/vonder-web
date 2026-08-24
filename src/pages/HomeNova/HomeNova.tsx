@@ -152,6 +152,7 @@ const HeroImg = styled.img`
   aspect-ratio: 2.55;
   width: 100%;
   height: auto;
+  max-height: 565px;
   object-fit: cover;
   display: block;
 

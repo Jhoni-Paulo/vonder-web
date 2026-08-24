@@ -93,7 +93,6 @@ const Track = styled.div`
   }
 
   .swiper-slide {
-    width: auto;
     height: auto;
   }
 `;
@@ -108,7 +107,7 @@ const Card = styled.div`
   gap: 17px;
   padding: 16px 12px 20px;
   position: relative;
-  width: 223px;
+  width: 100%;
   scroll-snap-align: center;
   box-sizing: border-box;
 
@@ -129,10 +128,6 @@ const Card = styled.div`
     pointer-events: none;
     position: absolute;
     z-index: 1;
-  }
-
-  @media (max-width: 600px) {
-    width: 190px;
   }
 `;
 
@@ -238,8 +233,14 @@ export const FrameWrapperSubsection = (): React.JSX.Element => {
           <Swiper
             grabCursor
             rewind
-            slidesPerView="auto"
+            slidesPerView={1.5}
             spaceBetween={16}
+            breakpoints={{
+              480: { slidesPerView: 2 },
+              640: { slidesPerView: 3 },
+              1000: { slidesPerView: 4 },
+              1200: { slidesPerView: 5 },
+            }}
             onSwiper={(s) => {
               swiperRef.current = s;
             }}
