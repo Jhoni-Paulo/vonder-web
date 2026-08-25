@@ -128,12 +128,13 @@ const SwiperWrap = styled.div<{ $locked: boolean }>`
 const Card = styled.div`
   position: relative;
   width: 260px;
-  aspect-ratio: 286 / 480;
+  height: 550px;
   border-radius: 16px;
   overflow: hidden;
 
   @media (max-width: 600px) {
     width: 208px;
+    height: 349px;
   }
 `;
 

@@ -189,13 +189,19 @@ const LaunchCard = styled.div<{ $hidden?: boolean }>`
   ${({ $hidden }) =>
     $hidden &&
     `
-      margin-right: -57px;
+      /* Next card overlaps half of this one (286px / 2 = 143px), so only the
+         left half of the hidden card peeks out. */
+      margin-right: -143px;
+      height: 365px;
+      /* Centraliza verticalmente este card (365px) em relação aos demais
+         (445px): metade da diferença de altura = (445 - 365) / 2 = 40px. */
+      margin-top: 40px;
       opacity: 0.5;
       transform: scale(0.97);
       filter: brightness(0.85);
 
       @media (max-width: 600px) {
-        margin-right: -46px;
+        margin-right: -115px;
       }
     `}
 `;

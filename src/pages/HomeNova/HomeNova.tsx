@@ -15,6 +15,7 @@ import { FrameSubsection } from "./sections/FrameSubsection";
 import { FrameWrapperSubsection } from "./sections/FrameWrapperSubsection/FrameWrapperSubsection";
 import { GroupWrapperSubsection } from "./sections/GroupWrapperSubsection";
 import { SectionComponentNodeSubsection } from "./sections/SectionComponentNodeSubsection";
+import { AlertaVonder } from "../../components/AlertaVonder/AlertaVonder";
 
 const BANNER_SRC = "https://c.animaapp.com/F8lHzCc8/img/banner-institucional-site-1.png";
 
@@ -34,6 +35,17 @@ const StyledHOME = styled.div`
 
   @media (max-width: 600px) {
     gap: 24px;
+  }
+
+  /* Faixa de alerta colada ao banner: cancela o gap logo abaixo dela. */
+  & .home-alerta {
+    margin-bottom: -40px;
+  }
+
+  @media (max-width: 600px) {
+    & .home-alerta {
+      margin-bottom: -24px;
+    }
   }
 
   & .camada-5 {
@@ -168,6 +180,8 @@ export const HomeNova = (): React.JSX.Element => {
   return (
     <StyledHOME data-model-id="126:1454">
       <div className="camada-5" />
+
+      <AlertaVonder className="home-alerta" />
 
       <HeroBanner>
         <Swiper
