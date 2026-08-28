@@ -4,6 +4,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import arrowLeft from "../../../../assets/Camada_1.png";
+import camada11 from "../../../../assets/camada11.png";
+import trenaBg from "../../../../assets/TRENA.png";
 
 const Section = styled.div`
   align-items: flex-start;
@@ -98,6 +100,8 @@ const Track = styled.div`
 
   .swiper-wrapper {
     justify-content: space-between;
+    background-image: url(${trenaBg});
+    background-repeat: no-repeat;
   }
 
   .swiper-slide {
@@ -148,7 +152,7 @@ const Text = styled.p`
 
 const milestones = [
   {
-    img: "https://c.animaapp.com/HXGo4e2k/img/trena-1@2x.png",
+    img: camada11,
     year: "HOJE",
     text: "O primeiro perfil brasileiro oficial do segmento de ferragens e ferramentas a atingir 500 mil seguidores no Instagram.",
   },

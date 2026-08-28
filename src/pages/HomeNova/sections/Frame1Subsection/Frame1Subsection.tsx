@@ -45,6 +45,8 @@ const StyledFrame1Subsection = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  max-width: 1292px;
+  margin: 0 auto;
   padding: 0 24px;
   box-sizing: border-box;
 

@@ -12,6 +12,12 @@ export interface ExpandableCardCarouselItem {
 interface ExpandableCardCarouselProps {
   items: ExpandableCardCarouselItem[];
   showArrows?: boolean;
+  /** Espaço (px) entre os cards no desktop. Default: 12. */
+  gap?: number;
+  /** Quando true, o card aberto fica ~20% mais estreito e a largura que sobra
+   *  é distribuída proporcionalmente entre os demais cards (em vez de eles
+   *  encolherem para uma miniatura fixa). Default: false. */
+  balancedActive?: boolean;
 }
 
 const CarouselRow = styled.div`
@@ -46,9 +52,9 @@ const Arrow = styled.img`
   }
 `;
 
-const Track = styled.div`
+const Track = styled.div<{ $gap: number }>`
   display: flex;
-  gap: 12px;
+  gap: ${({ $gap }) => $gap}px;
   width: 100%;
   align-items: stretch;
 
@@ -64,15 +70,26 @@ const Track = styled.div`
   }
 `;
 
-const Card = styled.div<{ $active?: boolean; $hasActive?: boolean }>`
+const Card = styled.div<{ $active?: boolean; $hasActive?: boolean; $balanced?: boolean }>`
   position: relative;
   height: 480px;
   border-radius: 15px;
   overflow: hidden;
   flex-shrink: 0;
-  flex: ${({ $active, $hasActive }) =>
-    $active ? "1 1 auto" : $hasActive ? "0 0 160px" : "1 1 0"};
-  width: ${({ $active, $hasActive }) => ($active || !$hasActive ? "auto" : "160px")};
+  flex: ${({ $active, $hasActive, $balanced }) =>
+    $balanced
+      ? !$hasActive
+        ? "1 1 0"
+        : $active
+        ? "8 1 0"
+        : "3 1 0"
+      : $active
+      ? "1 1 auto"
+      : $hasActive
+      ? "0 0 160px"
+      : "1 1 0"};
+  width: ${({ $active, $hasActive, $balanced }) =>
+    $balanced ? "auto" : $active || !$hasActive ? "auto" : "160px"};
   cursor: ${({ $active }) => ($active ? "default" : "pointer")};
   will-change: flex, width;
   transition:
@@ -156,6 +173,8 @@ const CardLink = styled.span`
 export const ExpandableCardCarousel = ({
   items,
   showArrows = true,
+  gap = 12,
+  balancedActive = false,
 }: ExpandableCardCarouselProps): React.JSX.Element => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -200,7 +219,7 @@ export const ExpandableCardCarousel = ({
           onClick={goLeft}
         />
       )}
-      <Track ref={trackRef} onScroll={handleScroll}>
+      <Track ref={trackRef} onScroll={handleScroll} $gap={gap}>
         {items.map((item, i) => {
           const isActive = i === activeIdx;
           return (
@@ -208,6 +227,7 @@ export const ExpandableCardCarousel = ({
               key={i}
               $active={isActive}
               $hasActive={activeIdx !== null}
+              $balanced={balancedActive}
               onClick={!isActive ? () => setActiveIdx(i) : undefined}
             >
               <CardImage alt={item.title} src={item.img} />

@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const NewsletterSectionContainer = styled.section`
   padding: 4% !important;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  background-color: rgb(85, 90, 87);
 `;
 
 export const Input = styled.input`
-  padding: 1.5% 4% !important;
+  height: 48px !important;
+  padding: 0 4% !important;
   box-sizing: border-box;
 
   @media (max-width: 600px) {
@@ -16,7 +16,8 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  padding: 1.5% 4% !important;
+  height: 48px !important;
+  padding: 0 4% !important;
   box-sizing: border-box;
 
   @media (max-width: 600px) {

@@ -20,6 +20,11 @@ const slideOut = keyframes`
   to   { transform: translateX(-100%); }
 `;
 
+const searchReveal = keyframes`
+  from { opacity: 0; transform: translateX(12px); }
+  to   { opacity: 1; transform: translateX(0); }
+`;
+
 export const HeaderWrapper = styled.header`
   position: sticky;
   top: 0;
@@ -274,6 +279,86 @@ export const RightControls = styled.div`
   @media (max-width: 1024px) {
     margin-left: 16px;
   }
+`;
+
+/* ── Busca (header de baixo) ── */
+
+export const SearchBar = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  margin-left: 24px;
+
+  @media (max-width: 1024px) {
+    margin-left: 16px;
+  }
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+`;
+
+export const SearchInputWrap = styled.div`
+  position: relative;
+  flex: 0 1 80%;
+  min-width: 0;
+  height: 46px;
+  border: 1px solid #000000;
+  border-radius: 23px;
+  background: transparent;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  animation: ${searchReveal} 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  &:focus-within {
+    border-color: #000000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+  }
+`;
+
+export const SearchInput = styled.input`
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0 22px;
+  box-sizing: border-box;
+  color: #000000;
+  font-family: "Swis721 LtCn BT-Light", Helvetica;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0;
+
+  &::placeholder {
+    color: #3e3e3e;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 15px;
+  }
+`;
+
+export const SearchIconButton = styled.button`
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: #000000;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  line-height: 0;
+  padding: 6px;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.65;
+  }
+`;
+
+export const SearchCloseButton = styled(SearchIconButton)`
+  animation: ${fadeIn} 0.3s ease both;
 `;
 
 /* ── Mobile Header ── */

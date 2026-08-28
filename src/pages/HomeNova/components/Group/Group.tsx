@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export interface GroupProps {
@@ -50,7 +51,7 @@ const ColText = styled.p`
   margin: 0;
 `;
 
-const Button = styled.div`
+const Button = styled(Link)`
   align-items: center;
   background-color: #000000;
   border-radius: 100px;
@@ -65,6 +66,7 @@ const Button = styled.div`
   margin-top: auto;
   padding: 15px 24px;
   text-align: center;
+  text-decoration: none;
   width: 100%;
   box-sizing: border-box;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -90,7 +92,7 @@ export const Group = ({ className }: GroupProps): React.JSX.Element => {
           além de suporte ao cliente para eventuais dúvidas no manuseio das
           ferramentas.
         </ColText>
-        <Button>Assistência técnica</Button>
+        <Button to="/assistencia-tecnica">Assistência técnica</Button>
       </Column>
       <Column>
         <ColTitle>
@@ -104,7 +106,7 @@ export const Group = ({ className }: GroupProps): React.JSX.Element => {
           Por isso, indicaremos sempre um revendedor dos nossos produtos que
           esteja próximo da sua localidade.
         </ColText>
-        <Button>Encontre um distribuidor</Button>
+        <Button to="/onde-comprar">Encontre um distribuidor</Button>
       </Column>
       <Column>
         <ColTitle>
@@ -119,7 +121,7 @@ export const Group = ({ className }: GroupProps): React.JSX.Element => {
           Clique aqui para enviar sua opinião, sugestões ou dúvidas sobre nossos
           produtos.
         </ColText>
-        <Button>Fale Conosco</Button>
+        <Button to="/fale-conosco">Fale Conosco</Button>
       </Column>
     </StyledGroup>
   );

@@ -16,6 +16,11 @@ import {
   Navbar,
   NavItem,
   RightControls,
+  SearchBar,
+  SearchInputWrap,
+  SearchInput,
+  SearchIconButton,
+  SearchCloseButton,
   MobileHeader,
   MobileHamburgerBtn,
   MobileLogo,
@@ -115,6 +120,17 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileClosing, setMobileClosing] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<SubmenuKey>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  const openSearch = () => {
+    setActiveMega(null);
+    setSearchOpen(true);
+  };
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setSearchValue("");
+  };
 
   const closeMenu = () => setMenuOpen(false);
   const closeMobile = () => {
@@ -163,37 +179,73 @@ export function Header() {
               <Img alt="Camada" src="https://c.animaapp.com/7nCxdmTD/img/camada-1-1.svg" />
             </StyledLink>
 
-            <Navbar $open={menuOpen}>
-              <NavItem style={{ cursor: "default" }} onMouseEnter={() => setActiveMega("produtos")}>
-                Nossos Produtos
-              </NavItem>
-              <NavItem style={{ cursor: "default" }} onMouseEnter={() => setActiveMega("conheca")}>
-                Conheça a VONDER
-              </NavItem>
-              <StyledLink to="/lancamentos" onClick={closeMenu} onMouseEnter={() => setActiveMega(null)}>
-                <NavItem>Lançamentos</NavItem>
-              </StyledLink>
-              <StyledLink to="/onde-comprar" onClick={closeMenu} onMouseEnter={() => setActiveMega(null)}>
-                <NavItem>Onde Comprar</NavItem>
-              </StyledLink>
-              <NavItem
-                style={{ cursor: "default" }}
-                onMouseEnter={() => setActiveMega("conteudo")}
-                onClick={() => setActiveMega(prev => prev === "conteudo" ? null : "conteudo")}
-              >
-                Conteúdo
-              </NavItem>
-              <NavItem
-                style={{ cursor: "default" }}
-                onMouseEnter={() => setActiveMega("atendimento")}
-                onClick={() => setActiveMega(prev => prev === "atendimento" ? null : "atendimento")}
-              >
-                Central de Atendimento
-              </NavItem>
-            </Navbar>
+            {searchOpen ? (
+              <SearchBar>
+                <SearchInputWrap>
+                  <SearchInput
+                    autoFocus
+                    type="text"
+                    placeholder="O que você esta procurando?"
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Escape") closeSearch();
+                    }}
+                  />
+                </SearchInputWrap>
+              </SearchBar>
+            ) : (
+              <Navbar $open={menuOpen}>
+                <NavItem style={{ cursor: "default" }} onMouseEnter={() => setActiveMega("produtos")}>
+                  Nossos Produtos
+                </NavItem>
+                <NavItem style={{ cursor: "default" }} onMouseEnter={() => setActiveMega("conheca")}>
+                  Conheça a VONDER
+                </NavItem>
+                <StyledLink to="/lancamentos" onClick={closeMenu} onMouseEnter={() => setActiveMega(null)}>
+                  <NavItem>Lançamentos</NavItem>
+                </StyledLink>
+                <StyledLink to="/onde-comprar" onClick={closeMenu} onMouseEnter={() => setActiveMega(null)}>
+                  <NavItem>Onde Comprar</NavItem>
+                </StyledLink>
+                <NavItem
+                  style={{ cursor: "default" }}
+                  onMouseEnter={() => setActiveMega("conteudo")}
+                  onClick={() => setActiveMega(prev => prev === "conteudo" ? null : "conteudo")}
+                >
+                  Conteúdo
+                </NavItem>
+                <NavItem
+                  style={{ cursor: "default" }}
+                  onMouseEnter={() => setActiveMega("atendimento")}
+                  onClick={() => setActiveMega(prev => prev === "atendimento" ? null : "atendimento")}
+                >
+                  Central de Atendimento
+                </NavItem>
+              </Navbar>
+            )}
 
             <RightControls>
-              <Vector alt="Vector" src="https://c.animaapp.com/7nCxdmTD/img/vector.svg" />
+              <SearchIconButton
+                type="button"
+                aria-label="Buscar"
+                onClick={openSearch}
+                onMouseEnter={() => setActiveMega(null)}
+              >
+                <Vector alt="Vector" src="https://c.animaapp.com/7nCxdmTD/img/vector.svg" />
+              </SearchIconButton>
+              {searchOpen && (
+                <SearchCloseButton
+                  type="button"
+                  aria-label="Fechar busca"
+                  onClick={closeSearch}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                  </svg>
+                </SearchCloseButton>
+              )}
             </RightControls>
           </BottomHeader>
 

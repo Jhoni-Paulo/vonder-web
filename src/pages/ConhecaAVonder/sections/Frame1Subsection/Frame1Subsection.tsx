@@ -121,10 +121,19 @@ const Card = styled.div<{ $hidden?: boolean }>`
   ${({ $hidden }) =>
     $hidden &&
     `
-      margin-right: -57px;
+      /* Mesmo layout do card escondido do carrossel "Lançamentos" da home:
+         aparece pela metade (286px / 2 = 143px), mais baixo (365px) e
+         centralizado verticalmente ((445 - 365) / 2 = 40px). */
+      margin-right: -143px;
+      height: 365px;
+      margin-top: 40px;
       opacity: 0.5;
       transform: scale(0.97);
       filter: brightness(0.85);
+
+      @media (max-width: 600px) {
+        margin-right: -115px;
+      }
     `}
 `;
 

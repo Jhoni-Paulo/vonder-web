@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
 import vitrineImg from "../../assets/vitrine.png";
+import vitrineHoverImg from "../../assets/OVERLAY-VITRINE-VONDER.png";
+import aspiradoresBanner from "../../assets/03_banner_principal_1920x480_px_ASPIRADORES.png";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
@@ -89,8 +91,6 @@ const StyledHOME = styled.div`
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 10px;
     width: 100%;
     max-width: 1292px;
     box-sizing: border-box;
@@ -174,7 +174,52 @@ const HeroImg = styled.img`
   }
 `;
 
+/* Wrapper de cada slide da Vitrine: imagem base + imagem de hover sobreposta
+   que aparece (fade) ao passar o mouse. As duas ficam pré-carregadas, então a
+   troca é suave e sem piscar. */
+const VitrineSlide = styled.div`
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  /* A imagem de hover é revelada com cross-fade suave (easeOutExpo). */
+  .vitrine-hover {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity;
+    backface-visibility: hidden;
+    pointer-events: none;
+  }
+
+  &:hover .vitrine-hover {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vitrine-hover {
+      transition: opacity 0.3s ease;
+    }
+  }
+`;
+
 const banners = [BANNER_SRC, BANNER_SRC, BANNER_SRC];
+
+/* Cada imagem da Vitrine tem sua própria imagem de hover. Mock: por enquanto
+   todas usam a mesma imagem de overlay; na integração, trocar `hover` pela
+   imagem real de cada item. */
+const vitrineItems = [
+  { img: vitrineImg, hover: vitrineHoverImg },
+  { img: vitrineImg, hover: vitrineHoverImg },
+  { img: vitrineImg, hover: vitrineHoverImg },
+  { img: vitrineImg, hover: vitrineHoverImg },
+  { img: vitrineImg, hover: vitrineHoverImg },
+  { img: vitrineImg, hover: vitrineHoverImg },
+];
 
 export const HomeNova = (): React.JSX.Element => {
   return (
@@ -225,9 +270,17 @@ export const HomeNova = (): React.JSX.Element => {
         spaceBetween={30}
         autoplay={{ delay: 3500, disableOnInteraction: false }}
       >
-        {[vitrineImg, vitrineImg, vitrineImg, vitrineImg, vitrineImg, vitrineImg].map((img, i) => (
+        {vitrineItems.map((item, i) => (
           <SwiperSlide key={i}>
-            <img className="frame-80" alt="Vitrine VONDER" src={img} />
+            <VitrineSlide>
+              <img className="frame-80" alt="Vitrine VONDER" src={item.img} />
+              <img
+                className="vitrine-hover"
+                alt=""
+                aria-hidden="true"
+                src={item.hover}
+              />
+            </VitrineSlide>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -239,7 +292,7 @@ export const HomeNova = (): React.JSX.Element => {
         <img
           className="element-banner-principal-2"
           alt="Element banner principal"
-          src="https://c.animaapp.com/F8lHzCc8/img/03-banner-principal-1920x480-px-aspiradores-2-1.png"
+          src={aspiradoresBanner}
         />
       </div>
     </StyledHOME>

@@ -266,6 +266,8 @@ const AlertBanner = styled.div`
   padding: 28px 96px;
   width: 100%;
   box-sizing: border-box;
+  /* Cancela o gap de 60px do Page para encostar no mapa (Hero) acima. */
+  margin-top: -60px;
 
   @media (max-width: 1024px) { padding: 24px 48px; }
   @media (max-width: 600px)  { padding: 20px; gap: 12px; }
@@ -362,15 +364,26 @@ const SectionSubtitle = styled.p`
   line-height: 1.4;
 `;
 
-/* Row principal — full width, duas colunas: grupo LOJA OFICIAL | grupo REVENDEDOR */
+/* Row principal — esquerda alinhada ao conteúdo da página (mesmo recuo do
+   Inner), direita encostando na borda direita (full width só para a direita). */
 const MarketplaceRow = styled.div`
   display: flex;
   align-items: stretch;
   gap: 16px;
   width: 100%;
+  box-sizing: border-box;
+  padding-left: calc(max(0px, (100% - 1440px) / 2) + 96px);
+
+  @media (max-width: 1024px) {
+    padding-left: 48px;
+  }
 
   @media (max-width: 900px) {
     flex-direction: column;
+  }
+
+  @media (max-width: 600px) {
+    padding-left: 20px;
   }
 `;
 
@@ -500,7 +513,7 @@ const OtrasTitle = styled.h2`
 const OptionGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 40px 32px;
+  gap: 40px 114px;
   justify-content: center;
   width: 100%;
 `;
@@ -508,10 +521,10 @@ const OptionGrid = styled.div`
 const OptionCard = styled.div`
   align-items: center;
   display: flex;
-  flex: 1 1 220px;
+  flex: 1 1 199px;
   flex-direction: column;
   gap: 16px;
-  max-width: 300px;
+  max-width: 199px;
   text-align: center;
 
   @media (max-width: 600px) {

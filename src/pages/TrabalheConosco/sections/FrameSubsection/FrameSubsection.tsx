@@ -14,10 +14,11 @@ const Card = styled.div`
   display: flex;
   gap: 40px;
   justify-content: space-between;
-  padding: 48px 60px 0;
+  padding: 28px 60px 0;
   width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
 
   @media (max-width: 900px) {
     flex-direction: column;
@@ -39,7 +40,7 @@ const Text = styled.p`
   max-width: 497px;
   flex: 1;
   align-self: center;
-  padding-bottom: 48px;
+  padding-bottom: 28px;
 
   @media (max-width: 600px) {
     font-size: 28px;
@@ -60,17 +61,24 @@ const BoldItalic = styled.span`
 
 const Collage = styled.div`
   position: relative;
+  z-index: 2;
   flex-shrink: 0;
   align-self: flex-end;
-  width: 460px;
+  width: 571px;
   aspect-ratio: 587 / 388;
+  /* Vaza acima do topo do card, ficando à frente da seção. */
+  margin-top: -100px;
 
   @media (max-width: 1100px) {
-    width: 380px;
+    width: 600px;
+  }
+
+  @media (max-width: 900px) {
+    margin-top: 0;
   }
 
   @media (max-width: 600px) {
-    width: 280px;
+    width: 440px;
   }
 `;
 

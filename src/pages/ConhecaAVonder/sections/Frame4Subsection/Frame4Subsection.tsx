@@ -7,6 +7,7 @@ const StyledFrame4Subsection = styled.div`
   flex: 0 0 auto;
   flex-direction: column;
   gap: 10px;
+  margin-bottom: 84px;
   position: relative;
   width: 1124px;
 
@@ -44,7 +45,9 @@ const Frame26 = styled.div`
   left: 204px;
   padding: 39px 118px;
   position: absolute;
-  top: 72px;
+  /* Centraliza o card (445px) verticalmente no Group23 (570px):
+     (570 - 445) / 2 = 62.5px em cima e embaixo. */
+  top: 62.5px;
   width: 920px;
 
   @media (max-width: 1000px) {

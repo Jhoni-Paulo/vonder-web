@@ -101,9 +101,9 @@ export const SectionComponentNodeSubsection = (): React.JSX.Element => {
           <br />
           nosso Blog
         </Title>
-        <BlogButton type="button">Acessar o Blog</BlogButton>
+        <BlogButton type="button">Ver Tudo</BlogButton>
       </Header>
-      <ExpandableCardCarousel items={posts} />
+      <ExpandableCardCarousel items={posts} gap={24} balancedActive />
     </Container>
   );
 };

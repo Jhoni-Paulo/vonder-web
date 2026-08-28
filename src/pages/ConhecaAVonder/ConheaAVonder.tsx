@@ -11,6 +11,7 @@ import { FrameSubsection } from "./sections/FrameSubsection";
 import { FrameWrapperSubsection } from "./sections/FrameWrapperSubsection";
 import { GroupWrapperSubsection } from "./sections/GroupWrapperSubsection";
 import { SectionComponentNodeSubsection } from "./sections/SectionComponentNodeSubsection";
+import { VitrineCarousel } from "../../components/VitrineCarousel/VitrineCarousel";
 
 const StyledConheaAVonder = styled.div`
   align-items: center;
@@ -41,10 +42,18 @@ const StyledConheaAVonder = styled.div`
     width: 100%;
   }
 
-  .mask-group-5 {
-    display: block;
-    height: auto;
+  .video-embed {
+    aspect-ratio: 16 / 9;
     position: relative;
+    width: 100%;
+  }
+
+  .video-embed iframe {
+    border: 0;
+    display: block;
+    height: 100%;
+    inset: 0;
+    position: absolute;
     width: 100%;
   }
 
@@ -97,14 +106,18 @@ export const ConheaAVonder = (): React.JSX.Element => {
       <DivWrapperSubsection />
       <DivSubsection />
       <SectionComponentNodeSubsection />
+      <VitrineCarousel />
       <Frame1Subsection />
       <Frame2Subsection />
       <div className="mask-group-wrapper">
-        <img
-          className="mask-group-5"
-          alt="Mask group"
-          src="https://c.animaapp.com/HXGo4e2k/img/mask-group-4.png"
-        />
+        <div className="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/xCqS9DO0Nzg"
+            title="Vídeo institucional VONDER"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
       </div>
       <div className="frame-30">
         <p className="text-wrapper-36">

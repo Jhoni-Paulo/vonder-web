@@ -65,8 +65,8 @@ const LeftPanel = styled.div`
   border-radius: 16px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  padding: 56px 60px 0;
+  gap: 25px;
+  padding: 56px 75px 0 60px;
   box-sizing: border-box;
   position: relative;
   z-index: 1;
@@ -103,6 +103,7 @@ const Title = styled.h1`
   letter-spacing: 0;
   line-height: normal;
   margin: 0;
+  padding-right: 50px;
 
   @media (max-width: 600px) {
     font-size: 32px;
@@ -118,6 +119,7 @@ const InfoText = styled.p`
   line-height: 1.5;
   margin: 0;
   max-width: 400px;
+  padding-right: 50px;
 
   @media (max-width: 1200px) {
     max-width: 100%;
@@ -145,7 +147,7 @@ const ContactImg = styled.div`
   background-repeat: no-repeat;
   background-position: center bottom;
   width: 100%;
-  height: 373px;
+  height: 500px;
   margin-top: auto;
 
   @media (max-width: 600px) {
@@ -305,6 +307,90 @@ const SubmitBtn = styled.button`
   }
 `;
 
+/* ── reCAPTCHA (mock) ─────────────────────────────────
+   Widget visual no estilo do reCAPTCHA v2. Mock por enquanto; na integração,
+   trocar pelo componente real (ex.: react-google-recaptcha) com a site key. */
+
+const RecaptchaRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
+`;
+
+const RecaptchaBox = styled.div`
+  align-items: center;
+  background-color: #f9f9f9;
+  border: 1px solid #d3d3d3;
+  border-radius: 3px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  display: flex;
+  gap: 12px;
+  height: 74px;
+  max-width: 100%;
+  padding: 0 14px 0 12px;
+  width: 302px;
+`;
+
+const RecaptchaCheck = styled.button<{ $checked: boolean }>`
+  align-items: center;
+  background-color: #ffffff;
+  border: 2px solid ${({ $checked }) => ($checked ? "#1a73e8" : "#c1c1c1")};
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  height: 28px;
+  justify-content: center;
+  padding: 0;
+  width: 28px;
+  transition: border-color 0.2s ease;
+
+  svg {
+    opacity: ${({ $checked }) => ($checked ? 1 : 0)};
+    transition: opacity 0.2s ease;
+  }
+`;
+
+const RecaptchaLabel = styled.span`
+  color: #202124;
+  flex: 1;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+`;
+
+const RecaptchaBrand = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 2px;
+`;
+
+const RecaptchaLogo = styled.img`
+  height: 32px;
+  width: 32px;
+`;
+
+const RecaptchaBrandText = styled.span`
+  color: #555555;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1;
+`;
+
+const RecaptchaLinks = styled.span`
+  color: #9aa0a6;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 8px;
+  line-height: 1;
+`;
+
 /* ── Component ────────────────────────────────────── */
 
 export function FaleConosco() {
@@ -313,6 +399,7 @@ export function FaleConosco() {
     endereco: "", bairro: "", estado: "", cidade: "",
     assunto: "", mensagem: "",
   });
+  const [recaptchaChecked, setRecaptchaChecked] = useState(false);
 
   const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -369,6 +456,30 @@ export function FaleConosco() {
             <InputField name="cidade"   value={form.cidade}   onChange={handle} placeholder="Cidade"    />
             <InputField name="assunto"  value={form.assunto}  onChange={handle} placeholder="Assunto"   />
             <TextAreaField name="mensagem" value={form.mensagem} onChange={handle} placeholder="Mensagem" />
+            <RecaptchaRow>
+              <RecaptchaBox>
+                <RecaptchaCheck
+                  type="button"
+                  $checked={recaptchaChecked}
+                  aria-pressed={recaptchaChecked}
+                  aria-label="Não sou um robô"
+                  onClick={() => setRecaptchaChecked((v) => !v)}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="5 12 10 17 19 7" />
+                  </svg>
+                </RecaptchaCheck>
+                <RecaptchaLabel>Não sou um robô</RecaptchaLabel>
+                <RecaptchaBrand>
+                  <RecaptchaLogo
+                    alt="reCAPTCHA"
+                    src="https://www.gstatic.com/recaptcha/api2/logo_48.png"
+                  />
+                  <RecaptchaBrandText>reCAPTCHA</RecaptchaBrandText>
+                  <RecaptchaLinks>Privacidade · Termos</RecaptchaLinks>
+                </RecaptchaBrand>
+              </RecaptchaBox>
+            </RecaptchaRow>
             <SubmitRow>
               <SubmitBtn type="submit">Enviar</SubmitBtn>
             </SubmitRow>
