@@ -10,6 +10,33 @@ import {
 } from "./sections/FrameWrapperSubsection/FrameWrapperSubsection";
 import { GroupSubsection } from "./sections/GroupSubsection";
 import { GroupWrapperSubsection } from "./sections/GroupWrapperSubsection/GroupWrapperSubsection";
+import {
+  TripleSlider,
+  type TripleSliderItem,
+} from "../../components/TripleSlider/TripleSlider";
+import cultura1 from "../../assets/05-2.png";
+import cultura2 from "../../assets/03-2.png";
+import cultura3 from "../../assets/05-1.png";
+
+/* Carrossel (mesma funcionalidade da seção "Quem apoia a VONDER" do blog). */
+const culturaImages = [cultura1, cultura2, cultura3];
+
+const culturaItems: TripleSliderItem[] = culturaImages.map((src, i) => ({
+  id: i,
+  content: (
+    <img
+      alt="Cultura VONDER"
+      src={src}
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+      }}
+    />
+  ),
+}));
 
 export const TrabalheConosco = (): React.JSX.Element => {
   const [activeTab, setActiveTab] = useState(0);
@@ -67,11 +94,9 @@ export const TrabalheConosco = (): React.JSX.Element => {
           contínuos.
         </p>
       </div>
-      <img
-        className="frame-106"
-        alt="Frame"
-        src="https://c.animaapp.com/fkOynynE/img/frame-462.svg"
-      />
+      <div className="frame-106">
+        <TripleSlider items={culturaItems} showArrows />
+      </div>
       <FrameWrapperSubsection active={activeTab} onSelect={setActiveTab} />
       <GroupWrapperSubsection title={tabs[activeTab].strong} activeTab={activeTab} />
       <DivWrapperSubsection />
@@ -159,7 +184,8 @@ const StyledTrabalheConosco = styled.div`
     max-width: none;
     margin-left: -95px;
     margin-right: -95px;
-    height: auto;
+    height: 400px;
+    object-fit: cover;
     display: block;
 
     @media (max-width: 1024px) {

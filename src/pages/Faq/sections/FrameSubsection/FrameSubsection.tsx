@@ -4,6 +4,14 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
+  /* A imagem estoura 118px acima da seção (352px numa seção de 234px). Empurra
+     a seção para baixo para deixar ~60px entre o breadcrumb e o topo da imagem
+     (94px de sobreposição atual + 60px de folga). */
+  margin-top: 154px;
+
+  @media (max-width: 900px) {
+    margin-top: 0;
+  }
 `;
 
 const Card = styled.div`
@@ -12,7 +20,10 @@ const Card = styled.div`
   border-radius: 16px;
   display: flex;
   gap: 40px;
-  padding: 32px 64px;
+  height: 234px;
+  overflow: visible;
+  padding: 0 64px;
+  position: relative;
   width: 100%;
   box-sizing: border-box;
 
@@ -20,6 +31,7 @@ const Card = styled.div`
     flex-direction: column;
     text-align: center;
     gap: 24px;
+    height: auto;
     padding: 32px;
   }
 `;
@@ -28,12 +40,18 @@ const ImageWrapper = styled.div`
   display: flex;
   flex-shrink: 0;
   align-items: center;
+  align-self: flex-end;
   justify-content: center;
+
+  @media (max-width: 900px) {
+    align-self: center;
+  }
 `;
 
 const GeminiGeneratedImage = styled.img`
   aspect-ratio: 0.82;
-  height: 300px;
+  display: block;
+  height: 352px;
   width: auto;
   object-fit: contain;
 

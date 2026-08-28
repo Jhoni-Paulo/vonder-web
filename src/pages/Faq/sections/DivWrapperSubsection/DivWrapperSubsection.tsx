@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import minusIcon from "../../../../assets/Group69338.png";
 
 const Container = styled.div`
   display: flex;
@@ -84,11 +85,21 @@ const QuestionList = styled.div`
   width: 100%;
 `;
 
-const QuestionRow = styled.div`
-  align-items: center;
+const QuestionItem = styled.div`
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 0px 20px #00000026;
+  overflow: hidden;
+  width: 100%;
+  transition: box-shadow 0.25s ease;
+
+  &:hover {
+    box-shadow: 0 6px 22px #0000003a;
+  }
+`;
+
+const QuestionRow = styled.div`
+  align-items: center;
   display: flex;
   gap: 20px;
   justify-content: space-between;
@@ -96,10 +107,26 @@ const QuestionRow = styled.div`
   width: 100%;
   box-sizing: border-box;
   cursor: pointer;
-  transition: box-shadow 0.25s ease;
+`;
 
-  &:hover {
-    box-shadow: 0 6px 22px #0000003a;
+const AnswerPanel = styled.div<{ $open: boolean }>`
+  max-height: ${({ $open }) => ($open ? "800px" : "0")};
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+`;
+
+const AnswerText = styled.p`
+  color: #333333;
+  font-family: "Swis721 LtCn BT-Light", Helvetica;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.6;
+  margin: 0;
+  padding: 4px 29px 24px;
+
+  @media (max-width: 600px) {
+    font-size: 16px;
   }
 `;
 
@@ -223,11 +250,16 @@ const CtaButton = styled(Link)`
 
 const ARROW = "https://c.animaapp.com/lFhe4nh2/img/frame-69640.svg";
 
-const faqCategories: { title: string; questions: string[] }[] = [
+type FaqQuestion = string | { q: string; a?: string };
+
+const faqCategories: { title: string; questions: FaqQuestion[] }[] = [
   {
     title: "Produtos VONDER",
     questions: [
-      "Quais tipos de ferramentas a VONDER oferece?",
+      {
+        q: "Quais tipos de ferramentas a VONDER oferece?",
+        a: "A VONDER oferece uma linha completa de ferramentas projetadas para atender profissionais, indústrias e consumidores que buscam qualidade, eficiência e durabilidade. Nosso portfólio inclui ferramentas elétricas, como parafusadeiras, furadeiras e serras; ferramentas manuais, como chaves, alicates e martelos; além de soluções portáteis a bateria para maior mobilidade. Também contamos com uma ampla variedade de abrasivos, discos de corte e acessórios que garantem desempenho e precisão em cada aplicação. Seja para uso profissional ou industrial, nossas ferramentas são desenvolvidas com tecnologia de ponta e certificação de qualidade para proporcionar segurança e resultados confiáveis em qualquer projeto.",
+      },
       "Como escolher a ferramenta certa para meu trabalho?",
       "Onde posso encontrar manuais de uso e especificações técnicas dos produtos?",
       "Os produtos VONDER são compatíveis com acessórios de outras marcas?",
@@ -287,6 +319,8 @@ const faqCategories: { title: string; questions: string[] }[] = [
 ];
 
 export const DivWrapperSubsection = (): React.JSX.Element => {
+  const [openKey, setOpenKey] = useState<string | null>(null);
+
   return (
     <Container>
       {faqCategories.map((category) => (
@@ -296,12 +330,28 @@ export const DivWrapperSubsection = (): React.JSX.Element => {
             <SeeAllButton type="button">Ver tudo</SeeAllButton>
           </CategoryHeader>
           <QuestionList>
-            {category.questions.map((question) => (
-              <QuestionRow key={question}>
-                <QuestionText>{question}</QuestionText>
-                <ArrowIcon alt="Abrir" src={ARROW} />
-              </QuestionRow>
-            ))}
+            {category.questions.map((item, qi) => {
+              const q = typeof item === "string" ? item : item.q;
+              const a = typeof item === "string" ? undefined : item.a;
+              const key = `${category.title}::${qi}`;
+              const isOpen = openKey === key;
+              return (
+                <QuestionItem key={q}>
+                  <QuestionRow
+                    onClick={() => setOpenKey(isOpen ? null : key)}
+                  >
+                    <QuestionText>{q}</QuestionText>
+                    <ArrowIcon
+                      alt={isOpen ? "Fechar" : "Abrir"}
+                      src={isOpen ? minusIcon : ARROW}
+                    />
+                  </QuestionRow>
+                  <AnswerPanel $open={isOpen} aria-hidden={!isOpen}>
+                    {a && <AnswerText>{a}</AnswerText>}
+                  </AnswerPanel>
+                </QuestionItem>
+              );
+            })}
           </QuestionList>
         </Category>
       ))}

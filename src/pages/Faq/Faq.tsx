@@ -3,6 +3,14 @@ import styled from "styled-components";
 import { DivWrapperSubsection } from "./sections/DivWrapperSubsection";
 import { FrameSubsection } from "./sections/FrameSubsection";
 import { FrameWrapperSubsection } from "./sections/FrameWrapperSubsection";
+import rectangle4 from "../../assets/Rectangle4.png";
+
+const Banner = styled.img`
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+`;
 
 const StyledFAQ = styled.div`
   align-items: center;
@@ -87,6 +95,7 @@ export const Faq = (): React.JSX.Element => {
         <FrameSubsection />
         <SearchTitle>O que você procura?</SearchTitle>
         <FrameWrapperSubsection />
+        <Banner src={rectangle4} alt="" />
         <DivWrapperSubsection />
       </Content>
     </StyledFAQ>

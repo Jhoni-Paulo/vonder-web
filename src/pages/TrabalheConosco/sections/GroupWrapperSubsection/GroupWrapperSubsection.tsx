@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const Section = styled.div`
@@ -678,6 +678,42 @@ const SectionHeading = styled.div`
   }
 `;
 
+/* ── Accordion (seções do formulário Revendedor) ── */
+const AccordionItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const AccordionHeading = styled(SectionHeading)`
+  cursor: pointer;
+  user-select: none;
+`;
+
+const AccordionArrow = styled.span<{ $open: boolean }>`
+  display: block;
+  flex-shrink: 0;
+  height: 14px;
+  width: 14px;
+  border-right: 3px solid #000000;
+  border-bottom: 3px solid #000000;
+  margin-right: 6px;
+  transform: ${({ $open }) =>
+    $open ? "translateY(3px) rotate(-135deg)" : "rotate(45deg)"};
+  transition: transform 0.3s ease;
+`;
+
+const AccordionPanel = styled.div<{ $open: boolean }>`
+  max-height: ${({ $open }) => ($open ? "2000px" : "0")};
+  overflow: hidden;
+  width: 100%;
+  transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+`;
+
+const PanelInner = styled.div`
+  padding-top: 16px;
+`;
+
 const FormBox = styled.div`
   background-color: #ffffff;
   border-radius: 16px;
@@ -850,6 +886,14 @@ const segments = [
 ];
 
 function RevendedorContent() {
+  const [open, setOpen] = useState({
+    dados: false,
+    produtos: false,
+    segmentos: false,
+  });
+  const toggle = (key: keyof typeof open) =>
+    setOpen((prev) => ({ ...prev, [key]: !prev[key] }));
+
   return (
     <>
       <FormTitle>Formulário de cadastro</FormTitle>
@@ -861,58 +905,79 @@ function RevendedorContent() {
 
       <Divider alt="" src={DIVIDER} />
 
-      <SectionHeading>
-        <p><em>Dados da empresa</em><span>*</span></p>
-      </SectionHeading>
-      <FormBox>
-        <FieldsRow>
-          <FieldsCol>
-            <FormField type="text" placeholder="Perfil" />
-            <FormField type="text" placeholder="Nome da empresa" />
-            <FormField type="email" placeholder="E-mail" />
-            <FormField type="text" placeholder="Estado" />
-          </FieldsCol>
-          <FieldsCol>
-            <FormField type="text" placeholder="CNPJ" />
-            <FormField type="tel" placeholder="Telefone" />
-            <FormField type="text" placeholder="Falar com" />
-            <FormField type="text" placeholder="Cidade" />
-          </FieldsCol>
-        </FieldsRow>
-        <FormField type="text" placeholder="Como conheceu a VONDER?" />
-      </FormBox>
+      <AccordionItem>
+        <AccordionHeading onClick={() => toggle("dados")}>
+          <p><em>Dados da empresa</em><span>*</span></p>
+          <AccordionArrow $open={open.dados} />
+        </AccordionHeading>
+        <AccordionPanel $open={open.dados}>
+          <PanelInner>
+            <FormBox>
+              <FieldsRow>
+                <FieldsCol>
+                  <FormField type="text" placeholder="Perfil" />
+                  <FormField type="text" placeholder="Nome da empresa" />
+                  <FormField type="email" placeholder="E-mail" />
+                  <FormField type="text" placeholder="Estado" />
+                </FieldsCol>
+                <FieldsCol>
+                  <FormField type="text" placeholder="CNPJ" />
+                  <FormField type="tel" placeholder="Telefone" />
+                  <FormField type="text" placeholder="Falar com" />
+                  <FormField type="text" placeholder="Cidade" />
+                </FieldsCol>
+              </FieldsRow>
+              <FormField type="text" placeholder="Como conheceu a VONDER?" />
+            </FormBox>
+          </PanelInner>
+        </AccordionPanel>
+      </AccordionItem>
 
       <Divider alt="" src={DIVIDER} />
 
-      <SectionHeading>
-        <p><em>Produtos de interesse</em><span>*</span></p>
-      </SectionHeading>
-      <FormBox>
-        <CheckGrid>
-          {products.map((p) => (
-            <CheckItem key={p}>
-              <input type="checkbox" />
-              <span>{p}</span>
-            </CheckItem>
-          ))}
-        </CheckGrid>
-      </FormBox>
+      <AccordionItem>
+        <AccordionHeading onClick={() => toggle("produtos")}>
+          <p><em>Produtos de interesse</em><span>*</span></p>
+          <AccordionArrow $open={open.produtos} />
+        </AccordionHeading>
+        <AccordionPanel $open={open.produtos}>
+          <PanelInner>
+            <FormBox>
+              <CheckGrid>
+                {products.map((p) => (
+                  <CheckItem key={p}>
+                    <input type="checkbox" />
+                    <span>{p}</span>
+                  </CheckItem>
+                ))}
+              </CheckGrid>
+            </FormBox>
+          </PanelInner>
+        </AccordionPanel>
+      </AccordionItem>
 
       <Divider alt="" src={DIVIDER} />
 
-      <SectionHeading>
-        <p><em>Segmentos que atende</em><span>*</span></p>
-      </SectionHeading>
-      <FormBox>
-        <CheckGrid>
-          {segments.map((s) => (
-            <CheckItem key={s}>
-              <input type="checkbox" />
-              <span>{s}</span>
-            </CheckItem>
-          ))}
-        </CheckGrid>
-      </FormBox>
+      <AccordionItem>
+        <AccordionHeading onClick={() => toggle("segmentos")}>
+          <p><em>Segmentos que atende</em><span>*</span></p>
+          <AccordionArrow $open={open.segmentos} />
+        </AccordionHeading>
+        <AccordionPanel $open={open.segmentos}>
+          <PanelInner>
+            <FormBox>
+              <CheckGrid>
+                {segments.map((s) => (
+                  <CheckItem key={s}>
+                    <input type="checkbox" />
+                    <span>{s}</span>
+                  </CheckItem>
+                ))}
+              </CheckGrid>
+            </FormBox>
+          </PanelInner>
+        </AccordionPanel>
+      </AccordionItem>
 
       <Divider alt="" src={DIVIDER} />
 
