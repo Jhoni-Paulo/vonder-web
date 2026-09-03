@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import alertaImage from "../../assets/alerta-image.png";
 
 interface AlertaVonderProps {
   /** Imagem do mini-banner que abre para baixo ao clicar na faixa. */
@@ -114,8 +115,7 @@ const PanelImg = styled.img`
 `;
 
 export const AlertaVonder = ({
-  // TODO: substituir pela imagem real do alerta quando disponível.
-  imageSrc = "https://c.animaapp.com/F8lHzCc8/img/03-banner-principal-1920x480-px-aspiradores-2-1.png",
+  imageSrc = alertaImage,
   imageAlt = "Alerta VONDER",
   className,
 }: AlertaVonderProps): React.JSX.Element => {
