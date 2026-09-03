@@ -58,7 +58,6 @@ const Track = styled.div`
   }
 
   .swiper-slide {
-    width: auto;
     height: auto;
   }
 `;
@@ -72,11 +71,11 @@ const Card = styled.div`
   flex-direction: column;
   flex-shrink: 0;
   gap: 17px;
-  height: 363px;
+  height: 100%;
   padding: 16px 12px 20px;
   position: relative;
   scroll-snap-align: center;
-  width: 223px;
+  width: 100%;
 
   &::before {
     -webkit-mask: linear-gradient(#fff 0 0) content-box,
@@ -95,10 +94,6 @@ const Card = styled.div`
     pointer-events: none;
     position: absolute;
     z-index: 1;
-  }
-
-  @media (max-width: 600px) {
-    width: 190px;
   }
 `;
 
@@ -127,6 +122,7 @@ const ProductName = styled.p`
   line-height: 1.3;
   margin: 0;
   overflow: hidden;
+  text-align: center;
   text-overflow: ellipsis;
 `;
 
@@ -135,6 +131,7 @@ const ProductCode = styled.div`
   font-family: "Swis721 Cn BT-Bold", Helvetica;
   font-size: 15px;
   font-weight: 700;
+  text-align: center;
 `;
 
 export const ProductCarousel = ({ items }: ProductCarouselProps): React.JSX.Element => {
@@ -152,8 +149,14 @@ export const ProductCarousel = ({ items }: ProductCarouselProps): React.JSX.Elem
         <Swiper
           grabCursor
           rewind
-          slidesPerView="auto"
+          slidesPerView={1.5}
           spaceBetween={16}
+          breakpoints={{
+            480: { slidesPerView: 2 },
+            640: { slidesPerView: 3 },
+            1000: { slidesPerView: 4 },
+            1200: { slidesPerView: 5 },
+          }}
           onSwiper={(s) => {
             swiperRef.current = s;
           }}

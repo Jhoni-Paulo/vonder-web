@@ -197,7 +197,7 @@ export const Frame1Subsection = (): React.JSX.Element => {
           <TextWrapper26>Ver tudo</TextWrapper26>
         </Frame37>
       </Frame36>
-      <ExpandableCardCarousel items={posts} showArrows={false} />
+      <ExpandableCardCarousel items={posts} gap={24} balancedActive />
     </StyledFrame1Subsection>
   );
 };

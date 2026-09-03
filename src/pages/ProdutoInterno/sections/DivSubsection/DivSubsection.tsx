@@ -17,10 +17,11 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
 `;
 
 const Title = styled.div`
@@ -31,7 +32,7 @@ const Title = styled.div`
   font-weight: 700;
   letter-spacing: 0;
   line-height: normal;
-  text-align: center;
+  text-align: left;
 
   @media (max-width: 600px) {
     font-size: 32px;
@@ -47,7 +48,7 @@ const Description = styled.p`
   line-height: normal;
   margin: 0;
   max-width: 500px;
-  text-align: center;
+  text-align: left;
 
   @media (max-width: 600px) {
     font-size: 18px;

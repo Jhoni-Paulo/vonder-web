@@ -133,16 +133,30 @@ const CardContent = styled.div`
   box-sizing: border-box;
 `;
 
-const CardTitle = styled.p`
+const CardTitle = styled.p<{ $active?: boolean }>`
   color: #f6be00;
   font-family: "Swis721 Cn BT-Bold", Helvetica;
   font-size: 20px;
   font-weight: 700;
   line-height: 1.25;
   margin: 0;
+  ${({ $active }) =>
+    !$active &&
+    `
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  `}
+
+  @media (max-width: 600px) {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
 `;
 
-const CardDesc = styled.p<{ $active?: boolean }>`
+const CardDesc = styled.p`
   color: #ffffff;
   font-family: "Swis721 LtCn BT-Light", Helvetica;
   font-size: 16px;
@@ -150,11 +164,8 @@ const CardDesc = styled.p<{ $active?: boolean }>`
   line-height: 1.4;
   margin: 0;
   overflow: hidden;
-  max-height: ${({ $active }) => ($active ? "200px" : "0px")};
-  opacity: ${({ $active }) => ($active ? 1 : 0)};
-  transition:
-    max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.4s ease;
+  max-height: 200px;
+  opacity: 1;
 
   @media (max-width: 600px) {
     max-height: 200px;
@@ -233,8 +244,8 @@ export const ExpandableCardCarousel = ({
               <CardImage alt={item.title} src={item.img} />
               <CardOverlay />
               <CardContent>
-                <CardTitle>{item.title}</CardTitle>
-                {item.desc && <CardDesc $active={isActive}>{item.desc}</CardDesc>}
+                <CardTitle $active={isActive}>{item.title}</CardTitle>
+                {item.desc && <CardDesc>{item.desc}</CardDesc>}
                 {item.linkText && (
                   <CardLink onClick={item.onLinkClick}>{item.linkText}</CardLink>
                 )}

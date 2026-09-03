@@ -105,6 +105,7 @@ const Card = styled.div`
   flex-direction: column;
   flex-shrink: 0;
   gap: 17px;
+  height: 100%;
   padding: 16px 12px 20px;
   position: relative;
   width: 100%;

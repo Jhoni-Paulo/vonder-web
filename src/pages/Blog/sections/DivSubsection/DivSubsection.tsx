@@ -120,17 +120,20 @@ const posts: ExpandableCardCarouselItem[] = [
     img: "https://c.animaapp.com/bNHZtEYo/img/mask-group-5.png",
     title:
       "Carrinhos, painéis, caixas e armários: qual opção escolher na hora de...",
+    desc: "Gosta de pedalar?! Antes do passeio, pense nisso… Nada melhor do que sair de bike para trabalhar, treinar ou simplesmente curtir o dia. Mas, antes de colocar o capacete...",
     linkText: "Ler Mais",
   },
   {
     img: "https://c.animaapp.com/bNHZtEYo/img/mask-group-6.png",
     title: "Como os organizadores plásticos aumentam sua produtividade...",
+    desc: "Gosta de pedalar?! Antes do passeio, pense nisso… Nada melhor do que sair de bike para trabalhar, treinar ou simplesmente curtir o dia. Mas, antes de colocar o capacete...",
     linkText: "Ler Mais",
   },
   {
     img: "https://c.animaapp.com/bNHZtEYo/img/mask-group-7.png",
     title:
       "Produto 2 em 1: Lavadora e Aspirador LAV 1580 VONDER – Um Só...",
+    desc: "Gosta de pedalar?! Antes do passeio, pense nisso… Nada melhor do que sair de bike para trabalhar, treinar ou simplesmente curtir o dia. Mas, antes de colocar o capacete...",
     linkText: "Ler Mais",
   },
 ];
@@ -154,7 +157,7 @@ export const DivSubsection = (): React.JSX.Element => {
           <div className="text-wrapper-17">Ver tudo</div>
         </div>
       </div>
-      <ExpandableCardCarousel items={posts} showArrows={false} />
+      <ExpandableCardCarousel items={posts} gap={24} balancedActive />
     </StyledDivSubsection>
   );
 };

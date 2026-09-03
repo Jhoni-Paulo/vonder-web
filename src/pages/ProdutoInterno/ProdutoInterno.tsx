@@ -154,9 +154,9 @@ export const ProdutoInterno = (): React.JSX.Element => {
           onItemSelect={setSelectedImage}
         />
       </GalleryWrap>
-      <GroupWrapperSubsection />
       <DivWrapperSubsection />
       <DivSubsection />
+      <GroupWrapperSubsection />
       <SectionComponentNodeSubsection />
     </Container>
   );

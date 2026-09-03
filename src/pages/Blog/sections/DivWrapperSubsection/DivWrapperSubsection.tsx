@@ -172,7 +172,7 @@ export const DivWrapperSubsection = (): React.JSX.Element => {
           <TextWrapper8>Ver tudo</TextWrapper8>
         </Frame9>
       </Frame7>
-      <ExpandableCardCarousel items={posts} showArrows={false} />
+      <ExpandableCardCarousel items={posts} gap={24} balancedActive />
     </StyledDivWrapperSubsection>
   );
 };
