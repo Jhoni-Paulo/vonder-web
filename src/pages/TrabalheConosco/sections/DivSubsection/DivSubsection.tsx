@@ -10,8 +10,8 @@ const CtaWrapper = styled.div`
   flex-direction: column;
   gap: 10px;
   position: relative;
-  width: 1124px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 1228px;
 
   @media (max-width: 1000px) {
     align-items: center;
@@ -25,8 +25,7 @@ const CtaWrapper = styled.div`
 const CtaGroup = styled.div`
   height: 570px;
   position: relative;
-  width: 1124px;
-  max-width: 100%;
+  width: 100%;
 
   @media (max-width: 1000px) {
     align-items: center;
@@ -48,10 +47,11 @@ const CtaFrame = styled.div`
   left: 204px;
   padding: 39px 40px;
   position: absolute;
+  right: 0;
   /* Centraliza o card (445px) verticalmente no CtaGroup (570px):
      (570 - 445) / 2 = 62.5px em cima e embaixo. */
   top: 62.5px;
-  width: 920px;
+  width: auto;
 
   @media (max-width: 1000px) {
     align-items: stretch;
@@ -59,6 +59,7 @@ const CtaFrame = styled.div`
     left: auto;
     padding: 32px 24px;
     position: relative;
+    right: auto;
     top: auto;
     width: 100%;
   }
@@ -73,7 +74,7 @@ const RectangleWrapper = styled.div`
   padding: 10px;
   position: absolute;
   top: 0;
-  width: 920px;
+  width: 100%;
 
   @media (max-width: 1000px) {
     inset: 0;
@@ -97,15 +98,18 @@ const Rectangle = styled.div`
 
 const CtaContent = styled.div`
   align-items: flex-start;
+  align-self: stretch;
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
   gap: 30px;
+  /* Mantém o texto começando logo após a imagem, independente da largura. */
+  margin-left: 290px;
   padding-left: 40px;
   position: relative;
-  width: 550px;
 
   @media (max-width: 1000px) {
+    margin-left: 0;
     max-width: 100%;
     width: 100%;
   }
