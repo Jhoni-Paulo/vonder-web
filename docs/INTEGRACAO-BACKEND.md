@@ -94,21 +94,32 @@ checkbox de aceite dos termos. Hoje não envia nada.
 - Validar email. Se já inscrito, responder `code: 0` mesmo assim (idempotente) ou `code: 1` com
   `message` amigável — o front exibe `message`.
 
-### 1.2 Menu de produtos (header) — `ProdutosMega`
-**Funcionalidade:** mega-menu com a lista de **categorias de produto** (Abrasivos, Pintura, EPI,
-Ferramentas Elétricas… hoje 21 fixas) + card do catálogo.
+### 1.2 Menu de produtos (header) — `ProdutosMega` ✅ INTEGRADO
+**Funcionalidade:** mega-menu com a lista de **categorias de produto** + card do catálogo. A mesma
+listagem alimenta o accordion "Nossos produtos" do menu mobile.
 
-🔴 `GET /categorias?idioma=ptBr`
+✅ `GET /mega-menu?idioma=ptBr` (header `x-api-key`) → `data`
 ```json
-// data esperado
 [
-  { "id": 1, "nome": "Abrasivos", "slug": "abrasivos" },
-  { "id": 2, "nome": "Pintura", "slug": "pintura" },
-  { "id": 3, "nome": "Ferramentas Elétricas", "slug": "ferramentas-eletricas" }
+  { "idNivelArvore": 5011, "idNivelPai": null, "nivel": 1, "numeroNivel": 1,
+    "valor": "Abrasivos", "imagem": null, "filhos": [] }
 ]
 ```
-- `slug` é o que o front usa na URL de `/categorias-e-produtos?categoria=abrasivos`.
-- Mesmo endpoint serve a sidebar de filtros da página de listagem (item 3.1).
+- Front usa `valor` (texto do item) e `idNivelArvore` (chave), ordenando por `numeroNivel`.
+- `imagem` e `filhos` **não são usados**: a listagem é de um nível só, em texto puro. Se um dia o
+  menu ganhar submenu ou ícone, `filhos`/`imagem` já atendem.
+- ⚠️ A resposta traz o nó **"Sem alocação"** (`idNivelArvore` 16162), que é um balde interno do
+  e-catálogo. O front filtra esse rótulo para não exibi-lo ao visitante — o ideal é o back não
+  devolvê-lo nesta rota.
+- Todos os itens levam hoje para `/categorias-e-produtos`, sem filtro, porque a página de listagem
+  ainda é mockada e não lê parâmetro de categoria. Quando o item 3.2 for integrado, basta passar o
+  `idNivelArvore` (ou um `slug`, se o back devolver um) na URL.
+- Resposta cacheada em memória: o mega menu monta a cada hover e o menu mobile usa a mesma lista,
+  então é **uma chamada por carregamento de página**, não por abertura.
+- Se a chamada falhar, o menu mantém só o atalho fixo "Ver Tudo em VONDER" — sem lista velha.
+
+> O `GET /categorias` sugerido antes deixa de ser necessário para o menu. A sidebar de filtros da
+> listagem (item 3.1) ainda precisa de contagem por categoria, que esta rota não traz.
 
 ---
 
@@ -118,8 +129,34 @@ A home inteira pode vir de **uma única chamada** — o back já tem `GET /api/h
 devolve `banners`, `blogs`, `destaques`, `parcerias`, `videosInstitucionais`, `produtoInformativos`.
 Abaixo, seção por seção, o que cada uma consome.
 
-### 2.1 Banner principal (hero / swiper) — `HomeNova.tsx`
-**Funcionalidade:** carrossel de banners no topo. Hoje 3 imagens fixas repetidas.
+### 2.0 Faixa "ALERTA VONDER!" — `AlertaVonder` ✅ INTEGRADO
+
+**Funcionalidade:** faixa cinza acima do banner principal ("Cuidado com sites e perfis falsos!").
+Ao clicar, expande e mostra a imagem cadastrada no painel. Só aparece dentro do período cadastrado.
+
+✅ `POST /alerta/buscar` → `data` (registro de `cms.alerta`)
+```json
+// request
+{}
+```
+```json
+// data esperado — objeto único (o front também aceita lista e usa o 1º item)
+{ "id": 1, "colapsado": "https://.../Alerta/colapsado.png",
+  "explandido": "https://.../Alerta/expandido.png",
+  "dataInicio": "2026-09-01", "dataFim": "2026-09-30" }
+```
+- O front usa `explandido` como imagem do painel aberto (cai em `colapsado` se vier vazia) — hoje o
+  painel salva o mesmo arquivo nos dois campos.
+- `dataInicio`/`dataFim` são **inclusivas** e comparadas por dia, no fuso do visitante. Fora do
+  período — ou sem registro — a faixa não é renderizada.
+- Aceita `YYYY-MM-DD` ou ISO com `T`. Campo de data vazio = período aberto daquele lado.
+- ⚠️ **Rota ainda exige JWT** (é rota de CMS). O front manda o Bearer de `VITE_API_TOKEN` como
+  paliativo; precisa virar pública com `x-api-key`, como o `/home` — ver seção 0.5.
+- O CORS do back reflete os headers pedidos no preflight (`authorization`, `x-api-key`), então a
+  troca para `x-api-key` não esbarra em CORS.
+
+### 2.1 Banner principal (hero / swiper) — `HomeNova.tsx` ✅ INTEGRADO
+**Funcionalidade:** carrossel de banners no topo.
 
 ✅ `GET /home` → `data.banners`
 ```json
@@ -129,25 +166,37 @@ Abaixo, seção por seção, o que cada uma consome.
 ]
 ```
 - Front usa `imagemUrl` (src), `descricao` (alt) e, se `redirecionamentoUrl` vier preenchido, torna o
-  slide clicável. Ordenar por `ordenacao`.
+  slide clicável (abre em nova aba). Ordena por `ordenacao`.
+- Destino sem protocolo (`teste.com`) é normalizado para `https://` no front — o browser trataria
+  como caminho relativo. O ideal é o CMS já gravar a URL completa.
+- Sem banner cadastrado, o hero inteiro não é renderizado (nada de espaço vazio).
 
-### 2.2 "Seleção Especial VONDER" (carrossel de produtos) — `FrameWrapperSubsection`
-**Funcionalidade:** carrossel horizontal de produtos em destaque (nome + código + imagem).
+### 2.2 "Ferramenta é VONDER" (carrossel de cards) — `FrameSubsection` ✅ INTEGRADO
+**Funcionalidade:** carrossel de cards com imagem + rótulo sobreposto.
 
 ✅ `GET /home` → `data.destaques`
 ```json
 [
-  { "id": 10, "idProduto": 123, "ordenacao": 1,
-    "produto": { "idProduto": 123, "codigoOvd": "60.01.112.000",
-                 "nomeEcommerce": "Parafusadeira/furadeira a bateria, 12 V..." },
-    "imagemPrincipal": { "id": 55, "link": "https://.../image.png", "fotoPrincipal": true } }
+  { "id": 29, "idProduto": 248951, "ordenacao": 1,
+    "produto": { "idProduto": 248951, "codigoOvd": "6818020065",
+                 "nomeAgrupamento": "Produtos Sem Agrupamento", "nomeEcommerce": null },
+    "imagemPrincipal": { "id": 21406, "link": "https://.../1125021_principal", "fotoPrincipal": true } }
 ]
 ```
-- Front usa `imagemPrincipal.link` (img), `produto.nomeEcommerce` (nome), `produto.codigoOvd` (código).
-- Cada card leva para `/produto/{codigoOvd}`.
+- Front usa `imagemPrincipal.link` (img) e, como rótulo, `produto.nomeEcommerce` — caindo em
+  `nomeAgrupamento`. Ordena por `ordenacao`.
+- ⚠️ Hoje o único destaque cadastrado vem com `nomeEcommerce: null` e `nomeAgrupamento`
+  "Produtos Sem Agrupamento": o card aparece **sem rótulo**, porque esse texto genérico não serve
+  para o visitante. Vale conferir a carga do e-catálogo.
+- Destaque sem imagem é descartado; sem nenhum destaque, a seção inteira não é renderizada.
 
-### 2.3 "Confira nosso Blog" (cards de blog) — `SectionComponentNodeSubsection`
-**Funcionalidade:** 4 cards de posts recentes (imagem, título, descrição, "Ler Mais").
+### 2.2.1 "Seleção Especial VONDER" — `FrameWrapperSubsection` (segue mockada)
+Carrossel de produtos (nome + código + imagem). Não foi apontada para nenhum atributo do `/home`,
+já que `destaques` ficou com a seção 2.2. Precisa de uma fonte própria — por exemplo um
+`data.selecaoEspecial` no `/home`, com a mesma estrutura de `destaques`.
+
+### 2.3 "Confira nosso Blog" (cards de blog) — `SectionComponentNodeSubsection` ✅ INTEGRADO
+**Funcionalidade:** cards de posts recentes (imagem, título, descrição, "Ler Mais").
 
 ✅ `GET /home` → `data.blogs`
 ```json
@@ -157,17 +206,37 @@ Abaixo, seção por seção, o que cada uma consome.
     "dataPublicacao": "2026-07-24", "idioma": "ptBr" }
 ]
 ```
-- Front usa `imagemUrl` (img), `titulo`, `descricao` (opcional), `redirecionamentoUrl` (destino do
-  "Ler Mais"). Ordenar por `dataPublicacao` desc.
+- Front usa `imagemUrl` (img), `titulo`, `descricao` (opcional) e `redirecionamentoUrl` (destino do
+  "Ler Mais", em nova aba). Ordena por `dataPublicacao` desc; a data em si não aparece no card.
+- Post sem `titulo` ou sem `imagemUrl` é descartado; sem `redirecionamentoUrl` o card fica sem o
+  "Ler Mais". O botão "Ver Tudo" leva para `/blog`.
 
 ### 2.4 "Fique por dentro dos nossos Lançamentos" — `DivSubsection`
 **Funcionalidade:** carrossel rotativo de cards de lançamento (imagem, título, descrição, "Ver mais").
 
-🔴 Não há fonte hoje. Sugestão: `GET /lancamentos?idioma=ptBr&destaque=true&tamanho=6`
-(mesma estrutura do item 6.1). Enquanto não existir, o front mantém o mock.
+✅ `GET /home` → `data.ultimosLancamentos` — **INTEGRADO**
+```json
+[
+  { "produto": { "idProduto": 53254, "codigoOvd": "6675007193",
+                 "nomeAgrupamento": "Morsas Mecânicas",
+                 "nomeEcommerce": "Morsa Mecânica Fixa - ROHM" },
+    "imagemPrincipal": { "id": 179, "link": "https://.../7444702_principal", "fotoPrincipal": true } }
+]
+```
+- Card usa `imagemPrincipal.link` (img) e `produto.nomeEcommerce` (título). Não há campo de
+  descrição: o front usa `nomeAgrupamento` como linha de apoio e **omite** a linha quando o
+  agrupamento é o genérico "Produtos Sem Agrupamento" ou repete o título.
+- "Ver mais" leva para `/produto/{codigoOvd}`; "Veja mais" leva para `/lancamentos`.
+- Se o CMS quiser um texto próprio por lançamento, é só acrescentar um campo `descricao` — o card
+  já tem lugar para ele.
 
 ### 2.5 "Confira nossas redes sociais" (Instagram) — `Frame2Subsection`
 **Funcionalidade:** grade de posts do Instagram (@vonderferramentas): imagem + legenda.
+
+🔴 **Não integrado — bloqueado.** O `/home` devolve `redesSociais` com `token`, `appId` e
+`appSecret` de cada rede. O front não consome esses campos (vazaria segredo no bundle do browser,
+que qualquer visitante lê) e não tem como montar o feed a partir deles. A grade de posts segue
+mockada até existir a rota abaixo.
 
 🔴 `GET /redes-sociais/instagram/feed?idioma=ptBr&limite=8`
 ```json
@@ -183,51 +252,96 @@ Abaixo, seção por seção, o que cada uma consome.
   API do Instagram **no servidor** e devolver só os **posts prontos** no formato acima.
 
 ### 2.6 Seções estáticas (não precisam de rota)
-"Ferramenta é VONDER" (categorias), band de features ("8 centros de distribuição" etc.), "Vitrine
-VONDER", banner institucional final. São conteúdo fixo institucional — **podem seguir estáticas**. Se
+Band de features ("8 centros de distribuição" etc.), "Vitrine VONDER" e banner institucional final. São conteúdo fixo institucional — **podem seguir estáticas**. Se
 um dia virarem editáveis, entram como um bloco de "conteúdo institucional" no `/home`.
 
 ---
 
 ## 3. Categorias e Produtos (`/categorias-e-produtos` → listagem)
 
-### 3.1 Sidebar de filtros
-**Funcionalidade:** filtros por Grupo, Subgrupo, Categoria, Potência, RPM (checkboxes) + contador
-"Resultados: 15 de 812".
+### 3.1 Sidebar de filtros — `CategoriasEProdutos` ✅ INTEGRADO (níveis da árvore)
+**Funcionalidade:** filtros em cascata por Grupo → Subgrupo → Categoria + contador
+"Resultados: 15 de 741".
 
-🔴 `GET /produtos/filtros?idioma=ptBr` (ou incluir os filtros disponíveis na resposta da busca)
+✅ `GET /produto/filtro?idioma=ptBr&grupoId=5011&subgrupoId=5053` (header `x-api-key`)
 ```json
-// data esperado
+// data
 {
-  "grupos":    [ { "id": 1, "nome": "Ferramentas elétricas", "quantidade": 812 } ],
-  "subgrupos": [ { "id": 5, "nome": "Aspirador", "quantidade": 40 } ],
-  "categorias":[ { "id": 9, "nome": "Parafusadeira a Bateria", "quantidade": 15 } ],
-  "potencias": [ { "id": 1, "nome": "1400 W", "quantidade": 3 } ],
-  "rpms":      [ { "id": 1, "nome": "3000 rpm", "quantidade": 2 } ]
+  "totalProdutos": 112,
+  "grupos":     [ { "nivel": 1, "idNivelArvore": 5011, "valor": "Abrasivos" } ],
+  "subgrupos":  [ { "nivel": 2, "idNivelArvore": 5053, "valor": "Disco Abrasivo" } ],
+  "categorias": [ { "nivel": 3, "idNivelArvore": 6105, "valor": "Disco de Corte" } ],
+  "atributos":  [ { "idAtributo": 9169, "nome": "Grão", "valor": "G 30" } ]
 }
 ```
+- **Cascata:** um nível só oferece opções depois que o nível acima foi escolhido. Os títulos
+  "Subgrupo" e "Categoria" ficam sempre na tela, apenas fechados enquanto não há opções.
+- **As opções de cada nível vêm da consulta do nível de cima.** Perguntar pelo recorte já
+  selecionado devolve só o próprio item em *todos* os blocos (ex.: com `subgrupoId`, `subgrupos`
+  volta com 1 item), e os irmãos sumiriam da lista — não daria para trocar de subgrupo sem antes
+  desmarcar. Por isso o front faz duas chamadas em paralelo: `?grupoId` (opções de subgrupo) e
+  `?grupoId&subgrupoId` (opções de categoria), com cache em memória por recorte.
+- **Seleção é única por nível** (a API aceita um id por nível). Clicar no item marcado limpa o
+  filtro; trocar um nível limpa os de baixo; qualquer mudança volta para a página 1.
+- Os grupos (nível 1) saem do `GET /mega-menu`, que já está em cache — ver o ponto de custo abaixo.
+- ⚠️ **`/produto/filtro` sem nenhum id custa ~1,8 MB e ~5,3 s** (19 grupos, 348 subgrupos, 1.152
+  categorias, 11.423 produtos). O front não chama nesse formato. Se a listagem "Ver Tudo" for
+  precisar dos filtros, vale um modo enxuto (só o nível pedido, sem `atributos`).
+- ⚠️ **Divergência de contagem:** para `grupoId=5011`, `/produto/filtro` diz `totalProdutos: 727`
+  e `/produto/lista` devolve `totalRegistros: 741`. O site mostra o número da listagem.
 
-### 3.2 Grid de produtos + ordenação + paginação
-**Funcionalidade:** grade de cards (imagem, nome, código), ordenar "Nome A-Z", paginação (1,2,3,4).
+#### Filtro por atributo — 🔴 não integrado (bloqueado)
+O bloco `atributos` volta na resposta, mas hoje não dá para ligar na tela:
 
-🟡 Back tem `POST /produto/buscar` (exige JWT e a tabela está vazia). Para o site público:
-`POST /produtos/buscar` **público**, paginado.
+1. **Não há id por valor.** O mesmo `idAtributo` se repete para cada valor
+   (`9169` = "Grão" aparece com G 30, G 36, G 46…), e o parâmetro `atributos` recebe
+   `id_atributo`. Ou seja, `atributos=9169` filtra "produtos que têm Grão", não "Grão = G 30" —
+   medido: `grupoId=5011` 727 → 275 produtos. Vários ids se combinam em **E**
+   (`atributos=9169,546` → 0). Para o layout (valor como checkbox) seria preciso um
+   `idAtributoValor` por linha.
+2. **`/produto/lista` ignora `atributos`.** Com e sem o parâmetro a listagem devolve os mesmos
+   741 registros, então a seleção mudaria a sidebar sem mudar a grade.
+
+Resolvidos esses dois pontos, a sidebar recebe as seções de atributo (uma por `nome`, valores como
+checkbox) sem mexer no resto — é onde estavam "Potência" e "Rotações por minuto (rpm)" no layout.
+
+### 3.2 Grid de produtos + ordenação + paginação — `CategoriasEProdutos` ✅ INTEGRADO
+**Funcionalidade:** grade de cards (imagem, nome, código) da categoria clicada no mega menu, com
+paginação de 15 em 15.
+
+✅ `GET /produto/lista?idioma=ptBr&grupoId=5011&tipoOrdenacao=alfAsc&pagina=0` (header `x-api-key`)
 ```json
-// request
-{ "idioma": "ptBr", "categoriaSlug": "abrasivos",
-  "filtros": { "subgrupos": [5], "categorias": [9] },
-  "ordenacao": "nome_asc", "pagina": 0, "tamanho": 15 }
-```
-```json
-// data esperado (lista) — + bloco "paginacao" no envelope
+// data — lista + bloco "paginacao" no envelope
 [
-  { "idProduto": 123, "codigoOvd": "60.01.112.000",
-    "nome": "Parafusadeira/furadeira a bateria, 12 V...",
-    "imagemUrl": "https://.../image-115.png" }
+  { "idProduto": 211694, "codigoOvd": "1204012412", "codigoFg": "1086796",
+    "referenciaEbs": "66253371240", "nomeAgrupamento": "Discos de Corte para Aço e Inox",
+    "nomeEcommerce": "Disco de Corte para Aço e Inox BNV 12 - VONDER",
+    "imagem": "https://.../1086796_principal" }
 ]
 ```
-- Front usa `imagemUrl`, `nome`, `codigoOvd`. Card leva para `/produto/{codigoOvd}`.
-- `totalRegistros` da paginação alimenta o "Resultados: 15 de 812".
+- Card usa `imagem`, `nomeEcommerce` (caindo em `nomeAgrupamento`) e `codigoOvd`, que também vira a
+  rota `/produto/{codigoOvd}`. `codigoFg` e `referenciaEbs` são códigos internos: não aparecem.
+- **Qual parâmetro usar:** o mega menu manda o `idNivelArvore` do nó clicado na URL
+  (`/categorias-e-produtos?categoria=5011`) e a página traduz pelo `nivel` do nó —
+  1 → `grupoId`, 2 → `subgrupoId`, 3 → `categoriaId`. Hoje a árvore só devolve nível 1.
+- Paginação: `pagina` é 0-based e a URL do site usa 1-based (`&pagina=3`), para o link ser
+  compartilhável. `totalRegistros` alimenta o "Resultados: 15 de 741"; `temProxima` controla a seta.
+- **Ordenação:** o botão "Ordenar por" abre um menu com os quatro valores de `tipoOrdenacao` —
+  `alfAsc` ("Nome A-Z", padrão), `alfDesc` ("Nome Z-A"), `dataDesc` ("Mais recentes") e
+  `dataAsc` ("Mais antigos"). A escolha vai para a URL (`&ordenacao=alfDesc`, omitida no padrão),
+  sobrevive à troca de filtro e volta para a página 1. Valor fora da lista é ignorado pelo front —
+  a API responde `code: 1` para um `tipoOrdenacao` desconhecido.
+- ⚠️ **Produtos sem `nomeEcommerce` se concentram nas ordenações por data.** Em `grupoId=5011`,
+  `dataDesc` devolve a página 0 inteira sem nome (15/15) — o card cai para `nomeAgrupamento` e, se
+  também faltar, fica só com imagem e código. Não é bug do site: é cadastro faltando no e-catálogo,
+  e justamente os registros mais novos.
+- ⚠️ **Sem filtro de nível a consulta demora ~6 s** (11.496 produtos), contra ~0,3 s quando vem com
+  `grupoId`. É o caminho do "Ver Tudo em VONDER" — vale olhar índice/contagem no back.
+- ⚠️ O `codigoOvd` vem sem máscara (`1204012412`) e o layout mostra no formato `12.04.012.412`.
+  O front exibe **como a API devolve**, para não arriscar agrupar os dígitos errado. Se a máscara
+  2-2-3-3 for a oficial, dá para aplicar no front ou já devolver formatado.
+- Enquanto carrega, a grade mostra "Carregando produtos..."; em erro, um aviso curto e a página
+  continua de pé.
 
 ---
 
@@ -540,16 +654,19 @@ seguir assim**. Só entra no back se quiserem torná-la editável via CMS — ne
 | # | Funcionalidade | Método + rota | Status |
 |---|---|---|---|
 | 1.1 | Newsletter (rodapé) | `POST /newsletter/inscrever` | 🔴 |
-| 1.2 | Categorias (mega-menu + filtros) | `GET /categorias` | 🔴 |
-| 2.x | Home agregada | `GET /home` | ✅ |
-| 2.5 | Feed do Instagram | `GET /redes-sociais/instagram/feed` | 🔴 |
-| 3.1 | Filtros da listagem | `GET /produtos/filtros` | 🔴 |
-| 3.2 | Listagem de produtos | `POST /produtos/buscar` (público) | 🟡 |
+| 1.2 | Categorias (mega-menu + menu mobile) | `GET /mega-menu` | ✅ integrado |
+| 2.0 | Faixa "Alerta VONDER" | `POST /alerta/buscar` | ✅ integrado |
+| 2.x | Home agregada | `GET /home` | ✅ integrado |
+| 2.2.1 | "Seleção Especial VONDER" | sem fonte definida | 🔴 |
+| 2.5 | Feed do Instagram | `GET /redes-sociais/instagram/feed` | 🔴 bloqueia a seção |
+| 3.1 | Filtros da listagem (Grupo/Subgrupo/Categoria) | `GET /produto/filtro` | ✅ integrado |
+| 3.1b | Filtros por atributo (Potência, RPM…) | `GET /produto/filtro` + `/produto/lista` | 🔴 bloqueado |
+| 3.2 | Listagem de produtos (paginada) | `GET /produto/lista` | ✅ integrado |
 | 4.1 | Produto (detalhe + galeria) | `GET /produto/{codigoOvd}` (público) | 🟡 |
 | 4.2 | Características (acordeão) | (junto do 4.1) | 🟡 |
 | 4.3 | Produtos relacionados | `GET /produto/{codigoOvd}/relacionados` | 🟡 |
 | 5.1 | Blog (listagem pública) | `GET /blog` (público) | 🟡 |
-| 6.1 | Lançamentos + modal | `GET /lancamentos` | 🔴 |
+| 6.1 | Lançamentos + modal (página) | `GET /lancamentos` | 🔴 |
 | 7.1 | Fale Conosco (form) | `POST /fale-conosco` | 🔴 |
 | 8.1 | Vagas (Trabalhe Conosco) | `GET /vagas` | 🔴 |
 | 8.2 | Currículo representante | `POST /trabalhe-conosco/representante` | 🔴 |

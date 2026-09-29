@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { Navigation } from "swiper/modules";
 import EffectCarousel from "../../../../lib/effectCarousel";
-import produtoImg from "../../../../assets/produto.png";
+import { useHomeData } from "../../../../hooks/useHomeData";
 import "swiper/css";
 import "swiper/css/navigation";
 import "../../../../lib/effectCarousel.css";
@@ -171,19 +171,16 @@ const CardLabel = styled.div`
   }
 `;
 
-const categories = [
-  { label: "EPI", img: produtoImg },
-  { label: "Linha\nIntercambiável", img: produtoImg },
-  { label: "Abrasivos", img: produtoImg },
-  { label: "Transporte e\nArmazenagem", img: produtoImg },
-  { label: "Ferramentas\nElétricas", img: produtoImg },
-];
-
-export const FrameSubsection = (): React.JSX.Element => {
+export const FrameSubsection = (): React.JSX.Element | null => {
   const swiperRef = useRef<SwiperType | null>(null);
   const [swiperLocked, setSwiperLocked] = useState(true);
+  const { destaques } = useHomeData().dados;
 
   const unlock = () => setSwiperLocked(false);
+
+  /* Sem destaques cadastrados no CMS a seção sai do ar: carrossel vazio
+     deixaria o título solto no meio da página. */
+  if (destaques.length === 0) return null;
 
   return (
     <Section>
@@ -219,7 +216,7 @@ export const FrameSubsection = (): React.JSX.Element => {
             slidesPerView="auto"
             spaceBetween={64}
             centeredSlides
-            initialSlide={2}
+            initialSlide={Math.min(2, Math.max(destaques.length - 1, 0))}
             className="swiper-carousel"
             onSwiper={(s) => {
               swiperRef.current = s;
@@ -236,18 +233,11 @@ export const FrameSubsection = (): React.JSX.Element => {
               },
             } as Record<string, unknown>)}
           >
-            {categories.map((cat) => (
-              <SwiperSlide key={cat.label} style={{ width: "260px" }}>
+            {destaques.map((destaque) => (
+              <SwiperSlide key={destaque.id} style={{ width: "260px" }}>
                 <Card className="swiper-carousel-animate-opacity">
-                  <CardImage alt={cat.label} src={cat.img} />
-                  <CardLabel>
-                    {cat.label.split("\n").map((line, i) => (
-                      <React.Fragment key={i}>
-                        {i > 0 && <br />}
-                        {line}
-                      </React.Fragment>
-                    ))}
-                  </CardLabel>
+                  <CardImage alt={destaque.nome ?? "Destaque VONDER"} src={destaque.imagemUrl} />
+                  {destaque.nome && <CardLabel>{destaque.nome}</CardLabel>}
                 </Card>
               </SwiperSlide>
             ))}

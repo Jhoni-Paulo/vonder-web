@@ -23,10 +23,16 @@ function AppContent() {
   const location = useLocation()
   const { isLoading, startLoading } = useLoading(2000)
 
+  /* Trocar de categoria pelo mega menu mantém a mesma rota e muda só a query
+     string, então o loading também escuta `?grupo` — o parâmetro que o menu
+     manda. Filtros da sidebar e paginação ficam de fora: são navegações
+     dentro da mesma listagem. */
+  const grupo = new URLSearchParams(location.search).get("grupo")
+
   useEffect(() => {
     startLoading()
     window.scrollTo({ top: 0 })
-  }, [location.pathname])
+  }, [location.pathname, grupo])
 
   return (
     <>

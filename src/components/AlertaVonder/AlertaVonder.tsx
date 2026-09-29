@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import alertaImage from "../../assets/alerta-image.png";
+import { useAlertaVonder } from "../../hooks/useAlertaVonder";
 
 interface AlertaVonderProps {
-  /** Imagem do mini-banner que abre para baixo ao clicar na faixa. */
+  /**
+   * Força a imagem do mini-banner. Quando informada, o componente não consulta
+   * a API (útil para preview/teste). Sem ela, a imagem e o período de exibição
+   * vêm de `POST /alerta/buscar`.
+   */
   imageSrc?: string;
   imageAlt?: string;
   className?: string;
@@ -115,11 +119,18 @@ const PanelImg = styled.img`
 `;
 
 export const AlertaVonder = ({
-  imageSrc = alertaImage,
+  imageSrc,
   imageAlt = "Alerta VONDER",
   className,
-}: AlertaVonderProps): React.JSX.Element => {
+}: AlertaVonderProps): React.JSX.Element | null => {
   const [open, setOpen] = useState(false);
+  const { alerta, carregando } = useAlertaVonder({ habilitado: !imageSrc });
+
+  const imagem = imageSrc ?? alerta?.imagemExpandida;
+
+  /* Sem alerta vigente no painel (ou fora do período cadastrado) a faixa não é
+     renderizada. Durante o carregamento também não, para não piscar na home. */
+  if (carregando || !imagem) return null;
 
   return (
     <Wrapper className={className}>
@@ -143,7 +154,7 @@ export const AlertaVonder = ({
         />
       </Strip>
       <Panel $open={open} aria-hidden={!open}>
-        <PanelImg alt={imageAlt} src={imageSrc} />
+        <PanelImg alt={imageAlt} src={imagem} />
       </Panel>
     </Wrapper>
   );

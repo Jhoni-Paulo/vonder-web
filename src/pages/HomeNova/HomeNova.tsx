@@ -18,9 +18,8 @@ import { FrameWrapperSubsection } from "./sections/FrameWrapperSubsection/FrameW
 import { GroupWrapperSubsection } from "./sections/GroupWrapperSubsection";
 import { SectionComponentNodeSubsection } from "./sections/SectionComponentNodeSubsection";
 import { AlertaVonder } from "../../components/AlertaVonder/AlertaVonder";
-
-const BANNER_SRC = "https://c.animaapp.com/F8lHzCc8/img/banner-institucional-site-1.png";
-
+import { HomeDataProvider } from "../../contexts/HomeDataProvider";
+import { useHomeData } from "../../hooks/useHomeData";
 
 const StyledHOME = styled.div`
   align-items: center;
@@ -154,6 +153,11 @@ const HeroBanner = styled.div`
   }
 `;
 
+const HeroLink = styled.a`
+  display: block;
+  width: 100%;
+`;
+
 const HeroSlide = styled.div`
   position: relative;
   width: 100%;
@@ -207,8 +211,6 @@ const VitrineSlide = styled.div`
   }
 `;
 
-const banners = [BANNER_SRC, BANNER_SRC, BANNER_SRC];
-
 /* Cada imagem da Vitrine tem sua própria imagem de hover. Mock: por enquanto
    todas usam a mesma imagem de overlay; na integração, trocar `hover` pela
    imagem real de cada item. */
@@ -221,33 +223,54 @@ const vitrineItems = [
   { img: vitrineImg, hover: vitrineHoverImg },
 ];
 
-export const HomeNova = (): React.JSX.Element => {
+export const HomeNova = (): React.JSX.Element => (
+  <HomeDataProvider>
+    <HomeNovaConteudo />
+  </HomeDataProvider>
+);
+
+const HomeNovaConteudo = (): React.JSX.Element => {
+  const { dados } = useHomeData();
+  const { banners } = dados;
+
   return (
     <StyledHOME data-model-id="126:1454">
       <div className="camada-5" />
 
       <AlertaVonder className="home-alerta" />
 
-      <HeroBanner>
-        <Swiper
-          className="hero-swiper"
-          modules={[Autoplay, Pagination, EffectFade]}
-          effect="fade"
-          fadeEffect={{ crossFade: true }}
-          loop
-          autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
-          pagination={{ clickable: true }}
-          speed={900}
-        >
-          {banners.map((src, i) => (
-            <SwiperSlide key={i}>
-              <HeroSlide className="hero-slide">
-                <HeroImg className="hero-img" alt={`Banner ${i + 1}`} src={src} />
-              </HeroSlide>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </HeroBanner>
+      {banners.length > 0 && (
+        <HeroBanner>
+          <Swiper
+            className="hero-swiper"
+            modules={[Autoplay, Pagination, EffectFade]}
+            effect="fade"
+            fadeEffect={{ crossFade: true }}
+            loop={banners.length > 1}
+            autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+            pagination={{ clickable: true }}
+            speed={900}
+          >
+            {banners.map((banner) => (
+              <SwiperSlide key={banner.id}>
+                <HeroSlide className="hero-slide">
+                  {banner.redirecionamentoUrl ? (
+                    <HeroLink
+                      href={banner.redirecionamentoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <HeroImg className="hero-img" alt={banner.descricao} src={banner.imagemUrl} />
+                    </HeroLink>
+                  ) : (
+                    <HeroImg className="hero-img" alt={banner.descricao} src={banner.imagemUrl} />
+                  )}
+                </HeroSlide>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </HeroBanner>
+      )}
 
       <FrameSubsection />
       <FrameWrapperSubsection />

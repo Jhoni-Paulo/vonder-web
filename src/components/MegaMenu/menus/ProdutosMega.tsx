@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useMegaMenuCategorias } from "../../../hooks/useMegaMenuCategorias";
 
 const Root = styled.div`
   align-items: center;
@@ -136,11 +137,19 @@ const CTAButtonText = styled.div`
   width: fit-content;
 `;
 
-const RightGrid = styled.div`
+const COLUNAS_DESKTOP = 3;
+const COLUNAS_TABLET = 2;
+
+/* A lista vem da API, então as posições deixam de ser fixas: o grid preenche
+   coluna a coluna (`grid-auto-flow: column`) com o número de linhas calculado
+   a partir da quantidade de itens — assim a leitura continua de cima para
+   baixo, como no layout original. */
+const RightGrid = styled.div<{ $linhas: number; $linhasTablet: number }>`
   display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(${({ $linhas }) => $linhas}, fit-content(100%));
+  grid-auto-columns: fit-content(100%);
   gap: 35px 80px;
-  grid-template-columns: repeat(3, fit-content(100%));
-  grid-template-rows: repeat(7, fit-content(100%));
   height: fit-content;
   width: fit-content;
 
@@ -149,43 +158,22 @@ const RightGrid = styled.div`
   }
 
   @media (max-width: 1100px) {
-    grid-template-columns: repeat(2, fit-content(100%));
-    grid-template-rows: unset;
+    grid-template-rows: repeat(${({ $linhasTablet }) => $linhasTablet}, fit-content(100%));
     gap: 18px 40px;
   }
 `;
 
-type GridItemData = {
-  text: string;
-  gridColumn: string;
-  gridRow: string;
-  width: string;
-  whiteSpace?: string;
-  color?: string;
-};
-
-type GridItemProps = {
-  $gridColumn: string;
-  $gridRow: string;
-  $width: string;
-  $whiteSpace?: string;
-  $color?: string;
-};
-
-const GridItem = styled.div<GridItemProps>`
+const GridItem = styled.div<{ $color?: string }>`
   color: ${({ $color = "#ffffff" }) => $color};
   font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
   font-size: 20px;
   font-style: italic;
   font-weight: 700;
-  grid-column: ${({ $gridColumn }) => $gridColumn};
-  grid-row: ${({ $gridRow }) => $gridRow};
   height: 24px;
   letter-spacing: 0;
   line-height: normal;
   position: relative;
-  width: ${({ $width }) => $width};
-  ${({ $whiteSpace }) => ($whiteSpace ? `white-space: ${$whiteSpace};` : "")}
+  white-space: nowrap;
   cursor: pointer;
   transition: color 0.22s ease, transform 0.22s ease;
 
@@ -200,38 +188,31 @@ const GridItem = styled.div<GridItemProps>`
 
   @media (max-width: 1100px) {
     font-size: 15px;
-    grid-column: auto;
-    grid-row: auto;
-    width: auto;
-    white-space: nowrap;
   }
 `;
 
-const gridItems: GridItemData[] = [
-  { text: "Abrasivos", gridColumn: "1 / 2", gridRow: "1 / 2", width: "79px" },
-  { text: "Mangueiras", gridColumn: "2 / 3", gridRow: "1 / 2", width: "95px", whiteSpace: "nowrap" },
-  { text: "Pintura", gridColumn: "3 / 4", gridRow: "1 / 2", width: "170.12px" },
-  { text: "Construção civil", gridColumn: "1 / 2", gridRow: "2 / 3", width: "130px", whiteSpace: "nowrap" },
-  { text: "Material Elétrico", gridColumn: "2 / 3", gridRow: "2 / 3", width: "134px", whiteSpace: "nowrap" },
-  { text: "Químicos", gridColumn: "3 / 4", gridRow: "2 / 3", width: "192.61px" },
-  { text: "Correias", gridColumn: "1 / 2", gridRow: "3 / 4", width: "69px" },
-  { text: "Medição e Teste", gridColumn: "2 / 3", gridRow: "3 / 4", width: "131px" },
-  { text: "Rolamento", gridColumn: "3 / 4", gridRow: "3 / 4", width: "170.12px" },
-  { text: "EPI", gridColumn: "1 / 2", gridRow: "4 / 5", width: "27px", whiteSpace: "nowrap" },
-  { text: "Metais", gridColumn: "2 / 3", gridRow: "4 / 5", width: "54px", whiteSpace: "nowrap" },
-  { text: "Solda", gridColumn: "3 / 4", gridRow: "4 / 5", width: "179.96px" },
-  { text: "Ferramentas Elétricas", gridColumn: "1 / 2", gridRow: "5 / 6", width: "176px", whiteSpace: "nowrap" },
-  { text: "Movimentação de Materiais", gridColumn: "2 / 3", gridRow: "5 / 6", width: "223px", whiteSpace: "nowrap" },
-  { text: "Teste", gridColumn: "3 / 4", gridRow: "5 / 6", width: "170.12px" },
-  { text: "Ferramentas Manuais", gridColumn: "1 / 2", gridRow: "6 / 7", width: "174px", whiteSpace: "nowrap" },
-  { text: "Máquinas e Compressores", gridColumn: "2 / 3", gridRow: "6 / 7", width: "214px", whiteSpace: "nowrap" },
-  { text: "Usinagem e Corte", gridColumn: "3 / 4", gridRow: "6 / 7", width: "213px" },
-  { text: "Jardinagem", gridColumn: "1 / 2", gridRow: "7 / 8", width: "95px", whiteSpace: "nowrap" },
-  { text: "Parafusos e Fixadores", gridColumn: "2 / 3", gridRow: "7 / 8", width: "178px", whiteSpace: "nowrap" },
-  { text: "Ver Tudo em VONDER", gridColumn: "3 / 4", gridRow: "7 / 8", width: "213px", color: "#f6be00", whiteSpace: "nowrap" },
-];
+const LINK_CATEGORIAS = "/categorias-e-produtos";
+
+/** Nível da árvore ↔ parâmetro da listagem (os mesmos nomes que a API usa). */
+const PARAM_POR_NIVEL: Record<number, string> = {
+  1: "grupo",
+  2: "subgrupo",
+  3: "categoria",
+};
+
+const linkCategoria = (id: number, nivel: number) =>
+  `${LINK_CATEGORIAS}?${PARAM_POR_NIVEL[nivel] ?? "grupo"}=${id}`;
 
 export function ProdutosMega(): React.JSX.Element {
+  const { categorias } = useMegaMenuCategorias();
+
+  /* "Ver Tudo em VONDER" não vem do CMS: é o atalho fixo para o catálogo, e
+     fica no ar mesmo se a listagem falhar, para o menu nunca virar um beco sem
+     saída. */
+  const total = categorias.length + 1;
+  const linhas = Math.ceil(total / COLUNAS_DESKTOP);
+  const linhasTablet = Math.ceil(total / COLUNAS_TABLET);
+
   return (
     <Root>
       <FrameContainer>
@@ -252,35 +233,25 @@ export function ProdutosMega(): React.JSX.Element {
             </DivWrapper>
           </Group>
         </LeftColumn>
-        <RightGrid>
-          {gridItems.map((item) =>
-            item.text === "Abrasivos" ? (
-              <GridItem
-                key={item.text}
-                as={Link}
-                to="/categorias-e-produtos"
-                $gridColumn={item.gridColumn}
-                $gridRow={item.gridRow}
-                $width={item.width}
-                $whiteSpace={item.whiteSpace}
-                $color={item.color}
-                style={{ textDecoration: "none" }}
-              >
-                {item.text}
-              </GridItem>
-            ) : (
-              <GridItem
-                key={item.text}
-                $gridColumn={item.gridColumn}
-                $gridRow={item.gridRow}
-                $width={item.width}
-                $whiteSpace={item.whiteSpace}
-                $color={item.color}
-              >
-                {item.text}
-              </GridItem>
-            )
-          )}
+        <RightGrid $linhas={linhas} $linhasTablet={linhasTablet}>
+          {categorias.map((categoria) => (
+            <GridItem
+              key={categoria.id}
+              as={Link}
+              to={linkCategoria(categoria.id, categoria.nivel)}
+              style={{ textDecoration: "none" }}
+            >
+              {categoria.nome}
+            </GridItem>
+          ))}
+          <GridItem
+            as={Link}
+            to={LINK_CATEGORIAS}
+            $color="#f6be00"
+            style={{ textDecoration: "none" }}
+          >
+            Ver Tudo em VONDER
+          </GridItem>
         </RightGrid>
       </FrameContainer>
     </Root>

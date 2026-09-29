@@ -49,6 +49,7 @@ import { ProdutosMega } from "../MegaMenu/menus/ProdutosMega";
 import { AtendimentoMega } from "../MegaMenu/menus/AtendimentoMega";
 import { ConteudoMega } from "../MegaMenu/menus/ConteudoMega";
 import { ConhecaVonderMega } from "../MegaMenu/menus/ConhecaVonderMega";
+import { useMegaMenuCategorias } from "../../hooks/useMegaMenuCategorias";
 
 type MegaKey = "produtos" | "atendimento" | "conteudo" | "conheca";
 
@@ -72,28 +73,20 @@ const StyledA = styled.a`
 `;
 
 
-const produtosLinks = [
-  { text: "Abrasivos", to: "/categorias-e-produtos" },
-  { text: "Mangueiras", to: "/categorias-e-produtos" },
-  { text: "Pintura", to: "/categorias-e-produtos" },
-  { text: "Construção civil", to: "/categorias-e-produtos" },
-  { text: "Material Elétrico", to: "/categorias-e-produtos" },
-  { text: "Químicos", to: "/categorias-e-produtos" },
-  { text: "Correias", to: "/categorias-e-produtos" },
-  { text: "Medição e Teste", to: "/categorias-e-produtos" },
-  { text: "Rolamento", to: "/categorias-e-produtos" },
-  { text: "EPI", to: "/categorias-e-produtos" },
-  { text: "Metais", to: "/categorias-e-produtos" },
-  { text: "Solda", to: "/categorias-e-produtos" },
-  { text: "Ferramentas Elétricas", to: "/categorias-e-produtos" },
-  { text: "Movimentação de Materiais", to: "/categorias-e-produtos" },
-  { text: "Ferramentas Manuais", to: "/categorias-e-produtos" },
-  { text: "Máquinas e Compressores", to: "/categorias-e-produtos" },
-  { text: "Usinagem e Corte", to: "/categorias-e-produtos" },
-  { text: "Jardinagem", to: "/categorias-e-produtos" },
-  { text: "Parafusos e Fixadores", to: "/categorias-e-produtos" },
-  { text: "Ver Tudo em VONDER", to: "/categorias-e-produtos", highlight: true },
-];
+/* Atalho fixo do submenu de produtos — as categorias em si vêm de
+   `GET /mega-menu` (mesma listagem do painel desktop). */
+const VER_TUDO_PRODUTOS = { text: "Ver Tudo em VONDER", to: "/categorias-e-produtos" };
+const LINK_CATEGORIAS = "/categorias-e-produtos";
+
+/** Nível da árvore ↔ parâmetro da listagem (os mesmos nomes que a API usa). */
+const PARAM_POR_NIVEL: Record<number, string> = {
+  1: "grupo",
+  2: "subgrupo",
+  3: "categoria",
+};
+
+const linkCategoria = (id: number, nivel: number) =>
+  `${LINK_CATEGORIAS}?${PARAM_POR_NIVEL[nivel] ?? "grupo"}=${id}`;
 
 const conhecaLinks: Array<{ text: string; to?: string; disabled?: boolean }> = [
   { text: "Nossa história", disabled: true },
@@ -115,6 +108,7 @@ const conteudoLinks: Array<{ text: string; to?: string; href?: string; disabled?
 type SubmenuKey = "produtos" | "conheca" | "atendimento" | "conteudo" | null;
 
 export function Header() {
+  const { categorias } = useMegaMenuCategorias();
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeMega, setActiveMega] = useState<MegaKey | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -311,13 +305,20 @@ export function Header() {
                   Nossos produtos
                 </MobileAccordionTrigger>
                 <MobileSubmenu $open={activeSubmenu === "produtos"}>
-                  {produtosLinks.map((item) => (
-                    <StyledLink key={item.text} to={item.to} onClick={closeMobile}>
-                      <MobileSubmenuItem className={item.highlight ? "highlight" : ""}>
-                        {item.text}
-                      </MobileSubmenuItem>
+                  {categorias.map((categoria) => (
+                    <StyledLink
+                      key={categoria.id}
+                      to={linkCategoria(categoria.id, categoria.nivel)}
+                      onClick={closeMobile}
+                    >
+                      <MobileSubmenuItem>{categoria.nome}</MobileSubmenuItem>
                     </StyledLink>
                   ))}
+                  <StyledLink to={VER_TUDO_PRODUTOS.to} onClick={closeMobile}>
+                    <MobileSubmenuItem className="highlight">
+                      {VER_TUDO_PRODUTOS.text}
+                    </MobileSubmenuItem>
+                  </StyledLink>
                 </MobileSubmenu>
               </MobileAccordionItem>
 

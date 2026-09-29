@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   ExpandableCardCarousel,
   type ExpandableCardCarouselItem,
 } from "../../../../components/ExpandableCardCarousel/ExpandableCardCarousel";
+import { useHomeData } from "../../../../hooks/useHomeData";
 
 const Container = styled.div`
   align-items: center;
@@ -62,37 +64,28 @@ const BlogButton = styled.button`
   }
 `;
 
-const DESC =
-  "Gosta de pedalar?! Antes do passeio, pense nisso… Nada melhor do que sair de bike para trabalhar, treinar ou simplesmente curtir o dia. Mas, antes de colocar o capacete...";
+export const SectionComponentNodeSubsection = (): React.JSX.Element | null => {
+  const navigate = useNavigate();
+  const { blogs } = useHomeData().dados;
 
-const posts: ExpandableCardCarouselItem[] = [
-  {
-    img: "https://c.animaapp.com/xLq2ckgk/img/mask-group.png",
-    title: "Carrinhos, painéis, caixas e armários: qual opção escolher na hora de...",
-    desc: DESC,
-    linkText: "Ler Mais",
-  },
-  {
-    img: "https://c.animaapp.com/xLq2ckgk/img/mask-group-1.png",
-    title: "Vou de bike – mas antes do passeio, confira algumas dicas de manutenção da sua bicicleta",
-    desc: DESC,
-    linkText: "Ler Mais",
-  },
-  {
-    img: "https://c.animaapp.com/xLq2ckgk/img/mask-group-2.png",
-    title: "Como os organizadores plásticos aumentam sua produtividade...",
-    desc: DESC,
-    linkText: "Ler Mais",
-  },
-  {
-    img: "https://c.animaapp.com/xLq2ckgk/img/mask-group-3.png",
-    title: "Produto 2 em 1: Lavadora e Aspirador LAV 1580 VONDER – Um Só...",
-    desc: DESC,
-    linkText: "Ler Mais",
-  },
-];
+  const posts = useMemo<ExpandableCardCarouselItem[]>(
+    () =>
+      blogs.map((post) => ({
+        img: post.imagemUrl,
+        title: post.titulo,
+        desc: post.descricao,
+        // Sem destino cadastrado, o card fica sem o "Ler Mais".
+        linkText: post.redirecionamentoUrl ? "Ler Mais" : undefined,
+        onLinkClick: post.redirecionamentoUrl
+          ? () => window.open(post.redirecionamentoUrl, "_blank", "noopener,noreferrer")
+          : undefined,
+      })),
+    [blogs],
+  );
 
-export const SectionComponentNodeSubsection = (): React.JSX.Element => {
+  /* Sem publicações não há o que mostrar: esconde título e carrossel. */
+  if (posts.length === 0) return null;
+
   return (
     <Container>
       <Header>
@@ -101,7 +94,9 @@ export const SectionComponentNodeSubsection = (): React.JSX.Element => {
           <br />
           nosso Blog
         </Title>
-        <BlogButton type="button">Ver Tudo</BlogButton>
+        <BlogButton type="button" onClick={() => navigate("/blog")}>
+          Ver Tudo
+        </BlogButton>
       </Header>
       <ExpandableCardCarousel items={posts} gap={24} balancedActive />
     </Container>

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useHomeData } from "../../../../hooks/useHomeData";
 
 const Wrapper = styled.div`
   position: relative;
@@ -267,45 +269,30 @@ const CardLink = styled.div`
   font-weight: 700;
 `;
 
-const launches = [
-  {
-    img: "https://c.animaapp.com/ea7M9uhj/img/mask-group-4@2x.png",
-    title: "Paleteira hidráulica elétrica 1,5 tf PE...",
-    desc: "Robusta e durável. Indicada para movimentação de cargas acondicionadas em paletes...",
-  },
-  {
-    img: "https://c.animaapp.com/ea7M9uhj/img/mask-group-5@2x.png",
-    title: "Torquímetros Digitais com Torque Angular",
-    desc: "Indicados para aperto de parafusos com controle preciso de torque e ângulo...",
-  },
-  {
-    img: "https://c.animaapp.com/ea7M9uhj/img/mask-group-6@2x.png",
-    title: "Pistolas para Solda PSV 130 e PSV 150",
-    desc: "Produtos certificados, garantindo qualidade, eficiência e segurança para as mais diversas aplicações!",
-  },
-  {
-    img: "https://c.animaapp.com/ea7M9uhj/img/mask-group-7@2x.png",
-    title: "Bomba Recarregável para Galão de Água VONDER",
-    desc: "Compacta, prática e portátil, solução ideal para facilitar o uso de galões de água",
-  },
-];
+export const DivSubsection = (): React.JSX.Element | null => {
+  const navigate = useNavigate();
+  const { lancamentos } = useHomeData().dados;
+  /* A rotação guarda só o deslocamento — a lista em si continua vindo da API,
+     sem cópia em estado que precise ser ressincronizada. */
+  const [offset, setOffset] = useState(0);
 
-export const DivSubsection = (): React.JSX.Element => {
-  const [items, setItems] = useState(launches);
+  const items = useMemo(
+    () =>
+      lancamentos.map(
+        (_, i) => lancamentos[(i + offset) % lancamentos.length],
+      ),
+    [lancamentos, offset],
+  );
 
-  const rotateLeft = () => {
-    setItems((prev) => {
-      const [first, ...rest] = prev;
-      return [...rest, first];
-    });
+  const rotateLeft = () => setOffset((prev) => prev + 1);
+  const rotateRight = () => setOffset((prev) => prev - 1 + lancamentos.length);
+
+  const abrirProduto = (codigoOvd?: string) => {
+    if (codigoOvd) navigate(`/produto/${codigoOvd}`);
   };
 
-  const rotateRight = () => {
-    setItems((prev) => {
-      const last = prev[prev.length - 1];
-      return [last, ...prev.slice(0, -1)];
-    });
-  };
+  /* Sem lançamentos cadastrados a faixa inteira sai do ar. */
+  if (lancamentos.length === 0) return null;
 
   return (
     <Wrapper>
@@ -328,24 +315,30 @@ export const DivSubsection = (): React.JSX.Element => {
               onClick={rotateRight}
             />
           </ArrowsRow>
-          <SeeMore type="button">Veja mais</SeeMore>
+          <SeeMore type="button" onClick={() => navigate("/lancamentos")}>
+            Veja mais
+          </SeeMore>
         </TextCol>
       </Container>
       <CardsTrack>
         {items.map((item, i) => (
-          <LaunchCard key={item.title} $hidden={i === 0}>
-            <CardImage alt={item.title} src={item.img} />
+          <LaunchCard key={`${item.id}-${i}`} $hidden={i === 0}>
+            <CardImage alt={item.titulo} src={item.imagemUrl} />
             <CardOverlay />
             <CardContent>
-              <CardTitle>{item.title}</CardTitle>
-              <CardDesc>{item.desc}</CardDesc>
-              <CardLink>Ver mais</CardLink>
+              <CardTitle>{item.titulo}</CardTitle>
+              {item.agrupamento && <CardDesc>{item.agrupamento}</CardDesc>}
+              {item.codigoOvd && (
+                <CardLink onClick={() => abrirProduto(item.codigoOvd)}>Ver mais</CardLink>
+              )}
             </CardContent>
           </LaunchCard>
         ))}
       </CardsTrack>
       <MobileButtonRow>
-        <MobileSeeMore type="button">Veja mais</MobileSeeMore>
+        <MobileSeeMore type="button" onClick={() => navigate("/lancamentos")}>
+          Veja mais
+        </MobileSeeMore>
       </MobileButtonRow>
     </Wrapper>
   );
