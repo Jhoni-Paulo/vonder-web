@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import image111 from "../../assets/image 111.png";
 import image112 from "../../assets/image 112.png";
-import image116 from "../../assets/image 116.png";
 import image137 from "../../assets/image 137.png";
 import image138 from "../../assets/image 138.png";
-import matriz18 from "../../assets/matriz_18.webp";
 import {
   ImageCarousel,
   type ImageCarouselItem,
 } from "../../components/ImageCarousel/ImageCarousel";
-import { ProductViewer360 } from "../../components/ProductViewer360/ProductViewer360";
 import { DivSubsection } from "./sections/DivSubsection/DivSubsection";
 import { DivWrapperSubsection } from "./sections/DivWrapperSubsection";
+import { Ferramenta360Subsection } from "./sections/Ferramenta360Subsection";
 import { GroupSubsection } from "./sections/GroupSubsection";
 import { GroupWrapperSubsection } from "./sections/GroupWrapperSubsection/GroupWrapperSubsection";
 import { SectionComponentNodeSubsection } from "./sections/SectionComponentNodeSubsection/SectionComponentNodeSubsection";
@@ -103,13 +101,6 @@ const GalleryWrap = styled.div`
 `;
 
 const galleryImages: ImageCarouselItem[] = [
-  {
-    id: "116",
-    src: image116,
-    alt: "Foto do produto — visualização 360",
-    is360: true,
-    matrixSrc: matriz18,
-  },
   { id: "111", src: image111, alt: "Foto do produto 1" },
   { id: "112", src: image112, alt: "Foto do produto 2" },
   { id: "137", src: image137, alt: "Foto do produto 3" },
@@ -133,17 +124,8 @@ export const ProdutoInterno = (): React.JSX.Element => {
       </Breadcrumb>
       <HeroRow>
         <ViewerWrap>
-          {selectedImage.is360 ? (
-            <ProductViewer360
-              key={selectedImage.matrixSrc}
-              imageUrl={selectedImage.matrixSrc}
-            />
-          ) : (
-            <StaticProductImage
-              alt={selectedImage.alt}
-              src={selectedImage.src}
-            />
-          )}
+          {/* A visualização 360 agora vive na seção "Ferramenta 360º". */}
+          <StaticProductImage alt={selectedImage.alt} src={selectedImage.src} />
         </ViewerWrap>
         <GroupSubsection />
       </HeroRow>
@@ -155,6 +137,7 @@ export const ProdutoInterno = (): React.JSX.Element => {
         />
       </GalleryWrap>
       <DivWrapperSubsection />
+      <Ferramenta360Subsection />
       <DivSubsection />
       <GroupWrapperSubsection />
       <SectionComponentNodeSubsection />
