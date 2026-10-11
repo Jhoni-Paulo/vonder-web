@@ -5,7 +5,11 @@ import { useListaProdutos } from "../../hooks/useListaProdutos";
 import type { TipoOrdenacao } from "../../services/produtoService";
 import { useFiltrosProduto } from "../../hooks/useFiltrosProduto";
 import { useMegaMenuCategorias } from "../../hooks/useMegaMenuCategorias";
-import type { OpcaoFiltro } from "../../services/filtroService";
+import {
+  FiltroArvore,
+  type NivelArvore,
+  type OpcaoArvore,
+} from "../../components/FiltroArvore/FiltroArvore";
 
 /* ── Página ────────────────────────────────────────────── */
 
@@ -82,124 +86,6 @@ const Body = styled.div`
 `;
 
 /* ── Sidebar ──────────────────────────────────────────── */
-
-const Sidebar = styled.aside`
-  background-color: #f2f2f2;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 30px 24px 40px;
-  width: 300px;
-  flex-shrink: 0;
-  box-sizing: border-box;
-
-  @media (max-width: 1024px) {
-    width: 100%;
-  }
-`;
-
-const SidebarNote = styled.div`
-  color: #3e3e3e;
-  font-family: "Swis721 LtCn BT-LightItalic", Helvetica;
-  font-size: 17px;
-  font-style: italic;
-  font-weight: 300;
-  padding: 6px 8px;
-`;
-
-const Divider = styled.img`
-  width: 100%;
-  height: auto;
-  flex-shrink: 0;
-`;
-
-const FilterGroupTitle = styled.div`
-  color: #000000;
-  font-family: "Swis721 Cn BT-BoldItalic", Helvetica;
-  font-size: 28px;
-  font-style: italic;
-  font-weight: 700;
-  padding: 6px 8px;
-`;
-
-const FilterSection = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const FilterHeader = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  padding: 8px;
-  cursor: pointer;
-`;
-
-const FilterLabel = styled.span`
-  color: #000000;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 19px;
-  font-weight: 700;
-  line-height: 1.3;
-`;
-
-const FilterChevron = styled.img<{ $aberta?: boolean }>`
-  width: 32px;
-  flex-shrink: 0;
-  transition: transform 0.25s ease;
-  transform: rotate(${({ $aberta }) => ($aberta ? "180deg" : "0deg")});
-`;
-
-const FilterRow = styled.label`
-  align-items: center;
-  display: flex;
-  gap: 10px;
-  padding: 5px 8px;
-  cursor: pointer;
-`;
-
-const CheckboxBox = styled.div`
-  background-color: #f2f2f2;
-  border: 1px solid #979797;
-  border-radius: 5px;
-  height: 20px;
-  width: 20px;
-  flex-shrink: 0;
-`;
-
-const CheckboxChecked = styled.img`
-  height: 20px;
-  width: 20px;
-  flex-shrink: 0;
-`;
-
-const FilterOptionText = styled.span`
-  color: #3e3e3e;
-  font-family: "Swis721 LtCn BT-Light", Helvetica;
-  font-size: 17px;
-  font-weight: 300;
-`;
-
-const ShowMoreRow = styled.div`
-  align-items: center;
-  display: flex;
-  gap: 8px;
-  padding: 5px 8px;
-  cursor: pointer;
-`;
-
-const ShowMoreIcon = styled.img`
-  height: 18px;
-  width: 18px;
-`;
-
-const ShowMoreText = styled.span`
-  color: #3e3e3e;
-  font-family: "Swis721 Cn BT-Bold", Helvetica;
-  font-size: 17px;
-  font-weight: 700;
-`;
 
 /* ── Conteúdo principal ───────────────────────────────── */
 
@@ -470,72 +356,11 @@ const rotuloDaOrdenacao = (valor: TipoOrdenacao) =>
 const ordenacaoDaUrl = (valor: string | null): TipoOrdenacao =>
   ORDENACOES.find((opcao) => opcao.valor === valor)?.valor ?? ORDENACAO_PADRAO;
 
-/** Opções exibidas em cada seção antes do "Ver mais". */
-const MAX_OPCOES_VISIVEIS = 6;
-
-const ICONE_DIVISOR = "https://c.animaapp.com/a8ORmsbd/img/frame-69892.svg";
-const ICONE_CHEVRON = "https://c.animaapp.com/a8ORmsbd/img/frame-69894.svg";
-const ICONE_CHECK = "https://c.animaapp.com/a8ORmsbd/img/checkbox-inactive-1.svg";
-const ICONE_MAIS = "https://c.animaapp.com/a8ORmsbd/img/add.svg";
-
 /** Nível da árvore ↔ parâmetro na URL (e na API). */
-const CHAVE_POR_NIVEL = { 1: "grupo", 2: "subgrupo", 3: "categoria" } as const;
-type NivelArvore = keyof typeof CHAVE_POR_NIVEL;
-
-interface SecaoFiltroProps {
-  titulo: string;
-  opcoes: OpcaoFiltro[];
-  selecionado?: number;
-  aberta: boolean;
-  verTudo: boolean;
-  onAlternarSecao: () => void;
-  onVerTudo: () => void;
-  onSelecionar: (id: number) => void;
-}
-
-/**
- * Seção de checkboxes da sidebar. Seleção é única por nível, porque a API
- * aceita um id por nível — clicar no item já marcado limpa o filtro.
- */
-const SecaoFiltro = ({
-  titulo,
-  opcoes,
-  selecionado,
-  aberta,
-  verTudo,
-  onAlternarSecao,
-  onVerTudo,
-  onSelecionar,
-}: SecaoFiltroProps): React.JSX.Element => {
-  const visiveis = verTudo ? opcoes : opcoes.slice(0, MAX_OPCOES_VISIVEIS);
-
-  return (
-    <FilterSection>
-      <FilterHeader onClick={onAlternarSecao}>
-        <FilterLabel>{titulo}</FilterLabel>
-        <FilterChevron $aberta={aberta} alt="" src={ICONE_CHEVRON} />
-      </FilterHeader>
-
-      {aberta &&
-        visiveis.map((opcao) => (
-          <FilterRow key={opcao.id} onClick={() => onSelecionar(opcao.id)}>
-            {opcao.id === selecionado ? (
-              <CheckboxChecked alt="Selecionado" src={ICONE_CHECK} />
-            ) : (
-              <CheckboxBox />
-            )}
-            <FilterOptionText>{opcao.nome}</FilterOptionText>
-          </FilterRow>
-        ))}
-
-      {aberta && opcoes.length > MAX_OPCOES_VISIVEIS && (
-        <ShowMoreRow onClick={onVerTudo}>
-          <ShowMoreIcon alt="" src={ICONE_MAIS} />
-          <ShowMoreText>{verTudo ? "Ver menos" : "Ver mais"}</ShowMoreText>
-        </ShowMoreRow>
-      )}
-    </FilterSection>
-  );
+const CHAVE_POR_NIVEL: Record<NivelArvore, string> = {
+  1: "grupo",
+  2: "subgrupo",
+  3: "categoria",
 };
 
 interface ControlesProps {
@@ -675,21 +500,9 @@ export const CategoriasEProdutos = (): React.JSX.Element => {
     pagina: paginaUrl - 1,
   });
 
-  const [secoesAlternadas, setSecoesAlternadas] = useState<Record<string, boolean>>({});
-  const [secoesVerTudo, setSecoesVerTudo] = useState<Record<string, boolean>>({});
+  const opcoesGrupo: OpcaoArvore[] = gruposMenu;
 
-  const estaAberta = (chave: string, padrao: boolean) => secoesAlternadas[chave] ?? padrao;
-  const alternarSecao = (chave: string, padrao: boolean) =>
-    setSecoesAlternadas((atual) => ({ ...atual, [chave]: !(atual[chave] ?? padrao) }));
-  const alternarVerTudo = (chave: string) =>
-    setSecoesVerTudo((atual) => ({ ...atual, [chave]: !atual[chave] }));
-
-  /* Um nível só oferece opções depois que o nível de cima foi escolhido —
-     é a seleção do pai que traz os filhos na próxima chamada. Os títulos
-     continuam na tela, apenas fechados. */
-  const opcoesGrupo: OpcaoFiltro[] = gruposMenu;
-
-  const nomeDe = (opcoes: OpcaoFiltro[], id?: number) =>
+  const nomeDe = (opcoes: OpcaoArvore[], id?: number) =>
     id ? opcoes.find((opcao) => opcao.id === id)?.nome : undefined;
 
   const nomeGrupo = nomeDe(opcoesGrupo, grupoId);
@@ -781,52 +594,20 @@ export const CategoriasEProdutos = (): React.JSX.Element => {
       <Title>{titulo}</Title>
 
       <Body>
-        {/* ── Sidebar ── */}
-        <Sidebar>
-          <SidebarNote>
-            {carregando
+        <FiltroArvore
+          resultado={
+            carregando
               ? "Resultados: ..."
-              : `Resultados: ${produtos.length} de ${paginacao?.totalRegistros ?? 0}`}
-          </SidebarNote>
-          <Divider alt="" src={ICONE_DIVISOR} />
-          <FilterGroupTitle>Filtros:</FilterGroupTitle>
-          <Divider alt="" src={ICONE_DIVISOR} />
-
-          <SecaoFiltro
-            titulo="Grupo"
-            opcoes={opcoesGrupo}
-            selecionado={grupoId}
-            aberta={estaAberta("grupo", true)}
-            verTudo={!!secoesVerTudo.grupo}
-            onAlternarSecao={() => alternarSecao("grupo", true)}
-            onVerTudo={() => alternarVerTudo("grupo")}
-            onSelecionar={(id) => selecionarNivel(1, id)}
-          />
-          <Divider alt="" src={ICONE_DIVISOR} />
-
-          <SecaoFiltro
-            titulo="Subgrupo"
-            opcoes={subgrupos}
-            selecionado={subgrupoId}
-            aberta={estaAberta("subgrupo", subgrupos.length > 0)}
-            verTudo={!!secoesVerTudo.subgrupo}
-            onAlternarSecao={() => alternarSecao("subgrupo", subgrupos.length > 0)}
-            onVerTudo={() => alternarVerTudo("subgrupo")}
-            onSelecionar={(id) => selecionarNivel(2, id)}
-          />
-          <Divider alt="" src={ICONE_DIVISOR} />
-
-          <SecaoFiltro
-            titulo="Categoria"
-            opcoes={categorias}
-            selecionado={categoriaId}
-            aberta={estaAberta("categoria", categorias.length > 0)}
-            verTudo={!!secoesVerTudo.categoria}
-            onAlternarSecao={() => alternarSecao("categoria", categorias.length > 0)}
-            onVerTudo={() => alternarVerTudo("categoria")}
-            onSelecionar={(id) => selecionarNivel(3, id)}
-          />
-        </Sidebar>
+              : `Resultados: ${produtos.length} de ${paginacao?.totalRegistros ?? 0}`
+          }
+          grupos={opcoesGrupo}
+          subgrupos={subgrupos}
+          categorias={categorias}
+          grupoId={grupoId}
+          subgrupoId={subgrupoId}
+          categoriaId={categoriaId}
+          onSelecionar={selecionarNivel}
+        />
 
         {/* ── Conteúdo principal ── */}
         <Main>

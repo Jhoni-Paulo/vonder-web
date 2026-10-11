@@ -239,6 +239,7 @@ export function ProdutosMega(): React.JSX.Element {
               key={categoria.id}
               as={Link}
               to={linkCategoria(categoria.id, categoria.nivel)}
+              state={{ recarregarTela: true }}
               style={{ textDecoration: "none" }}
             >
               {categoria.nome}

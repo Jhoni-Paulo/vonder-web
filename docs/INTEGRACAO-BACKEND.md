@@ -433,23 +433,45 @@ paginação de 15 em 15.
 
 ## 6. Lançamentos (`/lancamentos` → `Lancamentos`)
 
-### 6.1 Grid de lançamentos + ordenação + paginação + modal de detalhe
-**Funcionalidade:** grade de cards (imagem, título, descrição, "Ver mais"), ordenar "Mais recente",
-paginação, e um **modal** que abre com galeria de imagens + descrição do lançamento.
+### 6.1 Grid de lançamentos + filtro + ordenação + paginação — `Lancamentos` ✅ INTEGRADO
+**Funcionalidade:** sidebar de filtro (Grupo → Subgrupo → Categoria) à esquerda e, à direita,
+ordenação, paginação e a grade de cards. Título e breadcrumb seguem iguais.
 
-🔴 `GET /lancamentos?idioma=ptBr&ordenacao=recente&pagina=0&tamanho=20`
+✅ `GET /lancamentos?idioma=ptBr&grupo=5010&subgrupo=5444&categoria=1` (header `x-api-key`)
 ```json
-// data esperado (lista paginada)
-[
-  { "id": 1, "titulo": "Aspirador de Pó Vertical APV 1350 Turbo VONDER",
-    "descricao": "Leve, compacto e versátil...",
-    "imagemUrl": "https://.../capa.png",
-    "galeria": [ "https://.../4045-01.png", "https://.../4045-02.png" ],
-    "codigoOvd": "40.45.000.000", "dataLancamento": "2026-07-01" }
-]
+// data — uma chamada devolve os níveis do filtro E os lançamentos do recorte
+{
+  "grupo":     [ { "idNivelArvore": 5010, "idNivelPai": null, "valor": "Ferramentas Manuais" } ],
+  "subgrupo":  [ { "idNivelArvore": 5444, "idNivelPai": 5010, "valor": "Carrinho" } ],
+  "categoria": [],
+  "lancamentos": [
+    { "idProduto": 342163, "codigoOvd": "3599000550", "nomeAgrupamento": "Produtos Sem Agrupamento",
+      "nomeEcommerce": null, "nomeLancamento": "Carro em aço inox para ferramentas...",
+      "tipo": "Lançamento", "imagem": null,
+      "url": "https://www.ovd.com.br/informativos/Informativos_site/OVD/4100_L.html" }
+  ]
+}
 ```
-- Card usa `imagemUrl`, `titulo`, `descricao`. O **modal** usa `titulo`, `descricao` e `galeria`
-  (várias imagens). Se o lançamento estiver ligado a um produto, `codigoOvd` liga ao `/produto/{id}`.
+- Atenção aos nomes: aqui os parâmetros são `grupo`/`subgrupo`/`categoria` (sem o sufixo `Id` que
+  `/produto/lista` e `/produto/filtro` usam).
+- Card usa `nomeLancamento` (título), `imagem` e `url` (destino do "Ver mais", em nova aba). Não há
+  campo de descrição: a linha de apoio só aparece quando `nomeEcommerce`/`nomeAgrupamento`
+  acrescentam algo ao título.
+- A sidebar é o mesmo componente da listagem de produtos (`FiltroArvore`). A cascata é montada no
+  front pelo `idNivelPai` de cada nó, então funciona mesmo que a rota devolva os três níveis
+  inteiros. Seleção única por nível; trocar um nível limpa os de baixo.
+- ⚠️ **Sem paginação e sem ordenação na rota:** a resposta não traz bloco `paginacao` e a rota não
+  aceita `pagina`/`tipoOrdenacao`. O front pagina de 12 em 12 e ordena sobre a lista recebida — o
+  que só se sustenta enquanto o volume for pequeno. Com o catálogo de lançamentos cheio, vale
+  alinhar os mesmos parâmetros de `/produto/lista`.
+- ⚠️ **Não há data de lançamento no payload**, então o "Mais recente" do layout não existe: o menu
+  oferece só "Nome A-Z" e "Nome Z-A". Basta o back devolver a data para as duas opções voltarem.
+- ⚠️ **Hoje há 1 lançamento cadastrado**, com `imagem: null`. O card cai para um fundo escuro com o
+  texto. Como só existe um registro, não dá para saber se a rota restringe as listas de níveis
+  conforme a seleção — quando houver mais dados, vale conferir.
+- O modal de detalhe (`LaunchDetailModal`) ficou **sem uso**: ele precisa de galeria e descrição, que
+  o payload não tem. O card abre o informativo da OVD (`url`). O componente segue no repositório
+  para quando esses campos existirem.
 
 ---
 
@@ -666,7 +688,8 @@ seguir assim**. Só entra no back se quiserem torná-la editável via CMS — ne
 | 4.2 | Características (acordeão) | (junto do 4.1) | 🟡 |
 | 4.3 | Produtos relacionados | `GET /produto/{codigoOvd}/relacionados` | 🟡 |
 | 5.1 | Blog (listagem pública) | `GET /blog` (público) | 🟡 |
-| 6.1 | Lançamentos + modal (página) | `GET /lancamentos` | 🔴 |
+| 6.1 | Lançamentos: filtro + grade | `GET /lancamentos` | ✅ integrado |
+| 6.2 | Lançamentos: paginação/ordenação na rota | `GET /lancamentos` | 🔴 feito no front |
 | 7.1 | Fale Conosco (form) | `POST /fale-conosco` | 🔴 |
 | 8.1 | Vagas (Trabalhe Conosco) | `GET /vagas` | 🔴 |
 | 8.2 | Currículo representante | `POST /trabalhe-conosco/representante` | 🔴 |

@@ -24,15 +24,17 @@ function AppContent() {
   const { isLoading, startLoading } = useLoading(2000)
 
   /* Trocar de categoria pelo mega menu mantém a mesma rota e muda só a query
-     string, então o loading também escuta `?grupo` — o parâmetro que o menu
-     manda. Filtros da sidebar e paginação ficam de fora: são navegações
-     dentro da mesma listagem. */
-  const grupo = new URLSearchParams(location.search).get("grupo")
+     string, então o menu marca a navegação com `recarregarTela` para o loading
+     entrar também nesse caso. Filtro, ordenação e paginação mudam a mesma
+     query string sem essa marca: ali só os resultados são atualizados. */
+  const navegouPeloMenu = (location.state as { recarregarTela?: boolean } | null)
+    ?.recarregarTela
+  const chaveNavegacao = navegouPeloMenu ? location.key : null
 
   useEffect(() => {
     startLoading()
     window.scrollTo({ top: 0 })
-  }, [location.pathname, grupo])
+  }, [location.pathname, chaveNavegacao])
 
   return (
     <>

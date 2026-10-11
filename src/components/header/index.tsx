@@ -309,6 +309,7 @@ export function Header() {
                     <StyledLink
                       key={categoria.id}
                       to={linkCategoria(categoria.id, categoria.nivel)}
+                      state={{ recarregarTela: true }}
                       onClick={closeMobile}
                     >
                       <MobileSubmenuItem>{categoria.nome}</MobileSubmenuItem>
