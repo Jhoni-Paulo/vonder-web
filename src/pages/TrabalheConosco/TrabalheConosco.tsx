@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { AVonderUmaMarcaWrapperSubsection } from "./sections/AVonderUmaMarcaWrapperSubsection";
-import { DivSubsection } from "./sections/DivSubsection";
+import { CtaDuvidas } from "../../components/CtaDuvidas/CtaDuvidas";
 import { DivWrapperSubsection } from "./sections/DivWrapperSubsection";
 import { FrameSubsection } from "./sections/FrameSubsection";
 import {
@@ -100,7 +100,7 @@ export const TrabalheConosco = (): React.JSX.Element => {
       <FrameWrapperSubsection active={activeTab} onSelect={setActiveTab} />
       <GroupWrapperSubsection title={tabs[activeTab].strong} activeTab={activeTab} />
       <DivWrapperSubsection />
-      <DivSubsection />
+      <CtaDuvidas />
     </StyledTrabalheConosco>
   );
 };

@@ -90,7 +90,7 @@ const linkCategoria = (id: number, nivel: number) =>
 
 const conhecaLinks: Array<{ text: string; to?: string; disabled?: boolean }> = [
   { text: "Nossa história", disabled: true },
-  { text: "Nossos diferenciais", disabled: true },
+  { text: "Nossos diferenciais", to: "/nossos-diferenciais" },
   { text: "Nossa presença", disabled: true },
 ];
 

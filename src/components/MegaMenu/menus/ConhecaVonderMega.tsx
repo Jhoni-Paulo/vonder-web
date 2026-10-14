@@ -145,7 +145,8 @@ const cards = [
     description:
       "Conheça os diferenciais que nos destacam, incluindo nossas ações em sustentabilidade e os certificados que comprovam a qualidade de nossos produtos.",
     action: "Veja o que nos destaca",
-    link: "/conheca-a-vonder",
+    link: "/nossos-diferenciais",
+    unlocked: true,
   },
   {
     img: "https://c.animaapp.com/tE2W9na7/img/05-3@2x.png",

@@ -2,7 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-/* Mesmo layout de "Acompanhe também as Redes Sociais da OVD!" */
+/**
+ * Bloco "Ainda tem dúvidas?" — foto à esquerda, cartão cinza com texto e o
+ * botão para o Fale Conosco. Usado no fim da Trabalhe Conosco e da
+ * Nossos Diferenciais.
+ *
+ * Mesmo layout de "Acompanhe também as Redes Sociais da OVD!".
+ */
 const CtaWrapper = styled.div`
   align-items: flex-start;
   display: flex;
@@ -204,7 +210,7 @@ const CtaImage = styled.img`
   }
 `;
 
-export const DivSubsection = (): React.JSX.Element => {
+export const CtaDuvidas = (): React.JSX.Element => {
   return (
     <CtaWrapper>
       <CtaGroup>
@@ -234,3 +240,5 @@ export const DivSubsection = (): React.JSX.Element => {
     </CtaWrapper>
   );
 };
+
+export default CtaDuvidas;
