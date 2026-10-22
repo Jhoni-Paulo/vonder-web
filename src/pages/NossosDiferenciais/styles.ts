@@ -138,4 +138,15 @@ export const ImagemColuna = styled.img`
   min-width: 0;
   object-fit: contain;
   width: 100%;
+
+  /* Empilhada, a imagem ocuparia a largura inteira e ficaria com centenas de
+     pixels de altura — o mesmo teto usado nas outras páginas do site. */
+  @media (max-width: 1024px) {
+    align-self: center;
+    max-width: 520px;
+  }
+
+  @media (max-width: 600px) {
+    max-width: 100%;
+  }
 `;

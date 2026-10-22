@@ -228,7 +228,12 @@ export function ProdutosMega(): React.JSX.Element {
             técnicos de cada item.
           </Description>
           <Group>
-            <DivWrapper>
+            <DivWrapper
+              as={Link}
+              to="/catalogo"
+              state={{ recarregarTela: true }}
+              style={{ textDecoration: "none" }}
+            >
               <CTAButtonText>Clique e conheça</CTAButtonText>
             </DivWrapper>
           </Group>

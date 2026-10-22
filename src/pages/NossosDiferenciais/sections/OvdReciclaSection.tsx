@@ -45,7 +45,13 @@ const Imagem = styled.img`
 
   /* Empilhado no mobile o transbordo atropelaria as seções de cima e de baixo. */
   @media (max-width: 1024px) {
+    align-self: center;
     margin: 0;
+    max-width: 520px;
+  }
+
+  @media (max-width: 600px) {
+    max-width: 100%;
   }
 `;
 

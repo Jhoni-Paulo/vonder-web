@@ -48,6 +48,16 @@ const CarrosselWrap = styled.div`
   flex: 1.25 1 0;
   min-width: 0;
   width: 100%;
+
+  /* No celular as prévias laterais somem e as setas (44px + 30 de respiro de
+     cada lado) comiam quase metade da largura, deixando o slide estreito e
+     alto. Aproximar as setas devolve espaço para a foto. */
+  @media (max-width: 600px) {
+    > div {
+      gap: 10px;
+      padding: 16px 0;
+    }
+  }
 `;
 
 const SlideImagem = styled.img`

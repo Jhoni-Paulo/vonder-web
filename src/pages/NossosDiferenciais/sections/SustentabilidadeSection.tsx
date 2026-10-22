@@ -28,7 +28,13 @@ const Imagem = styled.img`
   /* Empilhado no mobile a imagem vem antes do texto: subir aqui a jogaria
      para cima da seção anterior. */
   @media (max-width: 1024px) {
+    align-self: center;
     margin-top: 0;
+    max-width: 520px;
+  }
+
+  @media (max-width: 600px) {
+    max-width: 100%;
   }
 `;
 

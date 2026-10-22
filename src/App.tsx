@@ -13,6 +13,7 @@ import { HomeNova } from "./pages/HomeNova"
 import { BlogHome } from "./pages/Blog"
 import { ConheaAVonder } from "./pages/ConhecaAVonder"
 import { NossosDiferenciais } from "./pages/NossosDiferenciais"
+import { CatalogoVonder } from "./pages/CatalogoVonder"
 import { Faq } from "./pages/Faq"
 import { Garantia } from "./pages/Garantias"
 import { OndeComprarVonder } from "./pages/OndeComprar"
@@ -53,6 +54,7 @@ function AppContent() {
           <Route path="/blog" element={<BlogHome />} />
           <Route path="/conheca-a-vonder" element={<ConheaAVonder />} />
           <Route path="/nossos-diferenciais" element={<NossosDiferenciais />} />
+          <Route path="/catalogo" element={<CatalogoVonder />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/garantia" element={<Garantia />} />
           <Route path="/onde-comprar" element={<OndeComprarVonder />} />

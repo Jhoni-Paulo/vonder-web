@@ -77,6 +77,10 @@ const Titulo = styled.h1`
   line-height: normal;
   margin: 0;
 
+  @media (max-width: 900px) {
+    font-size: 46px;
+  }
+
   @media (max-width: 600px) {
     font-size: 40px;
   }
@@ -91,9 +95,13 @@ const Descricao = styled.p`
   line-height: 38px;
   margin: 0;
 
+  @media (max-width: 900px) {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+
   @media (max-width: 600px) {
     font-size: 18px;
-    line-height: 1.5;
   }
 `;
 
