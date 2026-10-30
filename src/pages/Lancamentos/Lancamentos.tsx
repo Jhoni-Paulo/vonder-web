@@ -5,7 +5,9 @@ import {
   FiltroArvore,
   type NivelArvore,
 } from "../../components/FiltroArvore/FiltroArvore";
+import { Lightbox } from "../../components/Lightbox/Lightbox";
 import { useLancamentos } from "../../hooks/useLancamentos";
+import type { Lancamento } from "../../services/lancamentoService";
 
 /* ══════════════════════════════════════════════
    ESTILOS
@@ -215,8 +217,16 @@ const CardGrid = styled.div`
   @media (max-width: 480px)  { grid-template-columns: 1fr; }
 `;
 
+/* Vira `button` quando o lançamento tem conteúdo para abrir, daí o reset. */
 const Card = styled.div`
+  appearance: none;
+  background: none;
+  border: none;
   border-radius: 12px;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  text-align: left;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -466,6 +476,9 @@ export const Lancamentos = (): React.JSX.Element => {
 
   const { dados, carregando, erro } = useLancamentos({ grupo, subgrupo, categoria });
 
+  /* Conteúdo aberto na lightbox; `null` com ela fechada. */
+  const [emDestaque, setEmDestaque] = useState<Lancamento | null>(null);
+
   /* Cada nó traz o `idNivelPai`, então a cascata é montada aqui mesmo: só
      aparecem os filhos do nível selecionado acima. */
   const subgrupos = useMemo(
@@ -585,11 +598,9 @@ export const Lancamentos = (): React.JSX.Element => {
               {visiveis.map((lancamento) => (
                 <Card
                   key={lancamento.idProduto}
-                  onClick={
-                    lancamento.url
-                      ? () => window.open(lancamento.url, "_blank", "noopener,noreferrer")
-                      : undefined
-                  }
+                  as={lancamento.url ? "button" : "div"}
+                  type={lancamento.url ? "button" : undefined}
+                  onClick={lancamento.url ? () => setEmDestaque(lancamento) : undefined}
                 >
                   <CardImageWrap>
                     {lancamento.imagemUrl && (
@@ -611,6 +622,16 @@ export const Lancamentos = (): React.JSX.Element => {
             controles("https://c.animaapp.com/wSrmTlud/img/frame-389-1.svg")}
         </Main>
       </Body>
+
+      {emDestaque?.url && (
+        <Lightbox
+          aberto
+          titulo={emDestaque.titulo}
+          descricao={emDestaque.descricao}
+          url={emDestaque.url}
+          onFechar={() => setEmDestaque(null)}
+        />
+      )}
     </Page>
   );
 };

@@ -454,9 +454,12 @@ ordenação, paginação e a grade de cards. Título e breadcrumb seguem iguais.
 ```
 - Atenção aos nomes: aqui os parâmetros são `grupo`/`subgrupo`/`categoria` (sem o sufixo `Id` que
   `/produto/lista` e `/produto/filtro` usam).
-- Card usa `nomeLancamento` (título), `imagem` e `url` (destino do "Ver mais", em nova aba). Não há
+- Card usa `nomeLancamento` (título), `imagem` e `url` (destino do "Ver mais"). Não há
   campo de descrição: a linha de apoio só aparece quando `nomeEcommerce`/`nomeAgrupamento`
   acrescentam algo ao título.
+- O "Ver mais" abre o conteúdo numa **lightbox** (`src/components/Lightbox/Lightbox.tsx`), sem tirar
+  a pessoa do site. Se `url` apontar direto para uma imagem (`.jpg`, `.png`, …), ela é exibida como
+  imagem; qualquer outra coisa entra num `iframe`.
 - A sidebar é o mesmo componente da listagem de produtos (`FiltroArvore`). A cascata é montada no
   front pelo `idNivelPai` de cada nó, então funciona mesmo que a rota devolva os três níveis
   inteiros. Seleção única por nível; trocar um nível limpa os de baixo.
@@ -469,9 +472,19 @@ ordenação, paginação e a grade de cards. Título e breadcrumb seguem iguais.
 - ⚠️ **Hoje há 1 lançamento cadastrado**, com `imagem: null`. O card cai para um fundo escuro com o
   texto. Como só existe um registro, não dá para saber se a rota restringe as listas de níveis
   conforme a seleção — quando houver mais dados, vale conferir.
-- O modal de detalhe (`LaunchDetailModal`) ficou **sem uso**: ele precisa de galeria e descrição, que
-  o payload não tem. O card abre o informativo da OVD (`url`). O componente segue no repositório
-  para quando esses campos existirem.
+- ⚠️ **O `url` aponta para um informativo de e-mail, não para uma imagem.** O que vem hoje é uma
+  página HTML (`.../OVD/4100_L.html`) com dois problemas quando mostrada dentro do site:
+  1. As `<img>` dela apontam para **`http://`** enquanto a página é servida em `https://`. O
+     navegador promove o pedido para https (que o servidor atende), mas é um passo a mais que pode
+     falhar. O ideal é o informativo referenciar as imagens em https.
+  2. A página carrega o rodapé de **e-mail marketing** — "Se não estiver visualizando, clique
+     aqui", `%Subscriber:CustomField1010%` e "cancele sua inscrição" —, que não faz sentido dentro
+     do site.
+
+  **Pedido ao back:** devolver as imagens do informativo (ex.: `imagensInformativo: string[]`, em
+  https) junto do lançamento. Com isso a lightbox passa a renderizar as imagens direto, sem
+  `iframe` e sem o rodapé de e-mail — e o `LaunchDetailModal`, que já existe no repositório e espera
+  exatamente `images: string[]` + descrição, volta a ter uso.
 
 ---
 
@@ -668,6 +681,34 @@ aceite → e-mail de confirmação. O formulário em si ainda **não foi constru
 Página **institucional** (história, linha do tempo, valores, banners). Hoje 100% estática e **pode
 seguir assim**. Só entra no back se quiserem torná-la editável via CMS — nesse caso vira um bloco de
 "conteúdo institucional" com títulos/textos/imagens por seção. Sem rota necessária agora.
+
+---
+
+## 13.1. Catálogo VONDER (`/catalogo`)
+
+O folheador (`src/components/Flipbook/Flipbook.tsx`) já funciona: abre um PDF, monta as páginas
+em livro, navega, amplia e vai para tela cheia. **Falta só a lista de PDFs vir do back.**
+
+Hoje a lista é o array estático `src/pages/CatalogoVonder/catalogos.ts`:
+
+```ts
+export const catalogos: CatalogoPdf[] = [
+  { nome: "Catálogo VONDER 2026", url: "/catalogos/catalogo-vonder-2026.pdf" },
+];
+```
+
+Para integrar basta uma rota que devolva essa mesma forma — `{ nome, url }`, na ordem de exibição.
+O `url` pode ser absoluto (CDN/S3) ou relativo; o resto da página não muda.
+
+**Requisitos do arquivo** (valem para qualquer PDF publicado):
+
+- **Servir com `Accept-Ranges: bytes`.** O pdf.js baixa só os trechos necessários. Sem esse
+  cabeçalho ele desiste e puxa o arquivo inteiro. (nginx e S3/CloudFront já mandam; no `vite dev`
+  isso é suprido pelo plugin `accept-ranges-para-pdf` em `vite.config.ts`.)
+- **PDF linearizado** ("fast web view"), para a primeira página abrir sem ler o arquivo todo.
+- **Peso.** O `catalogo-vonder-2026.pdf` atual tem **278 MB** / 996 páginas. Funciona, mas é
+  grande demais para a web: convém publicar uma versão otimizada (imagens recomprimidas) e servir
+  de CDN, não do mesmo host da aplicação. O arquivo também não deveria ficar versionado no git.
 
 ---
 

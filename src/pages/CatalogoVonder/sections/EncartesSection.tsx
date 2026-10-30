@@ -32,6 +32,9 @@ const Texto = styled.p`
     text-decoration: underline;
   }
 
+  /* Folga a mais antes da lista de encartes, somada ao espaço da seção. */
+  margin-bottom: 30px;
+
   @media (max-width: 600px) {
     font-size: 18px;
   }
@@ -54,7 +57,7 @@ const Coluna = styled.div`
      transborda sempre o mesmo tanto e tem sempre a mesma largura. */
   display: grid;
   grid-auto-rows: 1fr;
-  /* A imagem de cada card sobe 50px para fora da caixa cinza: o espaço entre
+  /* A imagem de cada card sobe 25px para fora da caixa cinza: o espaço entre
      eles precisa acomodar esse transbordo. */
   gap: 70px;
   min-width: 0;
@@ -132,7 +135,7 @@ const CardImagem = styled.img`
   bottom: 0;
   /* Altura amarrada à do card: o transbordo é sempre o mesmo, mesmo nos
      cards de título longo, que são mais altos. */
-  height: calc(100% + 50px);
+  height: calc(100% + 25px);
   object-fit: contain;
   object-position: bottom right;
   position: absolute;
