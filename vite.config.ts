@@ -29,6 +29,19 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
     strictPort: true,
+    proxy: {
+      /*
+       * O servidor dos catálogos não manda 'Access-Control-Allow-Origin', e o
+       * pdf.js baixa o PDF por fetch — sem CORS o navegador bloqueia. Aqui o
+       * dev server busca o arquivo e devolve na mesma origem da página.
+       * Produção precisa do cabeçalho na origem ou deste mesmo proxy.
+       */
+      '/_catalogo-ovd': {
+        target: 'https://www.ovd.com.br',
+        changeOrigin: true,
+        rewrite: (caminho) => caminho.replace('/_catalogo-ovd', ''),
+      },
+    },
     hmr: {
       host: 'localhost',
       port: 5173,

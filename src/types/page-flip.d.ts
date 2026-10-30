@@ -35,6 +35,8 @@ declare module "page-flip" {
     constructor(element: HTMLElement, settings: PageFlipSettings);
     loadFromHTML(items: NodeListOf<HTMLElement> | HTMLElement[]): void;
     updateFromHtml(items: NodeListOf<HTMLElement> | HTMLElement[]): void;
+    /** Recalcula o tamanho das páginas a partir do contêiner. */
+    update(): void;
     turnToPage(page: number): void;
     flipNext(corner?: "top" | "bottom"): void;
     flipPrev(corner?: "top" | "bottom"): void;

@@ -8,6 +8,7 @@ import iconeGrade from "../../../assets/catalogo/frame-1171275359.svg";
 import iconeMiniaturas from "../../../assets/catalogo/frame-1171275376.svg";
 import type { FlipbookRef } from "../../../components/Flipbook/Flipbook";
 import { catalogos } from "../catalogos";
+import { resolverUrlPdf } from "../urlPdf";
 
 /* O folheador carrega o pdf.js, que é pesado e só interessa a esta página:
    fica num pedaço separado, baixado quando a seção aparece. */
@@ -417,7 +418,7 @@ export const VisualizadorSection = (): React.JSX.Element => {
           <Suspense fallback={<Carregando>Carregando o catálogo...</Carregando>}>
             <Flipbook
               ref={livroRef}
-              url={catalogo.url}
+              url={resolverUrlPdf(catalogo.url)}
               zoom={zoom}
               onPaginaChange={setPagina}
               onTotalPaginas={setTotalPaginas}

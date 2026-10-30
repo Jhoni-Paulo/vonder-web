@@ -19,6 +19,10 @@ const MARGEM_MEMORIA = 6;
 /** Supersampling do canvas, para a página não borrar com o zoom. */
 const FATOR_NITIDEZ = Math.min(Math.max(window.devicePixelRatio, 1.5), 2);
 
+/** Teto do fator de desenho: ampliado, a página é redesenhada mais detalhada,
+    mas sem estourar a memória do navegador. */
+const NITIDEZ_MAXIMA = 2.5;
+
 /* Espaço em volta do livro — sem fundo próprio: quem aparece atrás é a
    página. A aparência de livro vem da capa, não daqui. */
 const Area = styled.div<{ $ampliado: boolean; $arrastando: boolean }>`
@@ -49,7 +53,6 @@ const Area = styled.div<{ $ampliado: boolean; $arrastando: boolean }>`
  */
 const Palco = styled.div<{ $zoom: number }>`
   margin: 0 auto;
-  transition: width 0.25s ease;
   /* O zoom aumenta a largura em vez de usar transform: assim a área rolável
      acompanha o livro e nada fica cortado. */
   width: ${({ $zoom }) => $zoom * 100}%;
@@ -201,6 +204,8 @@ interface FlipbookProps {
 interface Controles {
   livro: PageFlip;
   renderizarVizinhas: (indice: number) => void;
+  /** Redimensiona o livro e redesenha as páginas no novo tamanho. */
+  ajustarZoom: (zoom: number) => void;
 }
 
 export const Flipbook = ({
@@ -221,6 +226,8 @@ export const Flipbook = ({
   } | null>(null);
   const [arrastando, setArrastando] = useState(false);
   const ampliado = zoom > 1;
+  /* Lido pelo efeito de carregamento, que não depende de `zoom`. */
+  const zoomRef = useRef(zoom);
   const controlesRef = useRef<Controles | null>(null);
   /* Guarda a URL já resolvida: enquanto não bate com a atual, está carregando.
      Evita escrever estado de forma síncrona dentro do efeito. */
@@ -235,7 +242,17 @@ export const Flipbook = ({
   useEffect(() => {
     aoMudarPagina.current = onPaginaChange;
     aoSaberTotal.current = onTotalPaginas;
-  }, [onPaginaChange, onTotalPaginas]);
+    zoomRef.current = zoom;
+  }, [onPaginaChange, onTotalPaginas, zoom]);
+
+  /*
+   * O page-flip calcula o tamanho das páginas em pixels e só refaz a conta
+   * quando é avisado. Sem isto, ampliar esticava a moldura e deixava o PDF do
+   * mesmo tamanho.
+   */
+  useEffect(() => {
+    controlesRef.current?.ajustarZoom(zoom);
+  }, [zoom]);
 
   useEffect(() => {
     const palco = palcoRef.current;
@@ -245,6 +262,8 @@ export const Flipbook = ({
        StrictMode monta o efeito duas vezes: sem esse isolamento, a execução
        cancelada contaminava o controle de páginas já desenhadas da segunda. */
     let cancelado = false;
+    let zoomDaVez = zoomRef.current;
+    let indiceAtual = 0;
     const desenhadas = new Set<number>();
     let pdf: PDFDocumentProxy | null = null;
 
@@ -276,7 +295,8 @@ export const Flipbook = ({
            dataset gravado na montagem. */
         const largura = Number(folha.dataset.largura) || folha.clientWidth || 600;
         const escala = largura / pagina.getViewport({ scale: 1 }).width;
-        const viewport = pagina.getViewport({ scale: Math.max(escala, 0.1) * FATOR_NITIDEZ });
+        const nitidez = Math.min(FATOR_NITIDEZ * zoomDaVez, NITIDEZ_MAXIMA);
+        const viewport = pagina.getViewport({ scale: Math.max(escala, 0.1) * nitidez });
 
         const canvas = document.createElement("canvas");
         canvas.width = Math.floor(viewport.width);
@@ -372,12 +392,24 @@ export const Flipbook = ({
 
         livro.loadFromHTML(folhas);
         livro.on("flip", (evento) => {
+          indiceAtual = evento.data;
           aoMudarPagina.current?.(evento.data + 1);
           renderizarVizinhas(evento.data);
         });
 
+        /* Redesenha tudo que está em tela: no tamanho novo, o canvas antigo
+           ficaria esticado e borrado. */
+        const ajustarZoom = (novoZoom: number) => {
+          if (cancelado || novoZoom === zoomDaVez) return;
+          zoomDaVez = novoZoom;
+          livro.update();
+          for (const indice of desenhadas) folhaDe(indice)?.replaceChildren();
+          desenhadas.clear();
+          renderizarVizinhas(indiceAtual);
+        };
+
         livroDaVez = livro;
-        controlesRef.current = { livro, renderizarVizinhas };
+        controlesRef.current = { livro, renderizarVizinhas, ajustarZoom };
         renderizarVizinhas(0);
         aoMudarPagina.current?.(1);
         setResolvido({ url, erro: false });

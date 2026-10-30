@@ -700,7 +700,21 @@ export const catalogos: CatalogoPdf[] = [
 Para integrar basta uma rota que devolva essa mesma forma — `{ nome, url }`, na ordem de exibição.
 O `url` pode ser absoluto (CDN/S3) ou relativo; o resto da página não muda.
 
+Hoje a URL fixa já aponta para o arquivo remoto:
+`https://www.ovd.com.br/_CATALOGO/vonder/catalogo_vonder.pdf`.
+
 **Requisitos do arquivo** (valem para qualquer PDF publicado):
+
+- 🚨 **Falta CORS na origem do PDF.** O pdf.js baixa o arquivo por `fetch`, então
+  vale a política de CORS, e `www.ovd.com.br` **não** responde
+  `Access-Control-Allow-Origin`. O navegador bloqueia o download e o folheador
+  não abre. Em desenvolvimento, o Vite faz de intermediário (`/_catalogo-ovd`
+  em `vite.config.ts`, com o desvio em `src/pages/CatalogoVonder/urlPdf.ts`) —
+  **isso não vale em produção**. Lá é preciso uma das duas:
+  1. `ovd.com.br` responder `Access-Control-Allow-Origin` para o domínio do
+     site (preferível: um cabeçalho no IIS), ou
+  2. o servidor que publica o site repetir esse proxy, servindo o PDF no mesmo
+     domínio — e repassando `Range`/`206`, senão o arquivo inteiro é baixado.
 
 - **Servir com `Accept-Ranges: bytes`.** O pdf.js baixa só os trechos necessários. Sem esse
   cabeçalho ele desiste e puxa o arquivo inteiro. (nginx e S3/CloudFront já mandam; no `vite dev`
